@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.3.3 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.3.4 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -321,7 +321,7 @@ un problema, ese archivo ayuda mucho.
 - **Documentación técnica completa** (todas las opciones del archivo de configuración, cómo
   funciona por dentro): `DOCUMENTACION.md`, dentro del zip.
 - **Apoyá DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) (también en la ventana **Acerca de** del panel)
-- **Hecho por** Diego – LW5HR, con Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
+- **Hecho por** Diego – LW5HR, con Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
 - **Licencia:** software libre, [MIT](LICENSE): cualquiera puede usarlo, copiarlo y compartirlo.
 
 73, Diego – LW5HR

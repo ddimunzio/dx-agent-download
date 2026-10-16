@@ -1,6 +1,6 @@
 # DX Agent — User Guide
 
-*Created by Diego – LW5HR, with Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
+*Created by Diego – LW5HR, with Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
 Versión en español: [DOCUMENTACION.md](DOCUMENTACION.md).*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every

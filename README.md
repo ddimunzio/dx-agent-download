@@ -60,7 +60,7 @@ hay nada que instalar (trae Python adentro).
 
 ---
 
-Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH
+Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH
 
 Free software, [MIT License](LICENSE) / Software libre, licencia MIT.
 
