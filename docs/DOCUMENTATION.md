@@ -166,6 +166,11 @@ the top-right corner says whether it worked.
   60 m); RTTY for RTTY; for FT8/FT4, USB through OmniRig (how WSJT-X runs the radio)
   or the data mode through Hamlib, flrig and DXLab. Untick **Also set the mode** to
   change only the frequency.
+- **A mode that already suits the spot is kept (OmniRig, and Log4OM through it):** for an
+  FT8/FT4 spot, a radio in USB or in its data mode only moves frequency; for CW, one in CW or
+  CW-R. So a radio that needs its data mode for FT8 (an IC-9100 in USB-D) keeps it from one
+  FT8 spot to the next: put it in USB-D once. Phone spots always set USB or LSB, so a data
+  mode is never left on with the microphone muted.
 - **Log4OM and the mode:** Log4OM's remote control accepts `SetMode`, but it changes only
   the mode on Log4OM's screen, not the radio's (tested: Log4OM 2.42 with an IC-9100). Log4OM
   drives the radio through OmniRig, so with **Also set the mode** on, DX Agent sets frequency

@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.3.1 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.3.2 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -183,6 +183,10 @@ derecha dice si funcionó.
 - **Con Log4OM, el modo** cambia por OmniRig, el programa con el que Log4OM maneja la radio:
   con **También cambiar el modo** marcado, DX Agent usa la radio de OmniRig que está en línea y
   Log4OM la sigue. Si Log4OM maneja tu radio de otra forma, cambia solo la frecuencia.
+- **Radios que necesitan su modo de datos para FT8** (por ejemplo un IC-9100 en USB-D): poné la
+  radio en USB-D una vez. Desde ahí, los clics en spots de FT8/FT4 solo cambian la frecuencia y
+  el USB-D se mantiene. Un spot de fonía la pasa a USB o LSB, y el siguiente spot de FT8 queda en
+  USB: volvé a poner USB-D a mano. Con CW pasa lo mismo: una radio en CW o CW-R lo conserva.
 - **WSJT-X:** marcá en DX Agent **Mandar también el indicativo a WSJT-X** y en WSJT-X
   Settings → Reporting → **Accept UDP requests**. Un clic en un spot de FT8/FT4 pone la radio
   en la frecuencia de FT8/FT4, completa **DX Call** y **DX Grid** y mueve el audio a la

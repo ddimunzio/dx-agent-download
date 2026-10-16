@@ -172,6 +172,12 @@ indica si funcionó.
   10 MHz, salvo 60 m); RTTY para RTTY; para FT8/FT4, USB con OmniRig (como WSJT-X usa
   la radio) o el modo de datos con Hamlib, flrig y DXLab. Desmarcar **También cambiar
   el modo** para cambiar solo la frecuencia.
+- **Si la radio ya está en un modo que sirve, se mantiene (OmniRig, y Log4OM a través de
+  OmniRig):** para un spot de FT8/FT4, una radio en USB o en su modo de datos solo cambia de
+  frecuencia; para CW, una en CW o CW-R. Así una radio que necesita su modo de datos para FT8
+  (un IC-9100 en USB-D) lo conserva de un spot de FT8 al siguiente: se pone en USB-D una vez.
+  Los spots de fonía siempre ponen USB o LSB, para que nunca quede un modo de datos con el
+  micrófono silenciado.
 - **Log4OM y el modo:** el control remoto de Log4OM acepta `SetMode`, pero solo cambia el modo
   en la pantalla de Log4OM, no el de la radio (probado: Log4OM 2.42 con un IC-9100). Log4OM
   maneja la radio a través de OmniRig, así que con **También cambiar el modo** marcado DX Agent
