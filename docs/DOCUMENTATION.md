@@ -1,6 +1,6 @@
 # DX Agent — User Guide
 
-*Created by Diego – LW5HR. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
+*Created by Diego – LW5HR, with Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
 Versión en español: [DOCUMENTACION.md](DOCUMENTACION.md).*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every
@@ -111,7 +111,7 @@ python -m dxagent run --no-ui       # console only
 
 | Area | What it shows |
 |------|---------------|
-| **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); your log totals; DXpeditions active; **Settings**, **EN/ES** (language), **Theme** and **Browser sound** buttons; UTC clock |
+| **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); your log totals; DXpeditions active; **Settings**, **About** (what DX Agent is, who made it, the collaborators, how to support it, help), **EN/ES** (language), **Theme** and **Browser sound** buttons; UTC clock. `#about` opens the About window |
 | **Filters** | Chips for alert type, band and mode, plus a search box for call or country. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. Your filters are remembered in the browser |
 | **Alert table** | One row per alert, newest on top, coloured by type: UTC, alert, call, kHz, band, mode, country, what you need, LoTW, **near you** (see below), who heard it. New rows flash; rows fade after 10 minutes and fade more after 30 (hover a row for its age) |
 | **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button, **Show only** this call and **☆ watchlist** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
@@ -155,7 +155,7 @@ the top-right corner says whether it worked.
 
 | Target | How DX Agent talks to it | Default port | Mode too? |
 |--------|--------------------------|--------------|-----------|
-| Log4OM 2 | UDP remote control (`SetTxFrequency`, `SetMode`, `SetCallsign`) | 2241 | no — tested: Log4OM 2.42 ignores `SetMode` |
+| Log4OM 2 | UDP remote control (`SetTxFrequency`, `SetCallsign`); the mode through OmniRig | 2241 | yes, through OmniRig (Log4OM's own `SetMode` changes only its screen) |
 | N1MM Logger+ | UDP `radio_setfrequency` | 13064 | no (N1MM has no mode field) |
 | OmniRig | Windows COM, through PowerShell; Rig 1 or Rig 2 | — | yes |
 | Hamlib rigctld | TCP `F <Hz>` / `M <mode> -1` | 4532 | yes |
@@ -166,9 +166,13 @@ the top-right corner says whether it worked.
   60 m); RTTY for RTTY; for FT8/FT4, USB through OmniRig (how WSJT-X runs the radio)
   or the data mode through Hamlib, flrig and DXLab. Untick **Also set the mode** to
   change only the frequency.
-- **Log4OM users who want the mode too:** choose **OmniRig** instead, with the radio
-  number OmniRig shows for your rig. Log4OM controls the radio through OmniRig, so it follows
-  the change, and OmniRig sets both frequency and mode.
+- **Log4OM and the mode:** Log4OM's remote control accepts `SetMode`, but it changes only
+  the mode on Log4OM's screen, not the radio's (tested: Log4OM 2.42 with an IC-9100). Log4OM
+  drives the radio through OmniRig, so with **Also set the mode** on, DX Agent sets frequency
+  and mode through OmniRig itself, on the OmniRig rig that is on-line (the **OmniRig radio**
+  setting is tried first), and Log4OM follows the radio as usual; the call still goes to
+  Log4OM. Without OmniRig, or with no rig on-line, Tune moves the frequency through Log4OM
+  and the message says the mode didn't change.
 - **Log4OM:** turn on Settings → Software integration → Connections → **Remote
   control** (port 2241). Log4OM's own document spells the
   command `SetTxFrequeny`; DX Agent uses the spelling reported to work,
@@ -176,8 +180,8 @@ the top-right corner says whether it worked.
   is ready to log it; a call you typed there yourself is left alone (Log4OM's rule).
 - **Only from the dashboard:** like saving settings, Tune only works from the
   dashboard page itself, so other websites can't move your radio.
-- **Tested:** every target against stand-in programs; Log4OM 2.42 with a real radio
-  (frequency works, mode doesn't).
+- **Tested:** every target against stand-in programs; Log4OM 2.42 with an IC-9100 on
+  OmniRig: frequency, mode (through OmniRig) and call.
 
 **WSJT-X.** Settings → Radio → tick **Also send the call to WSJT-X**, and in WSJT-X tick
 Settings → Reporting → **Accept UDP requests**. Then Tune on an FT8/FT4 spot puts the
@@ -969,8 +973,9 @@ example (shortened):
   its start date to one day after its end date.
 - **Portable calls.** Calls like `TF/PD9DX` resolve to the shorter prefix. Rare cases,
   such as `3D2/R` for Rotuma, can resolve to the wrong country.
-- **Log4OM can't change the mode.** Its remote control moves the frequency only; use
-  the OmniRig target for the mode (see Tune the radio).
+- **Log4OM's mode goes through OmniRig.** Log4OM's remote control can't change the
+  radio's mode, so DX Agent sets it through OmniRig (see Tune the radio): a Log4OM that
+  controls the radio another way (Hamlib, its own CAT) gets the frequency only.
 - **60 m is off by default.** Select it under **Bands** to watch it; there is no
   band-plan mode guess for 60 m.
 

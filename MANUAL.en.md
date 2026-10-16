@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.3.0 · Made by Diego – LW5HR · [Versión en castellano](MANUAL.es.md)*
+*Version 0.3.1 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -88,9 +88,13 @@ The dashboard follows your browser's language; the **ES/EN** button in the heade
 
 ## 4. The screen
 
+![The alert list, with Hide confirmed](images/list.en.png)
+
 **Header:** your callsign; one pill per spot source (green = connected, amber = connecting,
-red = down); your log's totals; the **Settings**, **ES/EN**, **Theme** (light / dark / auto),
-**Sound** (a beep for the important alerts, off by default) and **Stop** buttons; the UTC clock.
+red = down); your log's totals; the **Settings**, **About**, **ES/EN**, **Theme** (light / dark /
+auto), **Sound** (a beep for the important alerts, off by default) and **Stop** buttons; the UTC
+clock. **About** tells what DX Agent is, who made it and its collaborators, and has the links to
+support it, to this manual and to report a problem.
 
 **Filters**, above the list:
 
@@ -115,6 +119,8 @@ station:
 - **who hears it**, the receivers nearest to you first, and **Check PSKReporter (FT8/FT4)**;
 - **Show only** this call, **☆ Add to watchlist**, its latest spots, and links to QRZ.com,
   HamQTH and DXWatch.
+
+![The Station tab, with a DXpedition on the air](images/station.en.png)
 
 **The DXpeditions tab:** see section 8.
 
@@ -158,15 +164,16 @@ has a **Tune** button. A message at the top right says whether it worked.
 
 | Program | What to do in the program | Mode too? |
 |---------|---------------------------|-----------|
-| **Log4OM 2** | Settings → Software integration → Connections → turn on **Remote control** (port 2241) | no (Log4OM ignores it) |
+| **Log4OM 2** | Settings → Software integration → Connections → turn on **Remote control** (port 2241) | yes, when Log4OM uses OmniRig |
 | **N1MM Logger+** | nothing | no |
 | **OmniRig** | pick OmniRig's rig 1 or 2 in DX Agent | yes |
 | **Hamlib (rigctld)**, **flrig**, **DXLab Commander** | have the program running | yes |
 
 - **With Log4OM, the callsign is filled in too**, in its QSO window, ready to log. If you typed a
   call there yourself, Log4OM keeps yours.
-- **With Log4OM, to change the mode as well:** choose **OmniRig** in DX Agent (Log4OM controls
-  the radio through OmniRig and follows the change).
+- **With Log4OM, the mode** changes through OmniRig, the program Log4OM uses to control the
+  radio: with **Also set the mode** ticked, DX Agent uses the OmniRig rig that is on-line and
+  Log4OM follows it. If Log4OM controls your radio another way, only the frequency changes.
 - **WSJT-X:** tick **Also send the call to WSJT-X** in DX Agent, and in WSJT-X tick Settings →
   Reporting → **Accept UDP requests**. Clicking an FT8/FT4 spot puts the radio on the FT8/FT4
   frequency, fills in **DX Call** and **DX Grid**, and moves the audio to the station's
@@ -199,6 +206,8 @@ band" once you've worked it.
 
 ## 8. DXpeditions
 
+![The DXpeditions tab](images/dxpeditions.en.png)
+
 The **DXpeditions** tab shows the active ones and those starting in the next 30 days,
 gathered from NG3K, 425 DX News and Club Log.
 
@@ -215,6 +224,8 @@ gathered from NG3K, 425 DX News and Club Log.
 
 ## 9. Activations: POTA, SOTA, IOTA...
 
+![Activity: any activation, with new references](images/activity.en.png)
+
 The **Activity** menu (next to the mode filters) shows only activations: **POTA, SOTA, IOTA,
 WWFF, BOTA, COTA** (castles), **LOTA** (lighthouses), **TOTA, ROTA, JOTA, YOTA** and **EME**, with
 how many stations are on in the last hour.
@@ -230,6 +241,8 @@ how many stations are on in the last hour.
 - On the map, summits are triangles and parks are squares, at their real location.
 
 ## 10. The map
+
+![The map: alerts, DXpeditions, the night and your QTH](images/map.en.png)
 
 Click **Map** (next to **List**). The filters work the same as in the list.
 
@@ -283,12 +296,16 @@ problem, that file helps a lot.
 
 ## 14. Help and contact
 
+![The About window](images/about.en.png)
+
 - **Report a problem or suggest an improvement:** in this repository's
   [Issues](https://github.com/ddimunzio/dx-agent-download/issues). Say what you did, what you
   expected and what happened, and if you can, attach `data\dx-agent.log` (it doesn't contain
   your password).
 - **Full technical documentation** (every setting in the configuration file, how it works
   inside): `DOCUMENTATION.md`, in the zip.
-- **Support DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1)
+- **Support DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) (also in the dashboard's **About** window)
+- **Made by** Diego – LW5HR, with Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
+- **License:** free software, [MIT](LICENSE): anyone can use, copy and share it.
 
 73, Diego – LW5HR

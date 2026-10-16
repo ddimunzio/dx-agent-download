@@ -7,6 +7,8 @@ your PC, used from your browser.
 
 *Castellano más abajo.*
 
+![DX Agent: the alert list and a station](images/station.en.png)
+
 ## Download
 
 **[Download the latest version](https://github.com/ddimunzio/dx-agent-download/releases/latest)**
@@ -42,6 +44,8 @@ avisa apenas sale al aire una estación que necesitás: un país, una banda o un
 DXpedición que te suma algo, una cumbre o un parque que no trabajaste. Para Windows: corre en tu
 PC y se usa desde el navegador.
 
+![DX Agent: la lista de alertas y una estación](images/station.es.png)
+
 ## Descarga
 
 **[Bajar la última versión](https://github.com/ddimunzio/dx-agent-download/releases/latest)**
@@ -56,5 +60,9 @@ hay nada que instalar (trae Python adentro).
 
 ---
 
-Made by Diego – LW5HR. Support DX Agent / Apoyá DX Agent:
+Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH
+
+Free software, [MIT License](LICENSE) / Software libre, licencia MIT.
+
+Support DX Agent / Apoyá DX Agent:
 [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1)

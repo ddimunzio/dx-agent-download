@@ -1,6 +1,6 @@
 # DX Agent — Guía de uso
 
-*Creado por Diego – LW5HR. Apoyá DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
+*Creado por Diego – LW5HR, con Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. Licencia MIT. Apoyá DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
 English version: [DOCUMENTATION.md](DOCUMENTATION.md).*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada
@@ -115,7 +115,7 @@ python -m dxagent run --no-ui       # solo terminal
 
 | Zona | Qué muestra |
 |------|-------------|
-| **Encabezado** | Tu indicativo; una pastilla por fuente de spots (verde = conectada, ámbar = conectando, rojo = caída) con la cantidad de spots (al pasar el mouse muestra el servidor y la hora del último spot); los totales de tu log; DXpediciones activas; botones **Configuración**, **ES/EN** (idioma), **Tema** y **Sonido**; reloj UTC |
+| **Encabezado** | Tu indicativo; una pastilla por fuente de spots (verde = conectada, ámbar = conectando, rojo = caída) con la cantidad de spots (al pasar el mouse muestra el servidor y la hora del último spot); los totales de tu log; DXpediciones activas; botones **Configuración**, **Acerca de** (qué es DX Agent, quién lo hizo, los colaboradores, cómo apoyarlo, ayuda), **ES/EN** (idioma), **Tema** y **Sonido**; reloj UTC. `#about` abre la ventana Acerca de |
 | **Filtros** | Botones por tipo de alerta, banda y modo, y un cuadro de búsqueda por indicativo o país. Sin ningún botón seleccionado se muestra todo. Una alerta cuenta para cada uno de sus motivos, así que una DXpedición en tu lista de seguimiento aparece tanto en **DXPED FALTA** como en **SEGUIMIENTO**; **SEGUIMIENTO** además muestra los spots de tus indicativos en seguimiento que no dieron alerta (filas grises **SPOT**), para que veas cuándo están en el aire. **Ocultar confirmados** saca las estaciones cuya entidad ya tenés confirmada en esa banda y modo (una alerta de indicativo nuevo, una fila SPOT): quedan solo las que suman a tu log. El navegador recuerda los filtros |
 | **Tabla de alertas** | Una fila por alerta, la más nueva arriba, coloreada según el tipo: UTC, alerta, indicativo, kHz, banda, modo, país, qué te falta, LoTW, **cerca tuyo** (ver más abajo), quién la escuchó. Las filas nuevas destellan; se atenúan a los 10 minutos y más a los 30 (al pasar el mouse se ve la antigüedad) |
 | **Pestaña Estación** | Al hacer clic en una alerta, o escribir un indicativo en el cuadro, muestra la grilla banda × modo de ese país (C verde = confirmado, W ámbar = trabajado, gris = no trabajado), si trabajaste ese indicativo exacto, el estado de LoTW, los datos de la DXpedición, quién lo escucha más cerca tuyo, un botón **Consultar PSKReporter**, los botones **Ver solo** este indicativo y **☆ seguimiento**, sus últimos spots y enlaces a QRZ.com, HamQTH y DXWatch |
@@ -161,7 +161,7 @@ indica si funcionó.
 
 | Destino | Cómo se comunica DX Agent | Puerto por defecto | ¿También el modo? |
 |---------|---------------------------|--------------------|-------------------|
-| Log4OM 2 | Control remoto por UDP (`SetTxFrequency`, `SetMode`, `SetCallsign`) | 2241 | no — probado: Log4OM 2.42 ignora `SetMode` |
+| Log4OM 2 | Control remoto por UDP (`SetTxFrequency`, `SetCallsign`); el modo, por OmniRig | 2241 | sí, por OmniRig (el `SetMode` de Log4OM solo cambia su pantalla) |
 | N1MM Logger+ | UDP `radio_setfrequency` | 13064 | no (N1MM no tiene campo de modo) |
 | OmniRig | COM de Windows, mediante PowerShell; radio 1 o 2 | — | sí |
 | Hamlib rigctld | TCP `F <Hz>` / `M <modo> -1` | 4532 | sí |
@@ -172,9 +172,13 @@ indica si funcionó.
   10 MHz, salvo 60 m); RTTY para RTTY; para FT8/FT4, USB con OmniRig (como WSJT-X usa
   la radio) o el modo de datos con Hamlib, flrig y DXLab. Desmarcar **También cambiar
   el modo** para cambiar solo la frecuencia.
-- **Si usás Log4OM y querés que cambie también el modo:** elegí **OmniRig**, con el número de
-  radio que OmniRig muestra para tu equipo. Log4OM maneja la radio a través de OmniRig, así que
-  sigue el cambio, y OmniRig cambia frecuencia y modo.
+- **Log4OM y el modo:** el control remoto de Log4OM acepta `SetMode`, pero solo cambia el modo
+  en la pantalla de Log4OM, no el de la radio (probado: Log4OM 2.42 con un IC-9100). Log4OM
+  maneja la radio a través de OmniRig, así que con **También cambiar el modo** marcado DX Agent
+  pone frecuencia y modo por OmniRig, en la radio de OmniRig que está en línea (primero prueba
+  la de **Radio de OmniRig**), y Log4OM sigue a la radio como siempre; el indicativo se le sigue
+  mandando a Log4OM. Sin OmniRig, o sin ninguna radio en línea, Sintonizar mueve la frecuencia
+  por Log4OM y el mensaje avisa que el modo no cambió.
 - **Log4OM:** activar Settings → Software integration → Connections → **Remote
   control** (puerto 2241). El documento de Log4OM escribe
   el comando `SetTxFrequeny`; DX Agent usa la forma que se informó que funciona,
@@ -1012,8 +1016,9 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
   día antes de su fecha de inicio hasta un día después de su fecha de fin.
 - **Indicativos portables.** Los indicativos como `TF/PD9DX` se asocian al prefijo
   más corto. En casos raros, como `3D2/R` para Rotuma, el país puede salir mal.
-- **Log4OM no puede cambiar el modo.** Su control remoto solo mueve la frecuencia;
-  para el modo usá el destino OmniRig (ver Sintonizar la radio).
+- **El modo con Log4OM va por OmniRig.** El control remoto de Log4OM no puede cambiar el modo
+  de la radio, así que DX Agent lo cambia por OmniRig (ver Sintonizar la radio): un Log4OM que
+  maneja la radio de otra forma (Hamlib, su propio CAT) recibe solo la frecuencia.
 - **60 m está desactivada por defecto.** Elegirla en **Bandas** para vigilarla; para
   60 m no hay deducción de modo por plan de bandas.
 
