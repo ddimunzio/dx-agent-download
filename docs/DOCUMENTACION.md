@@ -955,7 +955,7 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 
 | Archivo de datos                              | Origen               | Se actualiza   |
 |-----------------------------------------------|----------------------|----------------|
-| `data/cty.csv`                                | country-files.com    | cada semana    |
+| `data/cty.csv`                                | country-files.com    | cada día (se revisa cada 6 horas, también con DX Agent abierto) |
 | `data/dxped-ng3k.json`, `dxped-425dxn.json`, `dxped-clublog.json` | NG3K, 425 DX News, Club Log | cada 6 horas |
 | `data/clublog-mostwanted.json`                | Most Wanted de Club Log | cada día    |
 | `data/lotw-user-activity.csv`                 | ARRL LoTW            | cada día       |
@@ -1021,8 +1021,20 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
   modo se ve). Una estación fuera de los segmentos habituales (SSB en la parte de CW, el
   FT8 de una DXpedición en su propia frecuencia) puede quedar mal; la parte digital se
   muestra con `?`.
-- **Las fechas anunciadas son aproximadas.** Una DXpedición cuenta como activa desde un
-  día antes de su fecha de inicio hasta un día después de su fecha de fin.
+- **Las fechas anunciadas son aproximadas.** Una DXpedición da alertas desde un día antes de su
+  fecha de inicio. Cuando pasa su fecha de fin anunciada, DX Agent vuelve a leer sus fuentes
+  (NG3K, 425 DX News, Club Log) en el momento, antes de sacarla de la lista: si alguna la
+  extendió, sigue con la fecha nueva; si siguen diciendo que terminó, sale de la pestaña
+  DXpediciones y de las alertas. Mientras las fuentes no se puedan leer, se queda (se reintenta
+  cada 30 minutos), como máximo dos días después de su fin. Al empezar un nuevo día UTC se
+  vuelve a calcular cuáles están activas.
+- **Indicativos KG4.** El archivo de países le da todo el prefijo KG4 a Guantánamo, pero solo los
+  KG4 con sufijo de dos letras (KG4AA) están ahí: KG4 + una o tres letras (KG4OJT) es un
+  indicativo de Estados Unidos, y DX Agent lo toma así. Las estaciones de Guantánamo que el
+  archivo nombra una por una cuentan como Guantánamo.
+- **El archivo de países** (el `cty.csv` de AD1C) se baja de nuevo cuando tiene un día, revisándolo
+  cada 6 horas con DX Agent abierto; cuando cambió, los spots usan el nuevo y tu log se vuelve a
+  indexar con él.
 - **Indicativos portables.** Los indicativos como `TF/PD9DX` se asocian al prefijo
   más corto. En casos raros, como `3D2/R` para Rotuma, el país puede salir mal.
 - **El modo con Log4OM va por OmniRig.** El control remoto de Log4OM no puede cambiar el modo

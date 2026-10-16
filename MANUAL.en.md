@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.3.4 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
+*Version 0.3.5 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -222,6 +222,8 @@ gathered from NG3K, 425 DX News and Club Log.
 - **Order:** **On the air** (the ones transmitting first), **Most Wanted** (the most wanted
   country on Club Log first) or **Date**.
 - **only needed** hides the ones you have on most bands (those on the air still show).
+- **When one ends:** once its announced end date has passed, DX Agent reads the sources again
+  before taking it off the list. If one of them extended it, it stays with the new date.
 - When you open a DXpedition that uploads its log to Club Log, DX Agent looks for your call in
   their log: it shows the bands and modes you're in, and warns you if a QSO of yours isn't in
   theirs.
@@ -255,7 +257,8 @@ Click **Map** (next to **List**). The filters work the same as in the list.
 - The shaded area is where it's night (its edge is the grey line).
 - Picking a station draws the path from your QTH, with heading and distance, and the receivers
   that heard it.
-- Mouse wheel or **+ / −** to zoom, drag to move, **⟲** for the whole world.
+- Mouse wheel or **+ / −** to zoom, drag to move, **⟲** for the whole world. Dragging east or
+  west goes round the world (past the Pacific, the map continues on the other side).
 - **DXCC** (top left) paints each entity by your award standing: green = confirmed, amber =
   worked, red = missing. Pick Mixed, Phone, CW, Digital, one band, Satellite or the Challenge.
 - **WAZ** paints the 40 CQ zones the same way, with its variants (by mode, by band, 5BWAZ...).

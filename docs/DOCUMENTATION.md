@@ -913,7 +913,7 @@ and can be deleted at any time; it is downloaded again when needed.
 
 | Data file                                     | Source             | Refreshed      |
 |-----------------------------------------------|--------------------|----------------|
-| `data/cty.csv`                                | country-files.com  | weekly         |
+| `data/cty.csv`                                | country-files.com  | daily (checked every 6 hours, also while DX Agent runs) |
 | `data/dxped-ng3k.json`, `dxped-425dxn.json`, `dxped-clublog.json` | NG3K, 425 DX News, Club Log | every 6 hours |
 | `data/clublog-mostwanted.json`                | Club Log Most Wanted | daily        |
 | `data/lotw-user-activity.csv`                 | ARRL LoTW          | daily          |
@@ -977,8 +977,19 @@ example (shortened):
   says the mode, it comes from the frequency (hover the mode to see so). A station
   outside the usual segments (SSB in the CW part, a DXpedition's FT8 on its own
   frequency) can be misread; the digital part is shown with `?`.
-- **Announced dates are approximate.** A DXpedition counts as active from one day before
-  its start date to one day after its end date.
+- **Announced dates are approximate.** A DXpedition alerts from one day before its start
+  date. When its announced end has passed, DX Agent reads its sources (NG3K, 425 DX News, Club
+  Log) again right away, before it leaves the list: if one extended it, it stays with the new
+  date; if they still say it's over, it leaves the DXpeditions tab and the alerts. While the
+  sources can't be read, it stays (they are tried again every 30 minutes), at most two days
+  past its end. A new UTC day works out again which ones are on.
+- **KG4 calls.** The country file gives the whole KG4 prefix to Guantanamo Bay, but only KG4
+  calls with a two-letter suffix (KG4AA) are there: KG4 + one or three letters (KG4OJT) is a
+  US call, and DX Agent takes it as such. Guantanamo stations the file lists by name count
+  as Guantanamo.
+- **The country file** (AD1C's `cty.csv`) is downloaded again when a day old, checked every
+  6 hours while DX Agent runs; when it changed, spots use the new one and your log is
+  indexed again with it.
 - **Portable calls.** Calls like `TF/PD9DX` resolve to the shorter prefix. Rare cases,
   such as `3D2/R` for Rotuma, can resolve to the wrong country.
 - **Log4OM's mode goes through OmniRig.** Log4OM's remote control can't change the

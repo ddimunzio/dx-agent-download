@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.3.4 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.3.5 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -233,6 +233,8 @@ reunidas de NG3K, 425 DX News y Club Log.
   más buscado según Club Log primero) o **Fecha**.
 - **Solo las que faltan** oculta las que ya tenés en la mayoría de las bandas (las que están
   en el aire se ven igual).
+- **Cuando termina:** al pasar su fecha de fin anunciada, DX Agent vuelve a leer las fuentes
+  antes de sacarla de la lista. Si alguna la extendió, sigue con la fecha nueva.
 - Al abrir una DXpedición que sube su log a Club Log, DX Agent busca tu indicativo en su log:
   te dice en qué bandas y modos estás, y te avisa si un QSO tuyo no figura en el de ellos.
 
@@ -266,6 +268,8 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
 - Al elegir una estación se dibuja la ruta desde tu QTH, con rumbo y distancia, y los
   receptores que la escucharon.
 - Rueda del mouse o **+ / −** para el zoom, arrastrar para moverse, **⟲** para ver el mundo.
+  Arrastrando hacia el este o el oeste se da la vuelta al mundo (pasando el Pacífico, el mapa
+  sigue del otro lado).
 - **DXCC** (arriba a la izquierda) pinta cada entidad según tu diploma: verde = confirmada,
   ámbar = trabajada, rojo = falta. Se puede elegir Mixto, Fonía, CW, Digital, una banda,
   Satélite o el Challenge.
