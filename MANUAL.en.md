@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.3.2 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
+*Version 0.3.3 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Manuel – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,

@@ -178,6 +178,9 @@ indica si funcionó.
   (un IC-9100 en USB-D) lo conserva de un spot de FT8 al siguiente: se pone en USB-D una vez.
   Los spots de fonía siempre ponen USB o LSB, para que nunca quede un modo de datos con el
   micrófono silenciado.
+- **CW en radios Icom (OmniRig):** los archivos de OmniRig para Icom llaman "CW upper" al CW-R
+  de la radio y "CW lower" a su CW normal, así que en un Icom DX Agent pide "CW lower" (probado:
+  IC-9100 en CW, no en CW-R); en otras marcas el CW normal es "CW upper".
 - **Log4OM y el modo:** el control remoto de Log4OM acepta `SetMode`, pero solo cambia el modo
   en la pantalla de Log4OM, no el de la radio (probado: Log4OM 2.42 con un IC-9100). Log4OM
   maneja la radio a través de OmniRig, así que con **También cambiar el modo** marcado DX Agent

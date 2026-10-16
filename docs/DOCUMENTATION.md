@@ -171,6 +171,9 @@ the top-right corner says whether it worked.
   CW-R. So a radio that needs its data mode for FT8 (an IC-9100 in USB-D) keeps it from one
   FT8 spot to the next: put it in USB-D once. Phone spots always set USB or LSB, so a data
   mode is never left on with the microphone muted.
+- **CW on Icom radios (OmniRig):** OmniRig's Icom files call the radio's CW-R "CW upper" and
+  its plain CW "CW lower", so on an Icom DX Agent asks for "CW lower" (tested: IC-9100 in CW,
+  not CW-R); on other makes plain CW is "CW upper".
 - **Log4OM and the mode:** Log4OM's remote control accepts `SetMode`, but it changes only
   the mode on Log4OM's screen, not the radio's (tested: Log4OM 2.42 with an IC-9100). Log4OM
   drives the radio through OmniRig, so with **Also set the mode** on, DX Agent sets frequency
