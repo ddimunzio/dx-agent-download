@@ -44,7 +44,23 @@ qué; lo que va mostrando queda en `data/dx-agent.log`, y **start-dx-agent-conso
 lo corre en una ventana para verlo. (El zip con el código, `dx-agent-<versión>-source.zip`,
 requiere
 [Python 3.11+](https://www.python.org/downloads/) instalado con "Add python.exe to
-PATH"; si no está, start-dx-agent.bat lo avisa y ofrece instalarlo con winget.) El primer inicio crea `config.toml` a partir
+PATH"; si no está, start-dx-agent.bat lo avisa y ofrece instalarlo con winget.)
+
+**En Linux:** descomprimir `dx-agent-<versión>-linux-x86_64.tar.gz` (también trae Python) y
+usar su propio lanzador. Necesita glibc 2.17 o superior, o sea cualquier distribución de 64
+bits normal:
+
+```sh
+tar -xzf dx-agent-<versión>-linux-x86_64.tar.gz
+cd dx-agent
+./start-dx-agent.sh
+```
+
+Ahí funciona todo salvo los programas de Windows; ver
+[Limitaciones conocidas](#limitaciones-conocidas). Para usar tu propio Python 3.11+ en vez del
+paquete, usar el zip con el código y `python3 -m dxagent run`.
+
+El primer inicio crea `config.toml` a partir
 de `config.example.toml`; después configurar indicativo y log en **Configuración**.
 Desde una terminal:
 
@@ -75,6 +91,8 @@ cualquier otra carpeta, indicar la ruta de la configuración:
 python -m dxagent -c C:\path\to\dx-agent\config.toml run
 ```
 
+En Linux son los mismos comandos con `python3` y `/path/to/dx-agent`.
+
 Un arranque normal se ve así en la terminal, seguido de una línea por cada estación
 necesitada:
 
@@ -95,7 +113,8 @@ Cada 10 minutos imprime una línea de estado con la cantidad de spots procesados
 alertas generadas.
 
 **Notificaciones:** las alertas también aparecen como notificaciones de Windows
-(Windows 10/11), sin instalar nada adicional.
+(Windows 10/11), sin instalar nada adicional. En Linux necesitan `plyer`
+(`pip install plyer`); sin él, las alertas igual se ven en el panel.
 
 ---
 
@@ -118,8 +137,28 @@ python -m dxagent run --no-ui       # solo terminal
 | **Encabezado** | Tu indicativo; una pastilla por fuente de spots (verde = conectada, ámbar = conectando, rojo = caída) con la cantidad de spots (al pasar el mouse muestra el servidor y la hora del último spot); los totales de tu log; DXpediciones activas; botones **Configuración**, **Acerca de** (qué es DX Agent, quién lo hizo, los colaboradores, cómo apoyarlo, ayuda), **ES/EN** (idioma), **Tema** y **Sonido**; reloj UTC. `#about` abre la ventana Acerca de |
 | **Filtros** | Botones por tipo de alerta, banda y modo, y un cuadro de búsqueda por indicativo o país. Sin ningún botón seleccionado se muestra todo. Una alerta cuenta para cada uno de sus motivos, así que una DXpedición en tu lista de seguimiento aparece tanto en **DXPED FALTA** como en **SEGUIMIENTO**; **SEGUIMIENTO** además muestra los spots de tus indicativos en seguimiento que no dieron alerta (filas grises **SPOT**), para que veas cuándo están en el aire. **Ocultar confirmados** saca las estaciones cuya entidad ya tenés confirmada en esa banda y modo (una alerta de indicativo nuevo, una fila SPOT): quedan solo las que suman a tu log. El navegador recuerda los filtros |
 | **Tabla de alertas** | Una fila por alerta, la más nueva arriba, coloreada según el tipo: UTC, alerta, indicativo, kHz, banda, modo, país, qué te falta, LoTW, **cerca tuyo** (ver más abajo), quién la escuchó. Las filas nuevas destellan; se atenúan a los 10 minutos y más a los 30 (al pasar el mouse se ve la antigüedad) |
-| **Pestaña Estación** | Al hacer clic en una alerta, o escribir un indicativo en el cuadro, muestra la grilla banda × modo de ese país (C verde = confirmado, W ámbar = trabajado, gris = no trabajado), si trabajaste ese indicativo exacto, el estado de LoTW, los datos de la DXpedición, quién lo escucha más cerca tuyo, un botón **Consultar PSKReporter**, los botones **Ver solo** este indicativo y **☆ seguimiento**, sus últimos spots y enlaces a QRZ.com, HamQTH y DXWatch |
-| **Pestaña DXpediciones** | DXpediciones activas y las que empiezan en los próximos 30 días. Etiqueta: **ATNO**, **No confirmado** o cuántas bandas tenés (por ejemplo "1 de 10 bandas", resaltada cuando son menos de la mitad). Marcar **solo las que faltan** oculta las que ya tenés en la mayoría de las bandas. Ordenadas por las que están **en el aire** (spoteadas en los últimos 30 minutos, la más reciente arriba), por el puesto en el **Most Wanted** de Club Log (el país más buscado primero) o por fecha de inicio: **Orden**, arriba. Cada tarjeta muestra sus fuentes y el puesto en el **Most Wanted** de Club Log; las spoteadas en los últimos 30 minutos se marcan en verde como **EN EL AIRE**. Al hacer clic se abre su grilla; la **☆** la agrega a tu lista de seguimiento |
+| **Pestaña Estación** | Al hacer clic en una alerta, o escribir un indicativo en el cuadro, muestra la grilla banda × modo de ese país (C verde = confirmado, W ámbar = trabajado, gris = no trabajado; un anillo verde marca las bandas y modos donde la spotearon en los últimos 15 minutos, el más reciente parpadeando, con un punto sobre la banda), si trabajaste ese indicativo exacto, el estado de LoTW, los datos de la DXpedición, quién lo escucha más cerca tuyo, un botón **Consultar PSKReporter**, los botones **Ver solo** este indicativo y **☆ seguimiento**, sus últimos spots y enlaces a QRZ.com, HamQTH y DXWatch |
+| **Pestaña DXpediciones** | DXpediciones activas y las que empiezan en los próximos 30 días. Etiqueta: **ATNO**, **No confirmado** o cuántas bandas tenés (por ejemplo "1 de 10 bandas", resaltada cuando son menos de la mitad). Marcar **solo las que faltan** oculta las que ya tenés en la mayoría de las bandas. Ordenadas por las que están **en el aire** (spoteadas en los últimos 15 minutos, la más reciente arriba), por el puesto en el **Most Wanted** de Club Log (el país más buscado primero) o por fecha de inicio: **Orden**, arriba. Cada tarjeta muestra sus fuentes y el puesto en el **Most Wanted** de Club Log; las spoteadas en los últimos 15 minutos se marcan en verde como **EN EL AIRE**. Al hacer clic se abre su grilla; la **☆** la agrega a tu lista de seguimiento |
+
+**En el aire, en la grilla de la pestaña Estación.** La grilla banda × modo también muestra
+dónde está transmitiendo la estación ahora:
+
+- **Anillo verde** en cada banda y modo donde la spotearon (cluster o RBN) en los últimos 15
+  minutos, y un **punto ●** sobre esa banda. El anillo está separado del cuadro, así se ve
+  igual sobre una **C** confirmada, una **W** trabajada o un cuadro vacío; sobre uno vacío,
+  está en el aire en una banda que te falta.
+- **Parpadeo:** solo el cuadro del **spot más reciente**, donde está ahora la estación. Los
+  otros quedan con el anillo fijo. Cuando llega un spot en otra banda, el parpadeo pasa ahí.
+- **En varias bandas a la vez** (una DXpedición con varias estaciones, por ejemplo S9R): cada
+  banda spoteada en los últimos 15 minutos tiene su anillo, y parpadea la más reciente.
+- **Pasando el mouse** por un cuadro con anillo: cuándo la spotearon, en qué frecuencia y
+  modo, y quién.
+- **Clic** en un cuadro con anillo (con una radio configurada, ver Sintonizar la radio):
+  sintoniza el spot más reciente de esa banda y modo, y el botón Sintonizar de la pestaña
+  Estación queda en ese spot.
+- Un spot que no dice su modo marca la banda entera. Sin spots durante 15 minutos, el anillo y
+  el punto se apagan. Con las animaciones de Windows apagadas, el más reciente tiene un anillo
+  más grueso en vez de parpadear.
 
 **Colores de banda.** Cada banda de HF y 6 m tiene su color, que se usa en la etiqueta
 de banda de la tabla, en los filtros de banda, en la grilla de la estación y en la
@@ -286,8 +325,8 @@ mismas alertas en un mapa del mundo. Los filtros valen para las dos vistas.
   seleccionarla.
 - **Los rombos** son DXpediciones activas: rojo = ATNO, ámbar = sin confirmar, turquesa = tenés
   el país pero en menos de la mitad de tus bandas, gris = ya la tenés. Si tienen una alerta de
-  los últimos 30 minutos, el rombo toma el color de la alerta. Un **borde verde** quiere decir
-  que la spotearon en los últimos 30 minutos (está en el aire). La leyenda abajo a la izquierda
+  los últimos 15 minutos, el rombo toma el color de la alerta. Un **borde verde** quiere decir
+  que la spotearon en los últimos 15 minutos (está en el aire). La leyenda abajo a la izquierda
   lo resume.
 - **Punto azul:** tu QTH, según tu grid locator.
 - **Zona sombreada:** donde es de noche ahora (su borde es la línea gris); se actualiza cada minuto.
@@ -394,7 +433,7 @@ fuentes en pocos segundos. No hace falta reiniciarlo.
 
 | Sección | Qué se puede configurar |
 |---------|-------------------------|
-| **Estación** | Tu indicativo; **Tu log**: un archivo ADIF de tu logger, o **Solo LoTW** (ver LoTW como log); la ruta del log ADIF (una por línea; `*` elige el archivo más nuevo, por ejemplo `…/CALL_*_backup.adi` para los backups de Log4OM). **Buscar…** abre la ventana de archivos de Windows para elegirlo (si elegís un backup de Log4OM con fecha, se convierte en `…/CALL_*_backup.adi` para usar siempre el más nuevo). **Probar** muestra qué archivo encontró, su tamaño, fecha y cantidad de QSOs; tu grid locator (vacío = se toma de tu log) |
+| **Estación** | Tu indicativo; **Tu log**: un archivo ADIF de tu logger, **Solo LoTW** (ver LoTW como log), o **Empezar de cero** (ver Un log nuevo); la ruta del log ADIF (una por línea; `*` elige el archivo más nuevo, por ejemplo `…/CALL_*_backup.adi` para los backups de Log4OM). **Buscar…** abre la ventana de archivos de Windows para elegirlo (si elegís un backup de Log4OM con fecha, se convierte en `…/CALL_*_backup.adi` para usar siempre el más nuevo). **Probar** muestra qué archivo encontró, su tamaño, fecha y cantidad de QSOs; tu grid locator (vacío = se toma de tu log) |
 | **LoTW** | Activar o desactivar la descarga de confirmaciones; usuario de LoTW (vacío = tu indicativo); contraseña de LoTW; cada cuánto descargar. **Probar ingreso** prueba el usuario y la contraseña con LoTW |
 | **Alertas** | Qué tipos de alerta querés; bandas; modos; cuándo una DXpedición o un indicativo de la lista de seguimiento cuenta como trabajado; **Lista de seguimiento**; **Ignorar**; cuánto esperar antes de repetir la misma alerta; el radio de "cerca tuyo" y **Avisar solo si se escucha cerca tuyo**; notificaciones de Windows y para qué alertas |
 | **Fuentes de spots** | DX cluster activado o no, sus servidores (`servidor:puerto`, en orden) y comandos al conectar; **Spots recientes al conectar** (minutos, 0 = no); de qué continentes tomar los spotters del cluster; RBN activada o no, fuentes CW/RTTY y FT8/FT4; de qué continentes cuentan los skimmers |
@@ -532,12 +571,12 @@ son QSOs reales, puede estirar las fechas. El mismo indicativo en dos viajes dis
 DXpediciones muestra sus fuentes y el puesto en el Most Wanted; la pestaña Estación
 tiene el link a cada fuente y al log de Club Log.
 
-**Orden.** **En el aire** pone primero las DXpediciones spoteadas en los últimos 30 minutos, la del spot más reciente arriba, y el resto por Most Wanted; la que pasa 30 minutos sin spots vuelve a su lugar. **Most Wanted** (el que viene elegido) pone primero los países más buscados, según el puesto de Club Log, y al final los que no tienen puesto; **Fecha** ordena por la fecha de inicio anunciada. El navegador recuerda tu elección. 425 DX News a
+**Orden.** **En el aire** pone primero las DXpediciones spoteadas en los últimos 15 minutos, la del spot más reciente arriba, y el resto por Most Wanted; la que pasa 15 minutos sin spots vuelve a su lugar. **Most Wanted** (el que viene elegido) pone primero los países más buscados, según el puesto de Club Log, y al final los que no tienen puesto; **Fecha** ordena por la fecha de inicio anunciada. El navegador recuerda tu elección. 425 DX News a
 veces da solo el fin ("till 31/10"); entonces el inicio se lee del texto del boletín
 ("from 20 September to…", "on 8-11 October", "between 7 and 21 October"). Si el texto
 tampoco lo dice, la tarjeta muestra **hasta 10-31** y va primero, porque ya está activa.
 
-**En el aire.** Una DXpedición spoteada (cluster o RBN) en los últimos 30 minutos se
+**En el aire.** Una DXpedición spoteada (cluster o RBN) en los últimos 15 minutos se
 marca con un borde verde y una línea **EN EL AIRE** con la frecuencia (clic para
 sintonizar), banda, modo, hace cuánto y quién la spoteó. La pestaña DXpediciones muestra
 cuántas hay en el aire (**● 4**) aunque estés mirando la pestaña Estación, el mapa marca
@@ -651,7 +690,7 @@ proyecto. También se puede editar a mano; después hay que reiniciar `run`.
 |-------------|-----------------------------|---------------------------------------------------|----------|
 | (inicio)    | `data_dir`                  | `data` (por defecto)                              | Dónde se guardan las descargas, el historial de alertas y la contraseña de LoTW guardada |
 | station     | `callsign`                  | (tu indicativo)                                   | Se usa para conectarse al cluster y a la RBN |
-| station     | `log_source`                | `adif`                                            | `adif` = un archivo de tu logger; `lotw` = todos los QSOs que subiste a LoTW (sin archivo ADIF) |
+| station     | `log_source`                | `adif`                                            | `adif` = un archivo de tu logger; `lotw` = todos los QSOs que subiste a LoTW (sin archivo ADIF); `new` = un log nuevo que lleva DX Agent, `data/<INDICATIVO>.adi` (para empezar de cero) |
 | station     | `adif`                      | `C:/Users/you/AppData/Roaming/Log4OM2/backup/CALL_*_backup.adi` | Ruta o patrón del log. Con un patrón se usa el archivo más nuevo. También acepta una lista de rutas |
 | station     | `grid`                      | vacío (= se toma del log)                         | Tu grid locator, para "cerca tuyo" |
 | alerts      | `alert_on`                  | `atno, dxpedition, new_band, new_mode, watchlist` | Qué tipos de alerta se activan |
@@ -707,6 +746,18 @@ La contraseña de LoTW nunca se guarda en este archivo (ver más abajo).
 - **Buscar estaciones puntuales.** Agregarlas a la **Lista de seguimiento**, por ejemplo `3Y0K` o
   `VP8*`.
 - **Repetir alertas antes o después.** Cambiar **No repetir durante**.
+
+### Un log nuevo (para empezar de cero)
+
+Si todavía no tenés log, elegí Configuración → Estación → **Tu log** → **Empezar de cero (log
+nuevo)**. DX Agent crea un log ADIF vacío, `data/<INDICATIVO>.adi` (un indicativo con `/` lleva
+`_`), y lo usa: al principio toda estación cuenta como nueva. Nunca pisa uno que ya exista.
+
+Los QSOs que tus programas mandan por UDP al loguearlos (WSJT-X, N1MM Logger+, DXLog.net,
+Log4OM...: ver "Tus QSOs a medida que los logueás") se escriben en él, una sola vez cada uno,
+así el log crece solo. Nada más escribe en él, y DX Agent nunca escribe en el archivo de tu
+programa de log. Es un archivo ADIF común: cuando empieces a usar un programa de log,
+importalo ahí y elegí **Archivo ADIF**.
 
 ### Tus QSOs a medida que los logueás
 
@@ -916,7 +967,8 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `config.example.toml`       | La configuración inicial para una instalación nueva |
 | `start-dx-agent.bat`        | Doble clic para iniciar DX Agent en Windows, sin ventana |
 | `start-dx-agent-console.bat` | Lo mismo, en una ventana que muestra todo lo que va informando |
-| `tools/make_package.py`     | Arma el zip para compartir (con Python, programa compilado) y, con `--source`, el zip con el código; nunca tus datos personales |
+| `start-dx-agent.sh`         | Los mismos dos lanzadores para Linux (`-console.sh` muestra lo que va informando); usan la carpeta `python/` si el paquete la trae |
+| `tools/make_package.py`     | Arma los paquetes para compartir: el zip de Windows y el tar.gz de Linux (con Python, programa compilado), y con `--source` el zip con el código; nunca tus datos personales |
 | `config.toml.bak`           | La configuración anterior, que se guarda en cada cambio |
 | `README.md`                 | Resumen breve (en inglés) |
 | `DOCUMENTATION.md`          | Esta guía en inglés |
@@ -924,7 +976,7 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `dxagent/__main__.py`       | Línea de comandos: `run`, `dxpeditions`, `check`, `stats` |
 | `dxagent/agent.py`          | Ciclo principal: inicia las fuentes, filtra spots, recarga el log, actualiza DXpediciones y LoTW, aplica la configuración guardada |
 | `dxagent/config.py`         | Lee `config.toml` con valores por defecto; lo valida y lo escribe para la página de configuración |
-| `dxagent/credentials.py`    | Guarda la contraseña de LoTW cifrada para tu usuario de Windows |
+| `dxagent/credentials.py`    | Guarda la contraseña de LoTW cifrada para tu usuario de Windows (en Linux, legible solo por vos) |
 | `dxagent/telnet.py`         | Se conecta al cluster y a la RBN, ingresa y reconecta |
 | `dxagent/spots.py`          | Convierte las líneas `DX de ...` en indicativo, frecuencia, banda, modo, SNR, WPM |
 | `dxagent/bands.py`          | Banda según la frecuencia, grupos de modos, modo según el plan de bandas |
@@ -1000,6 +1052,12 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
 
 ### Limitaciones conocidas
 
+- **Funciones solo de Windows.** Todo lo demás funciona en Linux con el paquete `-linux`. Ahí
+  no están: el log en vivo de Log4OM, y los destinos de **Sintonizar** Log4OM / N1MM / OmniRig /
+  DXLab (Hamlib y flrig sí funcionan); el envío del indicativo a WSJT-X; y el cartel de Windows
+  cuando no puede arrancar (ahí el motivo va a `data/dx-agent.log`). Las notificaciones necesitan
+  `plyer`, y el botón **Buscar…** de la configuración necesita tkinter (`python3-tk`). La
+  contraseña de LoTW se cifra con DPAPI de Windows; en Linux solo se ofusca, con permisos `0600`.
 - **Un QSO que acabás de guardar, con Log4OM 2:** DX Agent lo lee directo de la base de
   Log4OM en unos 10 segundos, sin esperar al siguiente backup ADIF (`logbook.live`, activado
   de fábrica). Encuentra la base en el `l4ong.status` de Log4OM, la abre solo para leer y
@@ -1057,6 +1115,9 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
 | Algunas alertas no muestran notificación | Revisar **Notificaciones de Windows** en la configuración; DXPED HAVE, NEW SLOT y NEW CALL no muestran notificación por defecto |
 | Ninguna notificación | Marcar **Mostrar notificaciones** en la configuración y revisar que las notificaciones de Windows estén activadas (Configuración de Windows → Sistema → Notificaciones, incluida "Windows PowerShell", que es quien las muestra) |
 | En la terminal aparecen códigos como `[1;93m` | Usar Windows Terminal o la terminal de VS Code |
+| `ImportError: bad magic number in 'dxagent'` | Estás corriendo el zip de Windows en Linux: está compilado para su propio Python. Usar el paquete `-linux`, o el zip con el código y tu propio Python |
+| `Permission denied` al correr `./start-dx-agent.sh` | `chmod +x start-dx-agent.sh start-dx-agent-console.sh` (con el paquete `-linux` no hace falta) |
+| No aparecen notificaciones en Linux | `pip install plyer`; sin él las alertas igual se ven en el panel |
 | Datos de países incorrectos o viejos | Borrar `data/cty.csv`; se descarga de nuevo en el próximo inicio |
 | `[ui] could not start on port 8073` | Otro programa (u otra copia de DX Agent) usa ese puerto; cerrarlo o cambiar el puerto del panel |
 | El panel muestra "Se perdió la conexión con el agente" | `run` se detuvo o falló; iniciarlo de nuevo y la página se reconecta sola |

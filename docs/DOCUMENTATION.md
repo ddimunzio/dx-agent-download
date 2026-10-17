@@ -43,7 +43,22 @@ runs just opens the dashboard. If it can't start, a Windows message says why; wh
 prints goes to `data/dx-agent.log`, and **start-dx-agent-console.bat** runs it in a
 window to watch it. (The source zip, `dx-agent-<version>-source.zip`, needs
 [Python 3.11+](https://www.python.org/downloads/) installed with "Add python.exe to
-PATH"; without it, start-dx-agent.bat says so and offers to install it with winget.) The first start creates `config.toml` from `config.example.toml`; then set your
+PATH"; without it, start-dx-agent.bat says so and offers to install it with winget.)
+
+**On Linux:** unzip `dx-agent-<version>-linux-x86_64.tar.gz` (it includes Python too) and run
+its own launcher. It needs glibc 2.17 or newer, that is, any ordinary 64-bit distribution:
+
+```sh
+tar -xzf dx-agent-<version>-linux-x86_64.tar.gz
+cd dx-agent
+./start-dx-agent.sh
+```
+
+Everything works there except the Windows programs; see
+[Known limitations](#known-limitations). With your own Python 3.11+ instead of the package,
+use the source zip and `python3 -m dxagent run`.
+
+The first start creates `config.toml` from `config.example.toml`; then set your
 callsign and log in **Settings**. From a terminal instead:
 
 1. Open a terminal. In VS Code: **Terminal → New Terminal**.
@@ -71,6 +86,8 @@ anywhere else, pass the config path:
 python -m dxagent -c C:\path\to\dx-agent\config.toml run
 ```
 
+On Linux the commands are the same with `python3` and `/path/to/dx-agent`.
+
 A normal start looks like this in the terminal, followed by one line per needed
 station:
 
@@ -91,7 +108,8 @@ Every 10 minutes it prints a status line with the number of spots processed and
 alerts raised.
 
 **Pop-ups:** alerts also appear as Windows notifications (Windows 10/11), with nothing
-extra to install.
+extra to install. On Linux they need `plyer` (`pip install plyer`); without it the alerts
+still appear in the dashboard.
 
 ---
 
@@ -114,8 +132,26 @@ python -m dxagent run --no-ui       # console only
 | **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); your log totals; DXpeditions active; **Settings**, **About** (what DX Agent is, who made it, the collaborators, how to support it, help), **EN/ES** (language), **Theme** and **Browser sound** buttons; UTC clock. `#about` opens the About window |
 | **Filters** | Chips for alert type, band and mode, plus a search box for call or country. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. Your filters are remembered in the browser |
 | **Alert table** | One row per alert, newest on top, coloured by type: UTC, alert, call, kHz, band, mode, country, what you need, LoTW, **near you** (see below), who heard it. New rows flash; rows fade after 10 minutes and fade more after 30 (hover a row for its age) |
-| **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button, **Show only** this call and **☆ watchlist** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
-| **DXpeditions tab** | Active DXpeditions and those starting in the next 30 days. Badge: **ATNO**, **Not confirmed**, or how many bands you have (e.g. "1 of 10 bands", highlighted when fewer than half). Tick **only needed** to hide ones you already have on most bands. Sorted by what's **on the air** (spotted in the last 30 minutes, the latest on top), by Club Log's **Most Wanted** rank (most wanted country first) or by start date: **Order** at the top. Each card shows its sources and Club Log's **Most Wanted** rank; one spotted in the last 30 minutes is framed in green as **ON THE AIR**. Click one to open its grid; the **☆** adds it to your watchlist |
+| **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked; a green ring marks the bands and modes where the station was spotted in the last 15 minutes, the latest one blinking, and a dot sits over the band), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button, **Show only** this call and **☆ watchlist** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
+| **DXpeditions tab** | Active DXpeditions and those starting in the next 30 days. Badge: **ATNO**, **Not confirmed**, or how many bands you have (e.g. "1 of 10 bands", highlighted when fewer than half). Tick **only needed** to hide ones you already have on most bands. Sorted by what's **on the air** (spotted in the last 15 minutes, the latest on top), by Club Log's **Most Wanted** rank (most wanted country first) or by start date: **Order** at the top. Each card shows its sources and Club Log's **Most Wanted** rank; one spotted in the last 15 minutes is framed in green as **ON THE AIR**. Click one to open its grid; the **☆** adds it to your watchlist |
+
+**On the air, in the Station tab's grid.** The band × mode grid also shows where the station
+is transmitting now:
+
+- **Green ring** on each band and mode where it was spotted (cluster or RBN) in the last 15
+  minutes, and a **dot ●** over that band. The ring is set apart from the cell, so it shows
+  on a confirmed **C**, a worked **W** or an empty cell alike; on an empty one, it's on the
+  air on a band you still need.
+- **Blinking:** only the cell of the **latest spot**, where the station is now. The others
+  keep a steady ring. When a spot comes in on another band, the blinking moves there.
+- **On several bands at once** (a DXpedition with several stations, S9R say): every band
+  spotted in the last 15 minutes has its ring, and the latest one blinks.
+- **Hover** a ringed cell: when it was spotted, on what frequency and mode, and by whom.
+- **Click** a ringed cell (with a radio set up, see Tune the radio): Tune goes to that band
+  and mode's latest spot, and the Station tab's Tune button keeps it.
+- A spot that doesn't say its mode marks the whole band. With no spot for 15 minutes, the
+  ring and the dot go. With Windows' animations off, the latest one has a thicker ring
+  instead of blinking.
 
 **Band colours.** Each HF band and 6 m has its own colour, used for the band tag in
 the table, the band filter chips, the station grid and the Settings page: 160 amber,
@@ -269,8 +305,8 @@ world map. The filters apply to both views.
   (marked "approx." in the tooltip). Hover a dot for the details, click it to select it.
 - **Diamonds** are active DXpeditions: red = ATNO, amber = not confirmed, teal = you have the
   country but on fewer than half of your bands, grey = you have it. With an alert in the last
-  30 minutes the diamond takes the alert's colour. A **green frame** means it was spotted in
-  the last 30 minutes (on the air). The legend in the bottom-left corner sums this up.
+  15 minutes the diamond takes the alert's colour. A **green frame** means it was spotted in
+  the last 15 minutes (on the air). The legend in the bottom-left corner sums this up.
 - **Blue dot:** your QTH, from your grid square.
 - **Shaded area:** where it is night right now (the greyline is its edge), updated every minute.
 - **Selected station:** a dashed great-circle path from your QTH, the **beam heading**
@@ -372,7 +408,7 @@ restart it.
 
 | Section | What you can set |
 |---------|------------------|
-| **Station** | Your callsign; **Your log**: an ADIF file from your logger, or **LoTW only** (see LoTW as your log); the path to your ADIF log (one per line; `*` picks the newest file, e.g. `…/CALL_*_backup.adi` for Log4OM backups). **Browse…** opens the Windows file window to pick the file (if you pick a dated Log4OM backup, it becomes `…/CALL_*_backup.adi` so the newest is always used). **Test** shows which file it found, its size, date and QSO count; your grid square (empty = taken from your log) |
+| **Station** | Your callsign; **Your log**: an ADIF file from your logger, **LoTW only** (see LoTW as your log), or **Start from scratch** (see A new log); the path to your ADIF log (one per line; `*` picks the newest file, e.g. `…/CALL_*_backup.adi` for Log4OM backups). **Browse…** opens the Windows file window to pick the file (if you pick a dated Log4OM backup, it becomes `…/CALL_*_backup.adi` so the newest is always used). **Test** shows which file it found, its size, date and QSO count; your grid square (empty = taken from your log) |
 | **LoTW** | Turn the confirmation download on or off; LoTW username (empty = your call); LoTW password; how often to download. **Test login** checks the username and password with LoTW |
 | **Alerts** | Which alert types you want; bands; modes; when a DXpedition or watchlist call counts as worked; watchlist; ignore list; how long before the same alert repeats; the "near you" radius and **Only alert when heard near you**; Windows pop-ups and for which alerts |
 | **Spot sources** | DX cluster on/off, its servers (`host:port`, tried in order) and login commands; **Recent spots on connecting** (minutes, 0 = off); which continents' cluster spotters to use; RBN on/off, CW/RTTY and FT8/FT4 feeds; which continents' skimmers count |
@@ -504,13 +540,13 @@ real QSOs, can stretch the dates. The same call on two separate trips (now and n
 year) stays two entries. Each card in the DXpeditions tab shows its sources and the
 Most Wanted rank; the Station tab links each source and the Club Log log.
 
-**Order.** **On the air** puts first the DXpeditions spotted in the last 30 minutes, the latest spot on top, and the rest by Most Wanted; one that goes 30 minutes without a spot drops back. **Most Wanted** (the default) puts the most wanted countries first, by Club Log's rank, and those without a rank last; **Date** sorts by the announced start date. The browser remembers your choice. 425 DX News sometimes
+**Order.** **On the air** puts first the DXpeditions spotted in the last 15 minutes, the latest spot on top, and the rest by Most Wanted; one that goes 15 minutes without a spot drops back. **Most Wanted** (the default) puts the most wanted countries first, by Club Log's rank, and those without a rank last; **Date** sorts by the announced start date. The browser remembers your choice. 425 DX News sometimes
 gives only an end ("till 31/10"); the start is then read from the bulletin text
 ("from 20 September to…", "on 8-11 October", "between 7 and 21 October"). When the
 text doesn't say either, the card shows **until 10-31** and goes first, since it is
 already on.
 
-**On the air.** A DXpedition spotted (cluster or RBN) in the last 30 minutes gets a
+**On the air.** A DXpedition spotted (cluster or RBN) in the last 15 minutes gets a
 green frame and an **ON THE AIR** line with the frequency (click it to tune), band,
 mode, how long ago and who spotted it. The DXpeditions tab shows how many are on the
 air (**● 4**) even while you look at the Station tab, the map rings their diamonds,
@@ -618,7 +654,7 @@ You can also edit it by hand; restart `run` afterwards.
 |-------------|-----------------------------|---------------------------------------------------|--------------|
 | (top)       | `data_dir`                  | `data` (default)                                  | Where downloads, the alert history and the saved LoTW password are stored |
 | station     | `callsign`                  | (your call)                                       | Used to log in to the cluster and RBN |
-| station     | `log_source`                | `adif`                                            | `adif` = a file from your logger; `lotw` = every QSO you uploaded to LoTW (no ADIF file) |
+| station     | `log_source`                | `adif`                                            | `adif` = a file from your logger; `lotw` = every QSO you uploaded to LoTW (no ADIF file); `new` = a new log DX Agent keeps, `data/<CALL>.adi` (starting from scratch) |
 | station     | `adif`                      | `C:/Users/you/AppData/Roaming/Log4OM2/backup/CALL_*_backup.adi` | Path or glob of your log. With a glob the newest file is used. A list of paths also works |
 | station     | `grid`                      | empty (= taken from the log)                      | Your grid square, for "near you" |
 | alerts      | `alert_on`                  | `atno, dxpedition, new_band, new_mode, watchlist` | Which alert types fire |
@@ -673,6 +709,17 @@ The LoTW password is never stored in this file (see below).
 - **Hide DXpeditions you already have.** Untick **Still show them**.
 - **Chase specific stations.** Add them to the **Watchlist**, e.g. `3Y0K` or `VP8*`.
 - **Repeat alerts sooner or later.** Change **Don't repeat for**.
+
+### A new log (starting from scratch)
+
+With no log yet, choose Settings → Station → **Your log** → **Start from scratch (a new log)**.
+DX Agent creates an empty ADIF log, `data/<CALL>.adi` (a call with a `/` gets `_`), and uses
+it: at first every station counts as new. It never overwrites one that's already there.
+
+The QSOs your programs send over UDP as you log them (WSJT-X, N1MM Logger+, DXLog.net,
+Log4OM...: see "Your QSOs as you log them") are written to it, once each, so the log grows by
+itself. Nothing else writes to it, and DX Agent never writes to your logger's file. It's a
+normal ADIF file: when you start using a logger, import it there and choose **ADIF file**.
 
 ### Your QSOs as you log them
 
@@ -874,7 +921,8 @@ and can be deleted at any time; it is downloaded again when needed.
 | `config.example.toml`       | The starting settings for a new installation |
 | `start-dx-agent.bat`        | Double-click to start DX Agent on Windows, without a window |
 | `start-dx-agent-console.bat` | The same, in a console window that shows everything it prints |
-| `tools/make_package.py`     | Builds the zip to share (Python included, program compiled) and, with `--source`, the source zip; never your personal data |
+| `start-dx-agent.sh`         | The same two launchers for Linux (`-console.sh` shows what it prints); they use the `python/` folder if the package brings one |
+| `tools/make_package.py`     | Builds the packages to share: the Windows zip and the Linux tarball (Python included, program compiled), plus the source zip with `--source`; never your personal data |
 | `config.toml.bak`           | The previous settings, kept on every save |
 | `README.md`                 | Short overview |
 | `DOCUMENTATION.md`          | This guide |
@@ -882,7 +930,7 @@ and can be deleted at any time; it is downloaded again when needed.
 | `dxagent/__main__.py`       | Command line: `run`, `dxpeditions`, `check`, `stats` |
 | `dxagent/agent.py`          | Main loop: starts the feeds, filters spots, reloads the log, refreshes DXpeditions and LoTW, applies saved settings |
 | `dxagent/config.py`         | Reads `config.toml` with defaults; validates and writes it for the Settings page |
-| `dxagent/credentials.py`    | Stores the LoTW password encrypted for your Windows user |
+| `dxagent/credentials.py`    | Stores the LoTW password encrypted for your Windows user (on Linux, readable only by you) |
 | `dxagent/telnet.py`         | Connects to the cluster and RBN, logs in, reconnects |
 | `dxagent/spots.py`          | Parses `DX de ...` lines into call, frequency, band, mode, SNR, WPM |
 | `dxagent/bands.py`          | Band from frequency, mode groups, band-plan mode guess |
@@ -958,6 +1006,12 @@ example (shortened):
 
 ### Known limitations
 
+- **Windows-only features.** Everything else works on Linux with the `-linux` package. Not
+  available there: Log4OM's live log, and the Log4OM / N1MM / OmniRig / DXLab "Tune" targets
+  (Hamlib and flrig do work); sending the call to WSJT-X; and the Windows message box when it
+  can't start (there the reason goes to `data/dx-agent.log`). Pop-ups need `plyer`, and the
+  Settings "Browse…" button needs tkinter (`python3-tk`). The LoTW password is encrypted with
+  Windows DPAPI; on Linux it is only obfuscated, with file permissions `0600`.
 - **A QSO you just saved, with Log4OM 2:** DX Agent reads it straight from Log4OM's
   database within about 10 seconds, without waiting for the next ADIF backup
   (`logbook.live`, on by default). It finds the database in Log4OM's `l4ong.status`, opens
@@ -1012,6 +1066,9 @@ example (shortened):
 | No pop-ups for some alerts | Check **Windows pop-ups** in Settings; DXPED HAVE, NEW SLOT and NEW CALL never pop up by default |
 | No pop-ups at all | Tick **Show pop-ups** in Settings, and check that Windows notifications are on (Windows Settings → System → Notifications, including "Windows PowerShell", which shows them) |
 | Colours show as `[1;93m` in the terminal | Use Windows Terminal or the VS Code terminal |
+| `ImportError: bad magic number in 'dxagent'` | You are running the Windows zip on Linux: it is compiled for its own Python. Use the `-linux` package, or the source zip with your own Python |
+| `Permission denied` running `./start-dx-agent.sh` | `chmod +x start-dx-agent.sh start-dx-agent-console.sh` (not needed with the `-linux` package) |
+| No pop-ups on Linux | `pip install plyer`; the alerts still appear in the dashboard without it |
 | Wrong or old country data | Delete `data/cty.csv`; it downloads again on the next start |
 | `[ui] could not start on port 8073` | Another program (or a second copy of DX Agent) uses that port; stop it or change the dashboard port |
 | Dashboard shows "Lost connection to the agent" | `run` stopped or crashed; start it again and the page reconnects by itself |

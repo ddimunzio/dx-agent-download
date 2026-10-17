@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.3.5 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
+*Version 0.3.6 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -28,8 +28,8 @@ Contents:
 
 ## 1. What you need
 
-- **Windows 10 or 11.** The zip brings everything it needs (Python included): nothing to
-  install.
+- **Windows 10 or 11, or Linux (x86_64).** The package brings everything it needs (Python
+  included): nothing to install.
 - **An internet connection**, for the spots and the DXpedition, country and LoTW lists.
 - **Your log**, in one of two ways:
   - an **ADIF** file your logging program writes: Log4OM's backups, for example, or an ADIF
@@ -60,6 +60,24 @@ see what it is doing, use **start-dx-agent-console.bat**, which runs it in a con
 
 You can bookmark the dashboard: `http://localhost:8073`. Only your PC can open it; other
 computers on your network can't.
+
+### On Linux
+
+1. Download the latest `dx-agent-<version>-linux-x86_64.tar.gz` from the same
+   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest) page.
+2. Unpack it into a folder of yours and start it:
+
+   ```sh
+   tar -xzf dx-agent-<version>-linux-x86_64.tar.gz
+   cd dx-agent
+   ./start-dx-agent.sh
+   ```
+
+   The dashboard opens in your browser at **http://localhost:8073**, as on Windows.
+   `./start-dx-agent-console.sh` runs it in the terminal, to see what it does.
+
+Log4OM and OmniRig are Windows programs: reading Log4OM's database and tuning through OmniRig
+only work on Windows. The rest is the same (the UDP QSOs from N1MM, DXLog, WSJT-X... included).
 
 ## 3. First setup
 
@@ -290,8 +308,9 @@ Click **Map** (next to **List**). The filters work the same as in the list.
 ## 12. Updating to a new version
 
 1. Close DX Agent (**Stop** button).
-2. Download the new zip and unzip it **into the same folder**, replacing the files.
-3. Open it as usual with **start-dx-agent.bat**.
+2. Download the new package and unpack it **into the same folder**, replacing the files
+   (on Linux: `tar -xzf` in the folder that holds `dx-agent`).
+3. Open it as usual with **start-dx-agent.bat** (Linux: `./start-dx-agent.sh`).
 
 Your settings (`config.toml`) and your data (the `data` folder) aren't in the zip, so they are
 kept. If you'd rather use a new folder, copy `config.toml` and the `data` folder from the old

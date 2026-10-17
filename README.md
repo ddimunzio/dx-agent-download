@@ -3,7 +3,7 @@
 **DX Agent** watches the DX cluster and the Reverse Beacon Network, checks every spot against
 your log, and tells you the moment a station you still need is on the air: a new country, band
 or mode, a DXpedition that adds something, a summit or park you haven't worked. Windows, runs on
-your PC, used from your browser.
+your PC (Windows or Linux), used from your browser.
 
 *Castellano más abajo.*
 
@@ -12,8 +12,9 @@ your PC, used from your browser.
 ## Download
 
 **[Download the latest version](https://github.com/ddimunzio/dx-agent-download/releases/latest)**
-— `dx-agent-<version>-windows.zip`. Unzip it and double-click `start-dx-agent.bat`: nothing to
-install (Python comes inside).
+— Windows: `dx-agent-<version>-windows.zip`, unzip it and double-click `start-dx-agent.bat`.
+Linux (x86_64): `dx-agent-<version>-linux-x86_64.tar.gz`, unpack it and run `./start-dx-agent.sh`.
+Nothing to install: Python comes inside.
 
 - **[User manual](MANUAL.en.md)** — install, first setup, the screen, alerts, tuning the
   radio, your logger, DXpeditions, POTA/SOTA, the map, LoTW.
@@ -41,7 +42,7 @@ What it does:
 
 **DX Agent** vigila el DX cluster y la Reverse Beacon Network, compara cada spot con tu log y te
 avisa apenas sale al aire una estación que necesitás: un país, una banda o un modo nuevos, una
-DXpedición que te suma algo, una cumbre o un parque que no trabajaste. Para Windows: corre en tu
+DXpedición que te suma algo, una cumbre o un parque que no trabajaste. Para Windows y Linux: corre en tu
 PC y se usa desde el navegador.
 
 ![DX Agent: la lista de alertas y una estación](images/station.es.png)
@@ -49,8 +50,9 @@ PC y se usa desde el navegador.
 ## Descarga
 
 **[Bajar la última versión](https://github.com/ddimunzio/dx-agent-download/releases/latest)**
-— `dx-agent-<versión>-windows.zip`. Descomprimilo y hacé doble clic en `start-dx-agent.bat`: no
-hay nada que instalar (trae Python adentro).
+— Windows: `dx-agent-<versión>-windows.zip`, descomprimilo y hacé doble clic en
+`start-dx-agent.bat`. Linux (x86_64): `dx-agent-<versión>-linux-x86_64.tar.gz`, descomprimilo y
+corré `./start-dx-agent.sh`. No hay nada que instalar: trae Python adentro.
 
 - **[Manual de usuario](MANUAL.es.md)** — instalación, primera configuración, la pantalla,
   alertas, sintonizar la radio, tu programa de log, DXpediciones, POTA/SOTA, el mapa, LoTW.

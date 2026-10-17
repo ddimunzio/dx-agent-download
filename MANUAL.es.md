@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.3.5 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.3.6 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -28,8 +28,8 @@ Contenido:
 
 ## 1. Qué necesitás
 
-- **Windows 10 u 11.** El zip ya trae todo lo necesario (incluido Python): no hay que
-  instalar nada.
+- **Windows 10 u 11, o Linux (x86_64).** El paquete ya trae todo lo necesario (incluido
+  Python): no hay que instalar nada.
 - **Conexión a internet**, para recibir los spots y bajar las listas de DXpediciones,
   países y LoTW.
 - **Tu log**, de una de estas dos formas:
@@ -63,6 +63,25 @@ que lo abre en una ventana de consola.
 
 Podés guardar el panel en los favoritos del navegador: `http://localhost:8073`. Solo se
 puede abrir desde tu PC; otras computadoras de la red no lo ven.
+
+### En Linux
+
+1. Bajá el último `dx-agent-<versión>-linux-x86_64.tar.gz` de la misma página
+   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest).
+2. Descomprimilo en una carpeta tuya y abrilo:
+
+   ```sh
+   tar -xzf dx-agent-<versión>-linux-x86_64.tar.gz
+   cd dx-agent
+   ./start-dx-agent.sh
+   ```
+
+   El panel se abre en el navegador, en **http://localhost:8073**, igual que en Windows.
+   `./start-dx-agent-console.sh` lo corre en la terminal, para ver lo que va haciendo.
+
+Log4OM y OmniRig son programas de Windows: leer la base de Log4OM y sintonizar por OmniRig
+funcionan solo en Windows. Todo lo demás es igual (incluidos los QSOs por UDP de N1MM, DXLog,
+WSJT-X...).
 
 ## 3. La primera configuración
 
@@ -304,8 +323,9 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
 ## 12. Actualizar a una versión nueva
 
 1. Cerrá DX Agent (botón **Detener**).
-2. Bajá el zip nuevo y descomprimilo **en la misma carpeta**, reemplazando los archivos.
-3. Abrilo como siempre con **start-dx-agent.bat**.
+2. Bajá el paquete nuevo y descomprimilo **en la misma carpeta**, reemplazando los archivos
+   (en Linux: `tar -xzf` en la carpeta que contiene `dx-agent`).
+3. Abrilo como siempre con **start-dx-agent.bat** (Linux: `./start-dx-agent.sh`).
 
 Tu configuración (`config.toml`) y tus datos (la carpeta `data`) no vienen en el zip, así que
 se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y la carpeta
