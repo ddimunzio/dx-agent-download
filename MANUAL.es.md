@@ -130,7 +130,8 @@ frecuencia) se abre la estación:
   **spot más reciente parpadea**: ahí está ahora la estación; los otros quedan con el anillo
   fijo, y el parpadeo se mueve cuando la spotean en otra banda. Una DXpedición en varias bandas
   a la vez (por ejemplo S9R) muestra un anillo en cada una, y parpadea la más reciente. Pasando
-  el mouse por un cuadro con anillo ves cuándo, dónde y quién la spoteó. Sin spots durante 10
+  el mouse por un cuadro con anillo ves cuándo, dónde y quién la spoteó; **con un clic sintonizás
+  ahí** (con una radio configurada, sección 6). Sin spots durante 10
   minutos, el anillo se apaga. Un anillo sobre un cuadro vacío: está en el aire en una banda que
   te falta;
 - si ya trabajaste ese indicativo exacto, su estado de LoTW y, si es una DXpedición, sus datos;

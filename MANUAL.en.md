@@ -124,7 +124,7 @@ station:
   **latest spot blinks**: that's where the station is now; the others keep a steady ring, and
   the blinking moves when it's spotted on another band. A DXpedition on several bands at
   once (S9R, say) shows a ring on each, with the latest one blinking. Hover a ringed cell
-  for when, where and who spotted it. With no spot for 10 minutes, the ring goes. A ring on
+  for when, where and who spotted it; **click it to tune there** (with a radio set up, section 6). With no spot for 10 minutes, the ring goes. A ring on
   an empty cell: it's on the air on a band you need;
 - whether you worked that exact call, its LoTW status and, for a DXpedition, its details;
 - the **beam heading**, large, with a compass, the long path and the distance;
