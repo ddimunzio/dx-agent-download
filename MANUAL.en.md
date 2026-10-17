@@ -35,7 +35,9 @@ Contents:
   - an **ADIF** file your logging program writes: Log4OM's backups, for example, or an ADIF
     export from any other logger;
   - or your **LoTW** account, if you have no ADIF file: DX Agent downloads every QSO you
-    uploaded there.
+    uploaded there;
+  - or nothing yet, if you're starting from scratch: DX Agent creates a new log for you
+    (section 3).
 - Optional: your **LoTW password**, so DX Agent knows what you have confirmed even when your
   logger isn't synced with LoTW.
 
@@ -66,7 +68,10 @@ yet. Click **Settings** (top right) and fill in:
 
 1. **Station**
    - **Callsign:** yours. It is used to log in to the cluster and the RBN.
-   - **Your log:** an ADIF file, or **LoTW only (no ADIF file)**.
+   - **Your log:** an ADIF file, **LoTW only (no ADIF file)**, or **Start from scratch (a new
+     log)**: DX Agent creates an empty log, `data\<CALL>.adi`, and adds to it the QSOs your
+     programs send it as you log them (WSJT-X, N1MM... see section 7). When you start using a
+     logger, import that file there and choose ADIF file.
    - **ADIF log:** click **Browse…** and pick the file. If you pick a dated Log4OM backup
      (`W1ABC_20261016_124613_backup.adi`), DX Agent turns it into `…/W1ABC_*_backup.adi`, so the
      newest backup is always used. **Test** shows which file it found and how many QSOs it has.

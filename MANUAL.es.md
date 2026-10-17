@@ -36,7 +36,8 @@ Contenido:
   - un archivo **ADIF** que escriba tu programa de log: por ejemplo los backups de Log4OM,
     o una exportación ADIF de cualquier otro programa;
   - o tu cuenta de **LoTW**, si no tenés un archivo ADIF: DX Agent baja de ahí todos los QSOs
-    que subiste.
+    que subiste;
+  - o nada todavía, si estás empezando de cero: DX Agent te crea un log nuevo (sección 3).
 - Opcional: tu **contraseña de LoTW**, para que DX Agent sepa qué tenés confirmado aunque tu
   programa de log no esté sincronizado.
 
@@ -70,7 +71,10 @@ log. Hacé clic en **Configuración** (arriba a la derecha) y completá:
 
 1. **Estación**
    - **Indicativo:** el tuyo. Se usa para entrar al cluster y a la RBN.
-   - **Tu log:** *Archivo ADIF* o *Solo LoTW*.
+   - **Tu log:** *Archivo ADIF*, *Solo LoTW* o *Empezar de cero (log nuevo)*: DX Agent crea un
+     log vacío, `data\<INDICATIVO>.adi`, y le agrega los QSOs que tus programas le mandan al
+     loguearlos (WSJT-X, N1MM... ver la sección 7). Cuando empieces a usar un programa de log,
+     importá ese archivo ahí y elegí Archivo ADIF.
    - **Ruta del log:** hacé clic en **Buscar…** y elegí el archivo. Si elegís un backup de
      Log4OM con fecha (`LW1ABC_20261016_124613_backup.adi`), DX Agent lo convierte en
      `…/LW1ABC_*_backup.adi`, así usa siempre el más nuevo. **Probar** muestra qué archivo
