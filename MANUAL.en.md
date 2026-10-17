@@ -114,6 +114,13 @@ station:
 
 - the band × mode grid of its country: green **C** = confirmed, amber **W** = worked, grey =
   missing;
+- **where it's on the air now**, in that same grid: a **green ring** on each band and mode
+  where it was spotted in the last 10 minutes, and a dot ● over the band. The cell of the
+  **latest spot blinks**: that's where the station is now; the others keep a steady ring, and
+  the blinking moves when it's spotted on another band. A DXpedition on several bands at
+  once (S9R, say) shows a ring on each, with the latest one blinking. Hover a ringed cell
+  for when, where and who spotted it. With no spot for 10 minutes, the ring goes. A ring on
+  an empty cell: it's on the air on a band you need;
 - whether you worked that exact call, its LoTW status and, for a DXpedition, its details;
 - the **beam heading**, large, with a compass, the long path and the distance;
 - **who hears it**, the receivers nearest to you first, and **Check PSKReporter (FT8/FT4)**;
@@ -121,6 +128,8 @@ station:
   HamQTH and DXWatch.
 
 ![The Station tab, with a DXpedition on the air](images/station.en.png)
+
+![On the air: S9R on four bands at once; 20 m digital blinks, the latest spot, on a band you need](images/grid-onair.en.png)
 
 **The DXpeditions tab:** see section 8.
 

@@ -121,6 +121,14 @@ frecuencia) se abre la estación:
 
 - la grilla banda × modo de ese país: **C** verde = confirmado, **W** ámbar = trabajado, gris =
   falta;
+- **dónde está en el aire ahora**, en esa misma grilla: un **anillo verde** en cada banda y modo
+  donde la spotearon en los últimos 10 minutos, y un punto ● sobre la banda. El cuadro del
+  **spot más reciente parpadea**: ahí está ahora la estación; los otros quedan con el anillo
+  fijo, y el parpadeo se mueve cuando la spotean en otra banda. Una DXpedición en varias bandas
+  a la vez (por ejemplo S9R) muestra un anillo en cada una, y parpadea la más reciente. Pasando
+  el mouse por un cuadro con anillo ves cuándo, dónde y quién la spoteó. Sin spots durante 10
+  minutos, el anillo se apaga. Un anillo sobre un cuadro vacío: está en el aire en una banda que
+  te falta;
 - si ya trabajaste ese indicativo exacto, su estado de LoTW y, si es una DXpedición, sus datos;
 - el **rumbo de antena** grande, con brújula, el paso largo y la distancia;
 - **quién la escucha**, los receptores más cercanos a vos primero, y el botón **Consultar
@@ -129,6 +137,8 @@ frecuencia) se abre la estación:
   últimos spots y enlaces a QRZ.com, HamQTH y DXWatch.
 
 ![La pestaña Estación, con una DXpedición en el aire](images/station.es.png)
+
+![En el aire: S9R en cuatro bandas a la vez; parpadea 20 m digital, el spot más reciente, en una banda que falta](images/grid-onair.es.png)
 
 **La pestaña DXpediciones:** ver la sección 8.
 
