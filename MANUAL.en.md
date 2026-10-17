@@ -120,11 +120,11 @@ station:
 - the band × mode grid of its country: green **C** = confirmed, amber **W** = worked, grey =
   missing;
 - **where it's on the air now**, in that same grid: a **green ring** on each band and mode
-  where it was spotted in the last 10 minutes, and a dot ● over the band. The cell of the
+  where it was spotted in the last 15 minutes, and a dot ● over the band. The cell of the
   **latest spot blinks**: that's where the station is now; the others keep a steady ring, and
   the blinking moves when it's spotted on another band. A DXpedition on several bands at
   once (S9R, say) shows a ring on each, with the latest one blinking. Hover a ringed cell
-  for when, where and who spotted it; **click it to tune there** (with a radio set up, section 6). With no spot for 10 minutes, the ring goes. A ring on
+  for when, where and who spotted it; **click it to tune there** (with a radio set up, section 6). With no spot for 15 minutes, the ring goes. A ring on
   an empty cell: it's on the air on a band you need;
 - whether you worked that exact call, its LoTW status and, for a DXpedition, its details;
 - the **beam heading**, large, with a compass, the long path and the distance;
@@ -231,7 +231,7 @@ gathered from NG3K, 425 DX News and Club Log.
 
 - Each card says what it adds: **ATNO**, **Not confirmed**, or how many bands you have (for
   example "3 of 10 bands").
-- **ON THE AIR** (green frame) = spotted in the last 30 minutes, with its frequency (click to
+- **ON THE AIR** (green frame) = spotted in the last 15 minutes, with its frequency (click to
   tune).
 - **Order:** **On the air** (the ones transmitting first), **Most Wanted** (the most wanted
   country on Club Log first) or **Date**.

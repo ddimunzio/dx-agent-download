@@ -126,12 +126,12 @@ frecuencia) se abre la estación:
 - la grilla banda × modo de ese país: **C** verde = confirmado, **W** ámbar = trabajado, gris =
   falta;
 - **dónde está en el aire ahora**, en esa misma grilla: un **anillo verde** en cada banda y modo
-  donde la spotearon en los últimos 10 minutos, y un punto ● sobre la banda. El cuadro del
+  donde la spotearon en los últimos 15 minutos, y un punto ● sobre la banda. El cuadro del
   **spot más reciente parpadea**: ahí está ahora la estación; los otros quedan con el anillo
   fijo, y el parpadeo se mueve cuando la spotean en otra banda. Una DXpedición en varias bandas
   a la vez (por ejemplo S9R) muestra un anillo en cada una, y parpadea la más reciente. Pasando
   el mouse por un cuadro con anillo ves cuándo, dónde y quién la spoteó; **con un clic sintonizás
-  ahí** (con una radio configurada, sección 6). Sin spots durante 10
+  ahí** (con una radio configurada, sección 6). Sin spots durante 15
   minutos, el anillo se apaga. Un anillo sobre un cuadro vacío: está en el aire en una banda que
   te falta;
 - si ya trabajaste ese indicativo exacto, su estado de LoTW y, si es una DXpedición, sus datos;
@@ -242,7 +242,7 @@ reunidas de NG3K, 425 DX News y Club Log.
 
 - Cada tarjeta dice qué te suma: **ATNO**, **No confirmado** o cuántas bandas tenés (por
   ejemplo "3 de 10 bandas").
-- **EN EL AIRE** (borde verde) = la spotearon en los últimos 30 minutos, con su frecuencia
+- **EN EL AIRE** (borde verde) = la spotearon en los últimos 15 minutos, con su frecuencia
   (clic para sintonizar).
 - **Orden:** **En el aire** (las que están transmitiendo primero), **Most Wanted** (el país
   más buscado según Club Log primero) o **Fecha**.
