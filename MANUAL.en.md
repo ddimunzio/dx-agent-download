@@ -311,6 +311,7 @@ one into it.
 | Tune doesn't move the radio | Check your program's remote control (section 6) and that it's running; the message at the top right says what failed |
 | A settings change made things worse | `config.toml.bak` has the previous settings: copy it over `config.toml` and open DX Agent again |
 | "saved password could not be read" | The LoTW password was saved by another Windows user or PC: type it again in Settings |
+| My logger says a band and mode is confirmed, DX Agent says not (amber **W**) | Most likely the only confirmation is an **eQSL**. DX Agent follows the ARRL's DXCC rules: only LoTW or a paper QSL count, eQSL doesn't (for WAZ, which accepts eQSL, it does count). Many loggers count eQSL as confirmed. For the ARRL, that band and mode still needs a LoTW or paper confirmation |
 
 What DX Agent does is written to `data\dx-agent.log`, inside its folder. If you report a
 problem, that file helps a lot.

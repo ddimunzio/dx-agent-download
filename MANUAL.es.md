@@ -324,6 +324,7 @@ se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y 
 | El botón Sintonizar no mueve la radio | Revisá en tu programa el control remoto (sección 6) y que esté abierto; el mensaje arriba a la derecha dice qué falló |
 | Un cambio de configuración lo empeoró | `config.toml.bak` tiene la configuración anterior: copialo sobre `config.toml` y volvé a abrirlo |
 | "saved password could not be read" | La contraseña de LoTW la guardó otro usuario de Windows u otra PC: escribila de nuevo en Configuración |
+| Mi programa de log dice que una banda y modo está confirmada y DX Agent dice que no (**W** ámbar) | Lo más probable es que la única confirmación sea una **eQSL**. DX Agent sigue las reglas del DXCC de la ARRL: solo cuentan LoTW o la QSL en papel, eQSL no (para el WAZ, que acepta eQSL, sí cuenta). Muchos programas de log cuentan eQSL como confirmado. Para la ARRL, esa banda y modo todavía necesita una confirmación por LoTW o en papel |
 
 Lo que DX Agent va haciendo queda en `data\dx-agent.log`, dentro de su carpeta. Si reportás
 un problema, ese archivo ayuda mucho.
