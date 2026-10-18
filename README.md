@@ -1,6 +1,6 @@
 # DX Agent
 
-[![Downloads](https://img.shields.io/github/downloads/ddimunzio/dx-agent-download/total?label=downloads)](https://github.com/ddimunzio/dx-agent-download/releases)
+[![Downloads](https://img.shields.io/github/downloads/ddimunzio/dx-agent-download/total?label=downloads&cacheSeconds=3600)](https://github.com/ddimunzio/dx-agent-download/releases)
 [![Latest version](https://img.shields.io/github/v/release/ddimunzio/dx-agent-download?sort=semver&label=version)](https://github.com/ddimunzio/dx-agent-download/releases/latest)
 
 **DX Agent** watches the DX cluster and the Reverse Beacon Network, checks every spot against
