@@ -1,7 +1,7 @@
 # DX Agent
 
 [![Downloads](https://img.shields.io/github/downloads/ddimunzio/dx-agent-download/total?label=downloads)](https://github.com/ddimunzio/dx-agent-download/releases)
-[![Latest version](https://img.shields.io/github/v/release/ddimunzio/dx-agent-download?label=version)](https://github.com/ddimunzio/dx-agent-download/releases/latest)
+[![Latest version](https://img.shields.io/github/v/release/ddimunzio/dx-agent-download?sort=semver&label=version)](https://github.com/ddimunzio/dx-agent-download/releases/latest)
 
 **DX Agent** watches the DX cluster and the Reverse Beacon Network, checks every spot against
 your log, and tells you the moment a station you still need is on the air: a new country, band
