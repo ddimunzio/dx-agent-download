@@ -202,6 +202,7 @@ indica si funcionó.
 |---------|---------------------------|--------------------|-------------------|
 | Log4OM 2 | Control remoto por UDP (`SetTxFrequency`, `SetCallsign`); el modo, por OmniRig | 2241 | sí, por OmniRig (el `SetMode` de Log4OM solo cambia su pantalla) |
 | N1MM Logger+ | UDP `radio_setfrequency` | 13064 | no (N1MM no tiene campo de modo) |
+| DXLog.net | UDP `radio_setfrequency` (como N1MM); en Options → Configure network agregar el puerto al UDP broadcast listener, y activar Options → Broadcast → Receive broadcasts | 13064 | no (solo la frecuencia) |
 | OmniRig | COM de Windows, mediante PowerShell; radio 1 o 2 | — | sí |
 | Hamlib rigctld | TCP `F <Hz>` / `M <modo> -1` | 4532 | sí |
 | flrig | XML-RPC `rig.set_frequency` / `rig.set_mode` | 12345 | sí |
@@ -314,6 +315,47 @@ SOTA, IOTA, WWFF, BOTA, COTA (castillos WCA), LOTA (faros), TOTA, ROTA, JOTA, YO
   estaciones con YOTA en el indicativo (GB23YOTA) cuentan como YOTA.
 - Como los demás filtros, se guarda; **Limpiar filtros** lo apaga.
 
+### CQ DX Marathon
+
+El [CQ DX Marathon](https://dxmarathon.com) da un punto por cada país y uno por cada zona CQ
+que trabajás: en el año (del 1 de enero al 31 de diciembre), o en el **Sprint**, diez días de
+octubre (2026: del 17 al 26 de octubre). Activalo en Configuración → **CQ DX Marathon**,
+elegí el anual o el Sprint (y sus fechas) y los modos que cuenta tu participación. Entonces:
+
+- Una pestaña **Marathon** al lado de DXpediciones muestra el período, tu puntaje (países +
+  zonas), las 40 zonas CQ (en verde, las trabajadas) y los países: **Trabajados**, con el QSO
+  que cuenta (el primero del período: indicativo, fecha, banda, modo; con un clic se abre la
+  estación), o **Faltan**, los que te quedan. El buscador encuentra un país por nombre o
+  prefijo. El número de la pestaña es tu puntaje.
+- Una estación que te suma un país o una zona avisa como **MARATHON** (violeta), aunque sea
+  de un país que tenés confirmado para el DXCC, y la columna "Qué te falta" dice qué suma
+  ("Marathon: país nuevo (Sicily), zona 15"). Cada tipo se puede apagar en Configuración. No
+  se repiten por país (o zona), banda y modo: con una estación de Sicilia alcanza. El filtro
+  **MARATHON** y la pestaña aparecen solo mientras seguís el Marathon.
+- La pestaña Estación dice, para cualquier indicativo, su país y su zona del Marathon, y si
+  los trabajaste en el período y cuándo.
+- Todo sigue a tu log: un QSO que logueás (archivo, base de Log4OM, UDP) cuenta enseguida.
+
+Qué cuenta, según las reglas:
+
+- **Países:** la lista CQ DX Countries, las entidades DXCC más seis países WAE: Sicilia
+  (IT9), Italia africana (IG9/IH9), Shetland (GM/s), Turquía europea (TA1), Isla del Oso
+  (JW/b) y el Centro Internacional de Viena (4U1VIC). El país de un QSO es el `REGION` de
+  ADIF si tu programa de log lo escribió, si no el campo `DXCC`, convertido en país WAE
+  cuando el indicativo es de uno (según el archivo de países de AD1C).
+- **Zonas:** el `CQZ` del QSO o, si no está, la zona del indicativo en el archivo de AD1C
+  (que sabe que W0 es zona 4 y VE7 zona 3). Una estación de EE. UU., Canadá o Rusia puede
+  estar en otra zona que la de su indicativo: para un spot, la zona que se muestra es la del
+  indicativo.
+- **Indicativos:** el principal, o los que marques en la tarjeta (hasta 2, ver Varios
+  indicativos).
+- **Bandas y modos:** de 160 a 6 m; sin satélites, repetidoras ni enlaces por internet; sin
+  /MM ni /AM. Modos: todos, o solo CW, fonía o digital, o la clase **Classic** del Sprint
+  (CW y fonía).
+- El Marathon anual es el año UTC en curso; hasta el 5 de enero (el plazo para mandar el
+  log) sigue siendo el del año anterior. DX Agent no envía tu participación: subí tu ADIF en
+  [entry.dxmarathon.com](https://entry.dxmarathon.com).
+
 ### Mapa mundial
 
 Hacé clic en **Mapa** (al lado de **Lista**, a la izquierda de los filtros) para ver las
@@ -323,6 +365,9 @@ mismas alertas en un mapa del mundo. Los filtros valen para las dos vistas.
   grid locator que informa la RBN en los spots de FT8/FT4; si no, es el centro del país
   (marcado "aprox." en el detalle). Pasá el mouse para ver los datos y hacé clic para
   seleccionarla.
+- **Hacé clic en un país** (en cualquier parte, o cerca de una isla chica) para verlo en la
+  pestaña Estación, como cuando consultás un indicativo: su tarjeta, los rumbos a su centro,
+  el estado, el cuadro del CQ DX Marathon y la grilla banda × modo.
 - **Los rombos** son DXpediciones activas: rojo = ATNO, ámbar = sin confirmar, turquesa = tenés
   el país pero en menos de la mitad de tus bandas, gris = ya la tenés. Si tienen una alerta de
   los últimos 15 minutos, el rombo toma el color de la alerta. Un **borde verde** quiere decir
@@ -336,8 +381,9 @@ mismas alertas en un mapa del mundo. Los filtros valen para las dos vistas.
 - **Zoom** con la rueda del mouse o los botones **+ / −**, **arrastrar** para moverse y
   **⟲** para ver el mundo entero. Al hacer zoom aparecen los indicativos de todas las estaciones;
   donde se pisarían, se muestran los más importantes (pasá el mouse por un punto para ver su indicativo).
-- La pestaña Estación también muestra el **rumbo**, grande, con una brújula que apunta hacia
-  ahí, y debajo el paso largo y la distancia, en cualquiera de las dos vistas.
+- La pestaña Estación también muestra los dos **rumbos**, grandes, cada uno con una brújula
+  que apunta hacia ahí y su distancia: el paso corto en azul y el paso largo (dando la vuelta
+  al mundo por el otro lado) en naranja, en cualquiera de las dos vistas.
 - Las fronteras son las **DXCC**, no solo las de los países: también están separadas la Rusia
   europea y la asiática, Inglaterra, Escocia y Gales o el Monte Athos. Pasá el mouse por el
   mapa para ver qué entidad es. Cada entidad muestra su prefijo cuando entra en pantalla
@@ -433,11 +479,12 @@ fuentes en pocos segundos. No hace falta reiniciarlo.
 
 | Sección | Qué se puede configurar |
 |---------|-------------------------|
-| **Estación** | Tu indicativo; **Tu log**: un archivo ADIF de tu logger, **Solo LoTW** (ver LoTW como log), o **Empezar de cero** (ver Un log nuevo); la ruta del log ADIF (una por línea; `*` elige el archivo más nuevo, por ejemplo `…/CALL_*_backup.adi` para los backups de Log4OM). **Buscar…** abre la ventana de archivos de Windows para elegirlo (si elegís un backup de Log4OM con fecha, se convierte en `…/CALL_*_backup.adi` para usar siempre el más nuevo). **Probar** muestra qué archivo encontró, su tamaño, fecha y cantidad de QSOs; tu grid locator (vacío = se toma de tu log) |
+| **Estación** | Tu indicativo; **Tu log**: un archivo ADIF de tu logger, **Solo LoTW** (ver LoTW como log), o **Empezar de cero** (ver Un log nuevo); la ruta del log ADIF (una por línea; `*` elige el archivo más nuevo, por ejemplo `…/CALL_*_backup.adi` para los backups de Log4OM). **Buscar…** abre la ventana de archivos de Windows para elegirlo (si elegís un backup de Log4OM con fecha, se convierte en `…/CALL_*_backup.adi` para usar siempre el más nuevo). **Probar** muestra qué archivo encontró, su tamaño, fecha y cantidad de QSOs; tu grid locator (vacío = se toma de tu log); **Tus otros indicativos**, cada uno con su log (ver Varios indicativos) |
 | **LoTW** | Activar o desactivar la descarga de confirmaciones; usuario de LoTW (vacío = tu indicativo); contraseña de LoTW; cada cuánto descargar. **Probar ingreso** prueba el usuario y la contraseña con LoTW |
 | **Alertas** | Qué tipos de alerta querés; bandas; modos; cuándo una DXpedición o un indicativo de la lista de seguimiento cuenta como trabajado; **Lista de seguimiento**; **Ignorar**; cuánto esperar antes de repetir la misma alerta; el radio de "cerca tuyo" y **Avisar solo si se escucha cerca tuyo**; notificaciones de Windows y para qué alertas |
 | **Fuentes de spots** | DX cluster activado o no, sus servidores (`servidor:puerto`, en orden) y comandos al conectar; **Spots recientes al conectar** (minutos, 0 = no); de qué continentes tomar los spotters del cluster; RBN activada o no, fuentes CW/RTTY y FT8/FT4; de qué continentes cuentan los skimmers |
-| **Radio (botón Sintonizar)** | Qué programa sintoniza la radio (Desactivado, Log4OM 2, N1MM Logger+, OmniRig, Hamlib rigctld, flrig, DXLab Commander), su dirección y puerto (0 = por defecto), si también cambia el modo, y qué radio de OmniRig |
+| **Radio (botón Sintonizar)** | Qué programa sintoniza la radio (Desactivado, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander), su dirección y puerto (0 = por defecto), si también cambia el modo, y qué radio de OmniRig |
+| **CQ DX Marathon** | Seguirlo o no; el anual o el Sprint, y las fechas del Sprint; los modos que cuentan (todos, CW, fonía, digital, o Classic: CW y fonía); alertas por país nuevo y por zona nueva del Marathon |
 | **DXpediciones, log y panel** | Mostrar DXpediciones que ya tenés; fuentes de DXpediciones y cada cuánto releerlas; cada cuánto revisar el archivo del log; puerto del panel; abrir el navegador al iniciar |
 
 Cómo se comporta:
@@ -549,6 +596,7 @@ siempre usan los nombres en inglés.
 | SEGUIMIENTO       | WATCHLIST           | Un indicativo de tu lista de seguimiento, todavía no trabajado     | activada    |
 | BANDA+MODO        | NEW SLOT            | País no trabajado en esta combinación de banda y modo              | desactivada |
 | INDICATIVO NUEVO  | NEW CALL            | Este indicativo exacto no está en tu log (genera muchísimas alertas) | desactivada |
+| MARATHON          | MARATHON            | Un país o una zona CQ que todavía no trabajaste en el CQ DX Marathon (ver CQ DX Marathon) | activada, mientras sigas el Marathon |
 
 "Por defecto" se refiere a **Avisarme de** en la página de configuración
 (`alert_on` en el archivo).
@@ -693,6 +741,8 @@ proyecto. También se puede editar a mano; después hay que reiniciar `run`.
 | station     | `log_source`                | `adif`                                            | `adif` = un archivo de tu logger; `lotw` = todos los QSOs que subiste a LoTW (sin archivo ADIF); `new` = un log nuevo que lleva DX Agent, `data/<INDICATIVO>.adi` (para empezar de cero) |
 | station     | `adif`                      | `C:/Users/you/AppData/Roaming/Log4OM2/backup/CALL_*_backup.adi` | Ruta o patrón del log. Con un patrón se usa el archivo más nuevo. También acepta una lista de rutas |
 | station     | `grid`                      | vacío (= se toma del log)                         | Tu grid locator, para "cerca tuyo" |
+| station     | `others`                    | `[]`                                              | Tus otros indicativos, cada uno con su log: `[{call = "N1CALL", adif = ["C:/…/N1CALL.SQLite"]}]` (ver Varios indicativos) |
+| station     | `active`                    | vacío (= todos tus indicativos)                   | El indicativo al que siguen las alertas, el DXCC y el WAZ; lo cambia el selector de la cabecera |
 | alerts      | `alert_on`                  | `atno, dxpedition, new_band, new_mode, watchlist` | Qué tipos de alerta se activan |
 | alerts      | `call_scope`                | `band_mode`                                       | Para DXpediciones y lista de seguimiento: `call` = cualquier QSO cuenta, `band` = por banda, `band_mode` = por banda y modo |
 | alerts      | `bands`                     | 160m–6m (sin 60m)                                 | Los spots en otras bandas se ignoran |
@@ -727,10 +777,16 @@ proyecto. También se puede editar a mano; después hay que reiniciar `run`.
 | rbn         | `enabled`                   | `true`                                            | Usar la Reverse Beacon Network |
 | rbn         | `cw` / `digital`            | `true` / `true`                                   | Fuente CW+RTTY (puerto 7000) y FT8/FT4 (puerto 7001) |
 | rbn         | `spotter_continents`        | `SA, NA`                                          | Avisar solo cuando un skimmer de estos continentes escucha la estación |
-| rig         | `target`                    | `none`                                            | Botón Sintonizar: `none`, `log4om`, `n1mm`, `omnirig`, `hamlib`, `flrig` o `dxlab` |
+| rig         | `target`                    | `none`                                            | Botón Sintonizar: `none`, `log4om`, `n1mm`, `dxlog`, `omnirig`, `hamlib`, `flrig` o `dxlab` |
 | rig         | `host` / `port`             | `127.0.0.1` / `0`                                 | Dónde escucha ese programa; 0 = su puerto por defecto |
 | rig         | `set_mode`                  | `true`                                            | También cambiar el modo (CW, USB/LSB, datos/RTTY) |
 | rig         | `omnirig_rig`               | `1`                                               | Radio 1 o 2 de OmniRig |
+| marathon    | `enabled`                   | `false`                                           | Seguir el CQ DX Marathon (una pestaña Marathon y alertas MARATHON) |
+| marathon    | `event`                     | `year`                                            | `year` (del 1 de enero al 31 de diciembre) o `sprint` |
+| marathon    | `sprint_start` / `sprint_end` | `2026-10-17` / `2026-10-26`                     | Primer y último día del Sprint (UTC) |
+| marathon    | `category`                  | `all`                                             | Modos que cuentan: `all`, `CW`, `PHONE`, `DIGI` o `classic` (CW y fonía) |
+| marathon    | `alert_countries` / `alert_zones` | `true` / `true`                             | Avisar por un país / una zona CQ todavía no trabajados en el Marathon |
+| marathon    | `calls`                     | `[]` (= tu indicativo principal)                  | Tus indicativos cuyos QSOs suman, hasta 2 |
 
 La contraseña de LoTW nunca se guarda en este archivo (ver más abajo).
 
@@ -746,6 +802,32 @@ La contraseña de LoTW nunca se guarda en este archivo (ver más abajo).
 - **Buscar estaciones puntuales.** Agregarlas a la **Lista de seguimiento**, por ejemplo `3Y0K` o
   `VP8*`.
 - **Repetir alertas antes o después.** Cambiar **No repetir durante**.
+
+### Varios indicativos
+
+Agregá tus otros indicativos (uno de concurso, por ejemplo) en Configuración → Estación →
+**Tus otros indicativos**, cada uno con su log: un archivo ADIF (`*` toma el más nuevo), o
+directamente la base de datos de Log4OM (`.SQLite`, por ejemplo
+`C:/Users/vos/Log4OM/N1CALL.SQLite`: no hace falta exportar nada). Entonces:
+
+- **Las alertas, el DXCC y el WAZ suman todos tus indicativos juntos**: un país trabajado con
+  cualquiera está trabajado, un QSO confirmado con cualquiera está confirmado. El indicativo
+  de la cabecera pasa a ser un selector: **Todos** (lo predeterminado) o un indicativo solo,
+  para ver qué le falta a ese. El cambio se aplica enseguida y se guarda para la próxima vez.
+- **El CQ DX Marathon** suma los indicativos que marques en su tarjeta, hasta 2: las reglas
+  admiten dos en una participación, operados desde la misma ubicación.
+- **De quién es cada QSO:** los QSOs de cada log son de su indicativo. Un QSO cuyo
+  `STATION_CALLSIGN` es otro de tus indicativos va a ese (también sirve un programa de log
+  con todos tus indicativos en un solo log). Los QSOs que llegan por UDP o de la base de
+  Log4OM van al indicativo que dicen (WSJT-X, N1MM y Log4OM lo dicen) o, si no, a tu
+  indicativo principal.
+- **LoTW:** alcanza con una cuenta de LoTW con los certificados de todos tus indicativos: las
+  confirmaciones se descargan con el indicativo con el que se hizo cada QSO, y cada uno toma
+  las suyas. Un archivo de confirmaciones de antes de esta versión se vuelve a descargar una
+  vez, en segundo plano (mientras tanto se usa el anterior).
+- Tus propios spots, de cualquiera de tus indicativos, nunca avisan. El cluster y la RBN se
+  conectan con tu indicativo principal; **¿Estás en su log?** le pregunta a Club Log por
+  todos tus indicativos (con Todos) o por el elegido.
 
 ### Un log nuevo (para empezar de cero)
 
@@ -998,7 +1080,8 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `dxagent/udplog.py`        | QSOs que otros programas mandan por UDP al loguearlos (XML de N1MM / DXLog.net, ADIF, WSJT-X) |
 | `dxagent/store.py`         | `data/dxagent.db` (SQLite): los registros propios de DX Agent |
 | `dxagent/worldmap.py`       | Tierra, fronteras DXCC y entidades DXCC para el mapa |
-| `dxagent/rig.py`            | Sintonizar: se comunica con Log4OM, N1MM, OmniRig, Hamlib, flrig o DXLab |
+| `dxagent/marathon.py`       | CQ DX Marathon: qué QSOs cuentan, los países y zonas trabajados en el período, qué te sumaría un spot |
+| `dxagent/rig.py`            | Sintonizar: se comunica con Log4OM, N1MM, DXLog.net, OmniRig, Hamlib, flrig o DXLab |
 | `dxagent/web.py`            | Servidor del panel: página, API JSON, eventos en vivo, configuración |
 | `dxagent/static/index.html` | El panel y la página de configuración (HTML, CSS y JavaScript en un solo archivo) |
 | `dxagent/static/logo.svg`  | El logo de DX Agent (encabezado del panel e ícono de la pestaña) |
@@ -1053,8 +1136,8 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
 ### Limitaciones conocidas
 
 - **Funciones solo de Windows.** Todo lo demás funciona en Linux con el paquete `-linux`. Ahí
-  no están: el log en vivo de Log4OM, y los destinos de **Sintonizar** Log4OM / N1MM / OmniRig /
-  DXLab (Hamlib y flrig sí funcionan); el envío del indicativo a WSJT-X; y el cartel de Windows
+  no están: el log en vivo de Log4OM, y los destinos de **Sintonizar** Log4OM / N1MM / DXLog.net /
+  OmniRig / DXLab (Hamlib y flrig sí funcionan); el envío del indicativo a WSJT-X; y el cartel de Windows
   cuando no puede arrancar (ahí el motivo va a `data/dx-agent.log`). Las notificaciones necesitan
   `plyer`, y el botón **Buscar…** de la configuración necesita tkinter (`python3-tk`). La
   contraseña de LoTW se cifra con DPAPI de Windows; en Linux solo se ofusca, con permisos `0600`.

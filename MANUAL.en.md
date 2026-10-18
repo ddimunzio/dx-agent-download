@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.3.6 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.0 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -19,10 +19,11 @@ Contents:
 8. [DXpeditions](#8-dxpeditions)
 9. [Activations: POTA, SOTA, IOTA...](#9-activations-pota-sota-iota)
 10. [The map](#10-the-map)
-11. [LoTW](#11-lotw)
-12. [Updating to a new version](#12-updating-to-a-new-version)
-13. [Common problems](#13-common-problems)
-14. [Help and contact](#14-help-and-contact)
+11. [CQ DX Marathon](#11-cq-dx-marathon)
+12. [LoTW](#12-lotw)
+13. [Updating to a new version](#13-updating-to-a-new-version)
+14. [Common problems](#14-common-problems)
+15. [Help and contact](#15-help-and-contact)
 
 ---
 
@@ -95,14 +96,18 @@ yet. Click **Settings** (top right) and fill in:
      newest backup is always used. **Test** shows which file it found and how many QSOs it has.
    - **Grid square:** yours (FN31, GF05pr...). Empty = taken from your log. It is used for the
      map, the beam heading and "near you".
+   - **Your other callsigns** (optional; a contest call, say): **+ Add a callsign**, the call
+     and its log: an ADIF file, or Log4OM's database itself (the `.SQLite` file, nothing to
+     export). Alerts, DXCC and WAZ count all your callsigns together; the picker in the header
+     can show just one.
 2. **LoTW** (optional): your LoTW username and password, then **Test login**. The password is
    stored encrypted for your Windows user, never as plain text.
 3. **Alerts:** which alert types you want, on which bands and modes. The defaults are a good
    start.
 4. **Radio (Tune button):** the program that controls your radio (see section 6). If you don't
    want DX Agent to move your radio, leave it off.
-5. Click **Save and apply**. No restart needed: within seconds it reads your log again and
-   connects to the spot sources.
+5. Click **Save and apply**. No restart needed: within seconds it reads your log again (the top
+   says "Reading your log…") and connects to the spot sources.
 
 If something is wrong (an invalid callsign, no band picked...), a list appears in red next to
 the button, and nothing is saved until it's fixed.
@@ -113,7 +118,8 @@ The dashboard follows your browser's language; the **ES/EN** button in the heade
 
 ![The alert list, with Hide confirmed](images/list.en.png)
 
-**Header:** your callsign; one pill per spot source (green = connected, amber = connecting,
+**Header:** your callsign (with several, a picker: **All**, or one alone to see what that one
+still needs); one pill per spot source (green = connected, amber = connecting,
 red = down); your log's totals; the **Settings**, **About**, **ES/EN**, **Theme** (light / dark /
 auto), **Sound** (a beep for the important alerts, off by default) and **Stop** buttons; the UTC
 clock. **About** tells what DX Agent is, who made it and its collaborators, and has the links to
@@ -135,6 +141,9 @@ who heard it. New rows flash, and fade after 10 and 30 minutes.
 **On the right, the Station tab:** clicking a row (on the call or on the frequency) opens the
 station:
 
+- a card with the call, its country, zones and **Most Wanted** rank on Club Log;
+- both **beam headings**, large, each with its compass and distance: the short path in blue,
+  the long path in orange;
 - the band × mode grid of its country: green **C** = confirmed, amber **W** = worked, grey =
   missing;
 - **where it's on the air now**, in that same grid: a **green ring** on each band and mode
@@ -145,7 +154,7 @@ station:
   for when, where and who spotted it; **click it to tune there** (with a radio set up, section 6). With no spot for 15 minutes, the ring goes. A ring on
   an empty cell: it's on the air on a band you need;
 - whether you worked that exact call, its LoTW status and, for a DXpedition, its details;
-- the **beam heading**, large, with a compass, the long path and the distance;
+- with the CQ DX Marathon on, what it adds to the Marathon (section 11);
 - **who hears it**, the receivers nearest to you first, and **Check PSKReporter (FT8/FT4)**;
 - **Show only** this call, **☆ Add to watchlist**, its latest spots, and links to QRZ.com,
   HamQTH and DXWatch.
@@ -154,7 +163,8 @@ station:
 
 ![On the air: S9R on four bands at once; 20 m digital blinks, the latest spot, on a band you need](images/grid-onair.en.png)
 
-**The DXpeditions tab:** see section 8.
+**The DXpeditions tab:** see section 8. **The Marathon tab:** see section 11. Clicking a country
+on the map shows that country in the Station tab (section 10).
 
 **List / Map:** to the left of the filters, switches between the list and the map (section 10).
 
@@ -171,6 +181,7 @@ station:
 | **WATCHLIST** | A call on your watchlist | on |
 | **NEW SLOT** | Country not worked on this band and mode combination | off |
 | **NEW CALL** | This exact call isn't in your log (lots of alerts) | off |
+| **MARATHON** | A country or CQ zone you haven't worked yet in the CQ DX Marathon (section 11) | on, while you follow the Marathon |
 
 - **What you need** says exactly what the station adds: "new band", "17m DIGI never worked",
   "entity not confirmed", or "have it".
@@ -198,6 +209,7 @@ has a **Tune** button. A message at the top right says whether it worked.
 |---------|---------------------------|-----------|
 | **Log4OM 2** | Settings → Software integration → Connections → turn on **Remote control** (port 2241) | yes, when Log4OM uses OmniRig |
 | **N1MM Logger+** | nothing | no |
+| **DXLog.net** | Options → Configure network: add port `13064` to the **UDP broadcast listener**; Options → Broadcast → **Receive broadcasts** | no |
 | **OmniRig** | pick OmniRig's rig 1 or 2 in DX Agent | yes |
 | **Hamlib (rigctld)**, **flrig**, **DXLab Commander** | have the program running | yes |
 
@@ -289,13 +301,37 @@ Click **Map** (next to **List**). The filters work the same as in the list.
 - The shaded area is where it's night (its edge is the grey line).
 - Picking a station draws the path from your QTH, with heading and distance, and the receivers
   that heard it.
+- **Click a country** (or near a small island): the Station tab shows it as a lookup does: its
+  card, the beam headings to its centre, its status and grid.
 - Mouse wheel or **+ / −** to zoom, drag to move, **⟲** for the whole world. Dragging east or
   west goes round the world (past the Pacific, the map continues on the other side).
 - **DXCC** (top left) paints each entity by your award standing: green = confirmed, amber =
   worked, red = missing. Pick Mixed, Phone, CW, Digital, one band, Satellite or the Challenge.
 - **WAZ** paints the 40 CQ zones the same way, with its variants (by mode, by band, 5BWAZ...).
 
-## 11. LoTW
+## 11. CQ DX Marathon
+
+The [CQ DX Marathon](https://dxmarathon.com) scores one point for each country and one for each
+CQ zone you work: in the year (January 1 to December 31) or in the **Sprint**, ten days in
+October. To follow it: Settings → **CQ DX Marathon** → **Track the countries and CQ zones I
+work**; pick the year or the Sprint (with its dates), the modes your entry counts (all, one, or
+**Classic**: CW and SSB) and, if you have several callsigns, which ones count (up to 2, as the
+rules allow).
+
+- **The Marathon tab** (next to DXpeditions) shows the period, your score (countries + zones),
+  the 40 CQ zones (green = worked) and the countries: **Worked**, with the QSO that counts (click
+  it to open the station), or **Missing**, with a search box. The tab's number is your score.
+- **MARATHON alert** (purple): a station that adds a country or a zone, even in a country you
+  have confirmed for DXCC. Country and zone alerts can be turned off separately. The MARATHON
+  filter and the tab only show while you follow the Marathon.
+- **Countries:** the CQ DX Countries List: the DXCC entities plus Sicily (IT9), African Italy
+  (IG9/IH9), Shetland (GM/s), European Turkey (TA1), Bear Island (JW/b) and 4U1VIC.
+- **Zones:** the QSO's zone in your log, else the call's. A US, Canadian or Russian station can
+  be in another zone than its call says.
+- DX Agent doesn't submit your entry: at the end, upload your ADIF at
+  [entry.dxmarathon.com](https://entry.dxmarathon.com).
+
+## 12. LoTW
 
 - **Who uploads to LoTW:** DX Agent downloads the ARRL's public list every day and shows, in
   each alert, whether the station uploads to LoTW. No password needed.
@@ -304,8 +340,10 @@ Click **Map** (next to **List**). The filters work the same as in the list.
   stays current even if your logger isn't synced. The first download can take a few minutes.
 - **LoTW as your log:** with no ADIF file, choose Settings → Station → **Your log** → **LoTW
   only (no ADIF file)**. Only what you uploaded to LoTW counts.
+- **Several callsigns:** one LoTW account with every callsign's certificate is enough: each
+  callsign takes its own confirmations.
 
-## 12. Updating to a new version
+## 13. Updating to a new version
 
 1. Close DX Agent (**Stop** button).
 2. Download the new package and unpack it **into the same folder**, replacing the files
@@ -316,7 +354,7 @@ Your settings (`config.toml`) and your data (the `data` folder) aren't in the zi
 kept. If you'd rather use a new folder, copy `config.toml` and the `data` folder from the old
 one into it.
 
-## 13. Common problems
+## 14. Common problems
 
 | What happens | What to do |
 |--------------|------------|
@@ -335,7 +373,7 @@ one into it.
 What DX Agent does is written to `data\dx-agent.log`, inside its folder. If you report a
 problem, that file helps a lot.
 
-## 14. Help and contact
+## 15. Help and contact
 
 ![The About window](images/about.en.png)
 

@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.3.6 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.4.0 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -19,10 +19,11 @@ Contenido:
 8. [DXpediciones](#8-dxpediciones)
 9. [Activaciones: POTA, SOTA, IOTA...](#9-activaciones-pota-sota-iota)
 10. [El mapa](#10-el-mapa)
-11. [LoTW](#11-lotw)
-12. [Actualizar a una versión nueva](#12-actualizar-a-una-versión-nueva)
-13. [Problemas frecuentes](#13-problemas-frecuentes)
-14. [Ayuda y contacto](#14-ayuda-y-contacto)
+11. [CQ DX Marathon](#11-cq-dx-marathon)
+12. [LoTW](#12-lotw)
+13. [Actualizar a una versión nueva](#13-actualizar-a-una-versión-nueva)
+14. [Problemas frecuentes](#14-problemas-frecuentes)
+15. [Ayuda y contacto](#15-ayuda-y-contacto)
 
 ---
 
@@ -100,6 +101,10 @@ log. Hacé clic en **Configuración** (arriba a la derecha) y completá:
      encontró y cuántos QSOs tiene.
    - **Grid locator:** tu cuadrícula (GF05, FN31pr...). Vacío = la toma de tu log. Se usa para
      el mapa, el rumbo de antena y "cerca tuyo".
+   - **Tus otros indicativos** (opcional; por ejemplo uno de concurso): **+ Agregar un
+     indicativo**, el indicativo y su log: un archivo ADIF o directamente la base de datos de
+     Log4OM (el archivo `.SQLite`, sin exportar nada). Las alertas, el DXCC y el WAZ suman todos
+     tus indicativos juntos; el selector del encabezado permite ver uno solo.
 2. **LoTW** (opcional): tu usuario y contraseña de LoTW, **Probar ingreso**. La contraseña
    queda guardada cifrada para tu usuario de Windows, nunca en texto.
 3. **Alertas:** qué tipos de alerta querés, en qué bandas y modos. Para empezar, los valores
@@ -107,7 +112,7 @@ log. Hacé clic en **Configuración** (arriba a la derecha) y completá:
 4. **Radio (botón Sintonizar):** el programa que maneja tu radio (ver sección 6). Si no
    querés que DX Agent mueva la radio, dejalo en *Desactivado*.
 5. Hacé clic en **Guardar y aplicar**. No hace falta reiniciar: en unos segundos vuelve a
-   leer el log y se conecta a las fuentes de spots.
+   leer el log (arriba dice "Leyendo tu log…") y se conecta a las fuentes de spots.
 
 Si algo está mal (un indicativo inválido, ninguna banda elegida...), aparece una lista en
 rojo junto al botón y no se guarda nada hasta corregirlo.
@@ -118,7 +123,8 @@ El panel aparece en el idioma del navegador; el botón **ES/EN** del encabezado 
 
 ![La lista de alertas, con Ocultar confirmados](images/list.es.png)
 
-**Encabezado:** tu indicativo; una pastilla por cada fuente de spots (verde = conectada,
+**Encabezado:** tu indicativo (con varios, un selector: **Todos** o uno solo, para ver qué le
+falta a ese); una pastilla por cada fuente de spots (verde = conectada,
 ámbar = conectando, rojo = caída); los totales de tu log; los botones **Configuración**,
 **Acerca de**, **ES/EN**, **Tema** (claro / oscuro / automático), **Sonido** (un pitido para las
 alertas importantes, apagado de fábrica) y **Detener**; el reloj UTC. **Acerca de** cuenta qué es
@@ -142,6 +148,9 @@ LoTW, **cerca tuyo** y quién la escuchó. Las filas nuevas destellan y se van a
 **A la derecha, la pestaña Estación:** al hacer clic en una fila (en el indicativo o en la
 frecuencia) se abre la estación:
 
+- una tarjeta con el indicativo, el país, sus zonas y su puesto en el **Most Wanted** de Club Log;
+- los dos **rumbos de antena**, grandes, cada uno con su brújula y su distancia: el paso corto en
+  azul y el paso largo en naranja;
 - la grilla banda × modo de ese país: **C** verde = confirmado, **W** ámbar = trabajado, gris =
   falta;
 - **dónde está en el aire ahora**, en esa misma grilla: un **anillo verde** en cada banda y modo
@@ -154,7 +163,7 @@ frecuencia) se abre la estación:
   minutos, el anillo se apaga. Un anillo sobre un cuadro vacío: está en el aire en una banda que
   te falta;
 - si ya trabajaste ese indicativo exacto, su estado de LoTW y, si es una DXpedición, sus datos;
-- el **rumbo de antena** grande, con brújula, el paso largo y la distancia;
+- con el CQ DX Marathon activado, qué te suma en el Marathon (sección 11);
 - **quién la escucha**, los receptores más cercanos a vos primero, y el botón **Consultar
   PSKReporter** para FT8/FT4;
 - **Ver solo** este indicativo, **☆ seguimiento** para sumarlo a tu lista de seguimiento, sus
@@ -164,7 +173,8 @@ frecuencia) se abre la estación:
 
 ![En el aire: S9R en cuatro bandas a la vez; parpadea 20 m digital, el spot más reciente, en una banda que falta](images/grid-onair.es.png)
 
-**La pestaña DXpediciones:** ver la sección 8.
+**La pestaña DXpediciones:** ver la sección 8. **La pestaña Marathon:** ver la sección 11.
+Con un clic en un país del mapa, la pestaña Estación muestra ese país (sección 10).
 
 **Lista / Mapa:** a la izquierda de los filtros, cambia entre la lista y el mapa (sección 10).
 
@@ -181,6 +191,7 @@ frecuencia) se abre la estación:
 | **SEGUIMIENTO** | Un indicativo de tu lista de seguimiento | activada |
 | **BANDA+MODO** | País no trabajado en esta combinación de banda y modo | desactivada |
 | **INDICATIVO NUEVO** | Este indicativo exacto no está en tu log (genera muchísimas alertas) | desactivada |
+| **MARATHON** | Un país o una zona CQ que todavía no trabajaste en el CQ DX Marathon (sección 11) | activada, si seguís el Marathon |
 
 - **Qué te falta** dice exactamente qué te suma la estación: "banda nueva", "17m DIGI nunca
   trabajado", "país no confirmado", o "ya lo tenés".
@@ -209,6 +220,7 @@ derecha dice si funcionó.
 |----------|----------------------------------|------------------|
 | **Log4OM 2** | Settings → Software integration → Connections → activar **Remote control** (puerto 2241) | sí, si Log4OM usa OmniRig |
 | **N1MM Logger+** | nada | no |
+| **DXLog.net** | Options → Configure network: agregar el puerto `13064` al **UDP broadcast listener**; Options → Broadcast → **Receive broadcasts** | no |
 | **OmniRig** | elegir en DX Agent la radio 1 o 2 de OmniRig | sí |
 | **Hamlib (rigctld)**, **flrig**, **DXLab Commander** | que el programa esté abierto | sí |
 
@@ -301,6 +313,8 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
 - La zona sombreada es donde es de noche (su borde es la línea gris).
 - Al elegir una estación se dibuja la ruta desde tu QTH, con rumbo y distancia, y los
   receptores que la escucharon.
+- **Clic en un país** (o cerca de una isla chica): la pestaña Estación lo muestra como cuando
+  consultás un indicativo: su tarjeta, los rumbos a su centro, el estado y la grilla.
 - Rueda del mouse o **+ / −** para el zoom, arrastrar para moverse, **⟲** para ver el mundo.
   Arrastrando hacia el este o el oeste se da la vuelta al mundo (pasando el Pacífico, el mapa
   sigue del otro lado).
@@ -310,7 +324,30 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
 - **WAZ** pinta las 40 zonas CQ de la misma forma, con sus variantes (por modo, por banda,
   5BWAZ...).
 
-## 11. LoTW
+## 11. CQ DX Marathon
+
+El [CQ DX Marathon](https://dxmarathon.com) suma un punto por cada país y uno por cada zona CQ
+que trabajás: en el año (del 1 de enero al 31 de diciembre) o en el **Sprint**, diez días de
+octubre. Para seguirlo: Configuración → **CQ DX Marathon** → **Seguir los países y zonas CQ que
+trabajo**; elegí el anual o el Sprint (con sus fechas), los modos que cuenta tu participación
+(todos, uno solo, o **Classic**: CW y SSB) y, si tenés varios indicativos, cuáles suman (hasta 2,
+como permiten las reglas).
+
+- **La pestaña Marathon** (al lado de DXpediciones) muestra el período, tu puntaje (países +
+  zonas), las 40 zonas CQ (en verde, las trabajadas) y los países: **Trabajados**, con el QSO
+  que cuenta (con un clic se abre la estación), o **Faltan**, con un buscador. El número de la
+  pestaña es tu puntaje.
+- **Alerta MARATHON** (violeta): una estación que te suma un país o una zona, aunque ese país ya
+  lo tengas confirmado para el DXCC. Las alertas de país y de zona se pueden apagar por
+  separado. El filtro MARATHON y la pestaña aparecen solo mientras seguís el Marathon.
+- **Países:** la lista CQ DX Countries: las entidades DXCC más Sicilia (IT9), Italia africana
+  (IG9/IH9), Shetland (GM/s), Turquía europea (TA1), Isla del Oso (JW/b) y 4U1VIC.
+- **Zonas:** la del QSO en tu log y, si no la tiene, la del indicativo. Una estación de EE. UU.,
+  Canadá o Rusia puede estar en otra zona que la que indica su indicativo.
+- DX Agent no envía tu participación: al final subí tu ADIF en
+  [entry.dxmarathon.com](https://entry.dxmarathon.com).
+
+## 12. LoTW
 
 - **Quién sube a LoTW:** DX Agent baja cada día la lista pública de la ARRL y en cada alerta
   muestra si la estación sube a LoTW. No necesita tu contraseña.
@@ -319,8 +356,10 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
   log no se haya sincronizado. La primera descarga puede tardar unos minutos.
 - **LoTW como log:** si no tenés archivo ADIF, en Configuración → Estación → **Tu log**
   elegí **Solo LoTW**. Solo cuenta lo que subiste a LoTW.
+- **Varios indicativos:** alcanza con una cuenta de LoTW con los certificados de todos tus
+  indicativos: cada uno toma sus confirmaciones.
 
-## 12. Actualizar a una versión nueva
+## 13. Actualizar a una versión nueva
 
 1. Cerrá DX Agent (botón **Detener**).
 2. Bajá el paquete nuevo y descomprimilo **en la misma carpeta**, reemplazando los archivos
@@ -331,7 +370,7 @@ Tu configuración (`config.toml`) y tus datos (la carpeta `data`) no vienen en e
 se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y la carpeta
 `data` de la anterior.
 
-## 13. Problemas frecuentes
+## 14. Problemas frecuentes
 
 | Qué pasa | Qué hacer |
 |----------|-----------|
@@ -350,7 +389,7 @@ se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y 
 Lo que DX Agent va haciendo queda en `data\dx-agent.log`, dentro de su carpeta. Si reportás
 un problema, ese archivo ayuda mucho.
 
-## 14. Ayuda y contacto
+## 15. Ayuda y contacto
 
 ![La ventana Acerca de](images/about.es.png)
 

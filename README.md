@@ -1,9 +1,12 @@
 # DX Agent
 
+[![Downloads](https://img.shields.io/github/downloads/ddimunzio/dx-agent-download/total?label=downloads)](https://github.com/ddimunzio/dx-agent-download/releases)
+[![Latest version](https://img.shields.io/github/v/release/ddimunzio/dx-agent-download?label=version)](https://github.com/ddimunzio/dx-agent-download/releases/latest)
+
 **DX Agent** watches the DX cluster and the Reverse Beacon Network, checks every spot against
 your log, and tells you the moment a station you still need is on the air: a new country, band
-or mode, a DXpedition that adds something, a summit or park you haven't worked. Windows, runs on
-your PC (Windows or Linux), used from your browser.
+or mode, a DXpedition that adds something, a summit or park you haven't worked. It runs on
+your PC (Windows or Linux) and you use it from your browser.
 
 *Castellano más abajo.*
 
@@ -17,7 +20,7 @@ Linux (x86_64): `dx-agent-<version>-linux-x86_64.tar.gz`, unpack it and run `./s
 Nothing to install: Python comes inside.
 
 - **[User manual](MANUAL.en.md)** — install, first setup, the screen, alerts, tuning the
-  radio, your logger, DXpeditions, POTA/SOTA, the map, LoTW.
+  radio, your logger, DXpeditions, POTA/SOTA, the map, the CQ DX Marathon, LoTW.
 - [Technical documentation](docs/DOCUMENTATION.md) — every setting and how it works inside.
 - Problems or ideas: [Issues](https://github.com/ddimunzio/dx-agent-download/issues).
 
@@ -29,10 +32,13 @@ What it does:
   whether you're in their log.
 - **Near you:** whether the station is being heard close to your QTH.
 - **LoTW:** who uploads, and your own confirmations.
-- **Tune** your radio with one click (Log4OM, N1MM, OmniRig, Hamlib, flrig, DXLab, WSJT-X), with
+- **Tune** your radio with one click (Log4OM, N1MM, DXLog.net, OmniRig, Hamlib, flrig, DXLab, WSJT-X), with
   the call filled in in Log4OM and WSJT-X.
 - **POTA, SOTA, IOTA, WWFF** and more, with the summits and parks you haven't worked.
-- A **world map** with your DXCC and WAZ standing.
+- A **world map** with your DXCC and WAZ standing; click a country to see what you have of it.
+- The **CQ DX Marathon**, the year or the Sprint: your countries and zones, and alerts for the
+  ones you still need.
+- **Several callsigns** (a contest call, say), each with its own log, counted together.
 - Your new QSOs counted at once: straight from Log4OM, or over UDP from N1MM Logger+,
   DXLog.net, HRD and WSJT-X.
 
@@ -55,7 +61,8 @@ PC y se usa desde el navegador.
 corré `./start-dx-agent.sh`. No hay nada que instalar: trae Python adentro.
 
 - **[Manual de usuario](MANUAL.es.md)** — instalación, primera configuración, la pantalla,
-  alertas, sintonizar la radio, tu programa de log, DXpediciones, POTA/SOTA, el mapa, LoTW.
+  alertas, sintonizar la radio, tu programa de log, DXpediciones, POTA/SOTA, el mapa, el CQ DX
+  Marathon, LoTW.
 - [Documentación técnica](docs/DOCUMENTACION.md) — todas las opciones y cómo funciona por
   dentro.
 - Problemas o ideas: [Issues](https://github.com/ddimunzio/dx-agent-download/issues).
