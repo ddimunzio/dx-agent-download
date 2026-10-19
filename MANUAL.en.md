@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.4.1 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.2 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -141,6 +141,12 @@ support it, to this manual and to report a problem.
 alert type, callsign, frequency, band, mode, country, **what you need**, LoTW, **near you** and
 who heard it. New rows flash, and fade after 10 and 30 minutes.
 
+**Sort by a column:** click a column's header to sort the list by it: by frequency, by band, by
+mode (CW, phone and digital together), by country... **Alert** and **What you need** put the
+most wanted first, **LoTW** the latest uploads first. Click again for the other way round, and a
+third time for newest on top again. An arrow shows the order. New alerts go into their place, and
+the browser remembers the order.
+
 **On the right, the Station tab:** clicking a row (on the call or on the frequency) opens the
 station:
 
@@ -148,7 +154,8 @@ station:
 - both **beam headings**, large, each with its compass and distance: the short path in blue,
   the long path in orange;
 - the band × mode grid of its country: green **C** = confirmed, amber **W** = worked, grey =
-  missing;
+  missing. **Hover a C or W** for the QSOs that made it (call, date, mode, ✓ when confirmed):
+  you see at once whether that 20 m QSO was this DXpedition or another station years ago;
 - **where it's on the air now**, in that same grid: a **green ring** on each band and mode
   where it was spotted in the last 15 minutes, and a dot ● over the band. The cell of the
   **latest spot blinks**: that's where the station is now; the others keep a steady ring, and
@@ -355,6 +362,10 @@ rules allow).
 
 ## 13. Updating to a new version
 
+From version 0.4.2 on, a pill next to the version number tells you when a new one is out, with a
+link to its page (DX Agent asks GitHub once a day; nothing of yours is sent, nothing is
+installed). To update:
+
 1. Close DX Agent (**Stop** button).
 2. Download the new package and unpack it **into the same folder**, replacing the files
    (on Linux: `tar -xzf` in the folder that holds `dx-agent`).
@@ -395,7 +406,7 @@ problem, that file helps a lot.
 - **Full technical documentation** (every setting in the configuration file, how it works
   inside): `DOCUMENTATION.md`, in the zip.
 - **Support DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) (also in the dashboard's **About** window)
-- **Made by** Diego – LW5HR, with Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
+- **Made by** Diego – LW5HR, with Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF.
 - **License:** free software, [MIT](LICENSE): anyone can use, copy and share it.
 
 73, Diego – LW5HR

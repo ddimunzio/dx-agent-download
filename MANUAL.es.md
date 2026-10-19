@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.1 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.4.2 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -148,6 +148,12 @@ Columnas: hora UTC, tipo de alerta, indicativo, frecuencia, banda, modo, país, 
 LoTW, **cerca tuyo** y quién la escuchó. Las filas nuevas destellan y se van atenuando a los
 10 y a los 30 minutos.
 
+**Ordenar por una columna:** al hacer clic en el encabezado de una columna la lista se ordena por
+ella: por frecuencia, por banda, por modo (CW, fonía y digitales juntos), por país... **Alerta** y
+**Qué te falta** ponen primero lo más buscado, **LoTW** las subidas más recientes. Otro clic lo
+invierte, y un tercero vuelve a lo más nuevo arriba. Una flecha muestra el orden. Las alertas
+nuevas entran en su lugar, y el navegador recuerda el orden.
+
 **A la derecha, la pestaña Estación:** al hacer clic en una fila (en el indicativo o en la
 frecuencia) se abre la estación:
 
@@ -155,7 +161,9 @@ frecuencia) se abre la estación:
 - los dos **rumbos de antena**, grandes, cada uno con su brújula y su distancia: el paso corto en
   azul y el paso largo en naranja;
 - la grilla banda × modo de ese país: **C** verde = confirmado, **W** ámbar = trabajado, gris =
-  falta;
+  falta. **Al pasar el mouse sobre una C o una W** ves los QSOs que la hicieron (indicativo,
+  fecha, modo, ✓ si está confirmado): sabés enseguida si ese QSO de 20 m fue esta DXpedición u
+  otra estación de hace años;
 - **dónde está en el aire ahora**, en esa misma grilla: un **anillo verde** en cada banda y modo
   donde la spotearon en los últimos 15 minutos, y un punto ● sobre la banda. El cuadro del
   **spot más reciente parpadea**: ahí está ahora la estación; los otros quedan con el anillo
@@ -372,6 +380,10 @@ como permiten las reglas).
 
 ## 13. Actualizar a una versión nueva
 
+Desde la versión 0.4.2, una pastilla junto al número de versión te avisa cuando sale una nueva,
+con un link a su página (DX Agent le pregunta a GitHub una vez por día; no se manda nada tuyo ni
+se instala nada). Para actualizar:
+
 1. Cerrá DX Agent (botón **Detener**).
 2. Bajá el paquete nuevo y descomprimilo **en la misma carpeta**, reemplazando los archivos
    (en Linux: `tar -xzf` en la carpeta que contiene `dx-agent`).
@@ -412,7 +424,7 @@ un problema, ese archivo ayuda mucho.
 - **Documentación técnica completa** (todas las opciones del archivo de configuración, cómo
   funciona por dentro): `DOCUMENTACION.md`, dentro del zip.
 - **Apoyá DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) (también en la ventana **Acerca de** del panel)
-- **Hecho por** Diego – LW5HR, con Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
+- **Hecho por** Diego – LW5HR, con Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF.
 - **Licencia:** software libre, [MIT](LICENSE): cualquiera puede usarlo, copiarlo y compartirlo.
 
 73, Diego – LW5HR
