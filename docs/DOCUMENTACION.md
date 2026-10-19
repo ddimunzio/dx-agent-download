@@ -135,7 +135,7 @@ python -m dxagent run --no-ui       # solo terminal
 | Zona | Qué muestra |
 |------|-------------|
 | **Encabezado** | Tu indicativo; una pastilla por fuente de spots (verde = conectada, ámbar = conectando, rojo = caída) con la cantidad de spots (al pasar el mouse muestra el servidor y la hora del último spot); los totales de tu log; DXpediciones activas; botones **Configuración**, **Acerca de** (qué es DX Agent, quién lo hizo, los colaboradores, cómo apoyarlo, ayuda), **ES/EN** (idioma), **Tema** y **Sonido**; reloj UTC. `#about` abre la ventana Acerca de |
-| **Filtros** | Botones por tipo de alerta, banda y modo, y un cuadro de búsqueda por indicativo o país. Sin ningún botón seleccionado se muestra todo. Una alerta cuenta para cada uno de sus motivos, así que una DXpedición en tu lista de seguimiento aparece tanto en **DXPED FALTA** como en **SEGUIMIENTO**; **SEGUIMIENTO** además muestra los spots de tus indicativos en seguimiento que no dieron alerta (filas grises **SPOT**), para que veas cuándo están en el aire. **Ocultar confirmados** saca las estaciones cuya entidad ya tenés confirmada en esa banda y modo (una alerta de indicativo nuevo, una fila SPOT): quedan solo las que suman a tu log. El navegador recuerda los filtros |
+| **Filtros** | Botones por tipo de alerta, banda y modo, y un cuadro de búsqueda por indicativo o país. Solo aparecen los tipos de alerta activados en Configuración. Sin ningún botón seleccionado se muestra todo. Una alerta cuenta para cada uno de sus motivos, así que una DXpedición en tu lista de seguimiento aparece tanto en **DXPED FALTA** como en **SEGUIMIENTO**; **SEGUIMIENTO** además muestra los spots de tus indicativos en seguimiento que no dieron alerta (filas grises **SPOT**), para que veas cuándo están en el aire. Las filas SPOT son una por estación, banda y modo: el spot más reciente, con **×N** la cantidad (un CQ lo escuchan varios skimmers de la RBN a la vez; pasando el mouse se ve quién la escuchó); los anteriores a una alerta de esa estación, banda y modo quedan representados por la alerta. Una fila SPOT que todavía te suma algo (no dio alerta propia porque la misma alerta no se repite durante el tiempo de espera) va con el color de lo que suma, no en gris. **Ocultar confirmados** saca las estaciones cuya entidad ya tenés confirmada en esa banda y modo (una alerta de indicativo nuevo, una fila SPOT): quedan solo las que suman a tu log. **Solo LoTW** deja las estaciones que subieron a LoTW en los últimos 12 meses y las DXpediciones que anunciaron LoTW: las que probablemente confirmen ahí. El navegador recuerda los filtros |
 | **Tabla de alertas** | Una fila por alerta, la más nueva arriba, coloreada según el tipo: UTC, alerta, indicativo, kHz, banda, modo, país, qué te falta, LoTW, **cerca tuyo** (ver más abajo), quién la escuchó. Las filas nuevas destellan; se atenúan a los 10 minutos y más a los 30 (al pasar el mouse se ve la antigüedad) |
 | **Pestaña Estación** | Al hacer clic en una alerta, o escribir un indicativo en el cuadro, muestra la grilla banda × modo de ese país (C verde = confirmado, W ámbar = trabajado, gris = no trabajado; un anillo verde marca las bandas y modos donde la spotearon en los últimos 15 minutos, el más reciente parpadeando, con un punto sobre la banda), si trabajaste ese indicativo exacto, el estado de LoTW, los datos de la DXpedición, quién lo escucha más cerca tuyo, un botón **Consultar PSKReporter**, los botones **Ver solo** este indicativo y **☆ seguimiento**, sus últimos spots y enlaces a QRZ.com, HamQTH y DXWatch |
 | **Pestaña DXpediciones** | DXpediciones activas y las que empiezan en los próximos 30 días. Etiqueta: **ATNO**, **No confirmado** o cuántas bandas tenés (por ejemplo "1 de 10 bandas", resaltada cuando son menos de la mitad). Marcar **solo las que faltan** oculta las que ya tenés en la mayoría de las bandas. Ordenadas por las que están **en el aire** (spoteadas en los últimos 15 minutos, la más reciente arriba), por el puesto en el **Most Wanted** de Club Log (el país más buscado primero) o por fecha de inicio: **Orden**, arriba. Cada tarjeta muestra sus fuentes y el puesto en el **Most Wanted** de Club Log; las spoteadas en los últimos 15 minutos se marcan en verde como **EN EL AIRE**. Al hacer clic se abre su grilla; la **☆** la agrega a tu lista de seguimiento |
@@ -601,6 +601,12 @@ siempre usan los nombres en inglés.
 "Por defecto" se refiere a **Avisarme de** en la página de configuración
 (`alert_on` en el archivo).
 
+La lista y el mapa guardan las últimas 500 alertas. Cuando la lista se llena, se van primero las
+menos importantes: las INDICATIVO NUEVO y DXPED YA TENGO más viejas, o cualquier alerta de más de
+una hora. Las demás (ATNO, banda, modo o banda+modo nuevos, DXpediciones, seguimiento, Marathon)
+quedan al menos una hora, así INDICATIVO NUEVO, que puede traer cien alertas por minuto, no las
+saca.
+
 ### De dónde salen las DXpediciones
 
 Se unen tres fuentes públicas por indicativo (se eligen en Configuración →
@@ -847,7 +853,10 @@ DX Agent lee tu archivo de log (el backup ADIF) al arrancar y cada vez que cambi
 de log que le avisa cada QSO al guardarlo lo mantiene al día entre medio: una estación recién
 trabajada deja de alertar enseguida, las alertas que ya están en la lista dicen lo que
 necesitan ahora y se actualizan las DXpediciones, las activaciones y los slots del mapa. Los
-QSOs se suman al archivo hasta que el siguiente backup los trae.
+QSOs se suman al archivo hasta que el siguiente backup los trae. Los que llegan por UDP además
+se guardan en `data/dxagent.db`: si cerrás DX Agent antes de que tu programa de log escriba su
+archivo, no se pierden. En el próximo arranque vuelven a contar, y cada uno se borra cuando el
+log releído ya lo tiene (como máximo 2.000, durante 30 días).
 
 **Log4OM 2** no necesita nada: DX Agent lee los QSOs posteriores al backup directo de la base
 de Log4OM, cada 10 segundos (`logbook.live`).
@@ -1101,7 +1110,8 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `data/world-countries-50m.json`               | Natural Earth (vía world-atlas) | una vez |
 | `data/dxcc-shapes.json`, `data/cq-zones.json` | GridTracker                     | una vez |
 | `data/world-map.json`                         | armado con los dos de arriba (el mapa terminado) | cuando cambian |
-| `data/dxagent.db`                             | DX Agent: alertas (últimos `keep_days` días), dónde estuvo cada activador (últimos 32 días), tus QSOs con ellos | mientras corre |
+| `data/dxagent.db`                             | DX Agent: alertas (últimos `keep_days` días), dónde estuvo cada activador (últimos 32 días), tus QSOs con ellos, QSOs por UDP que todavía no están en tu log | mientras corre |
+| `data/cache/log-<INDICATIVO>.pickle`          | DX Agent: los índices del log de cada indicativo tal como se leyó, para no volver a leer un log grande en cada arranque. Se usa solo si son iguales los archivos del log, el archivo de países, tus indicativos, el año y la versión de DX Agent; los QSOs posteriores (la base de tu logger, UDP) se suman encima como siempre. Se puede borrar sin problema | cuando cambia el log |
 | `data/dx-agent.log`                           | DX Agent (sin ventana) | mientras corre; menos de 5 MB |
 
 ### data/dxagent.db
@@ -1115,6 +1125,7 @@ reemplaza entero y se lee entero. Las tablas:
 | `alerts`     | cada alerta: hora, indicativo, banda y la alerta en JSON | `alerts.keep_days` días (7) |
 | `activators` | dónde estuvo cada activador (indicativo, hora, referencias) | 32 días |
 | `hunted`     | tus QSOs con activadores vistos en el aire (indicativo, programa, referencia, banda, hora) | para siempre |
+| `udp_qsos`   | QSOs que tus programas mandaron por UDP y tu archivo de log todavía no tiene (sus campos ADIF) | hasta que el log los tenga; como máximo 2.000, 30 días |
 
 Cualquier programa de SQLite lo abre (DB Browser for SQLite, `sqlite3`), incluso con DX Agent
 corriendo. Las versiones anteriores escribían `alerts.jsonl` (y `activations*.jsonl`):

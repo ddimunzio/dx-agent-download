@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.0 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.4.1 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -133,10 +133,13 @@ para reportar un problema.
 
 **Filtros**, arriba de la lista:
 
-- botones por **tipo de alerta**, **banda** y **modo** (sin ninguno marcado se ve todo);
+- botones por **tipo de alerta** (solo los tipos activados en Configuración), **banda** y **modo**
+  (sin ninguno marcado se ve todo);
 - **Actividad:** solo activaciones POTA, SOTA, IOTA... (sección 9);
 - **Solo cerca tuyo:** solo las estaciones que escucha alguien cerca tuyo;
 - **Ocultar confirmados:** saca lo que ya tenés confirmado en esa banda y modo;
+- **Solo LoTW:** solo las estaciones que subieron a LoTW en los últimos 12 meses y las
+  DXpediciones que anunciaron LoTW;
 - un cuadro de **búsqueda** por indicativo o país;
 - **Limpiar filtros** vuelve a mostrar todo. El navegador recuerda los filtros.
 
@@ -202,6 +205,8 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
   "cerca" (1.500 km de fábrica); en gris, la distancia al receptor más cercano; **—** = nadie
   la reportó en los últimos 15 minutos.
 - La misma alerta no se repite durante 15 minutos (se cambia en Configuración).
+- La lista guarda las últimas 500 alertas. Cuando se llena, se van primero las de INDICATIVO
+  NUEVO; las demás quedan al menos una hora.
 - Las **notificaciones de Windows** salen de fábrica solo para ATNO; en Configuración se
   pueden activar para más tipos.
 
@@ -262,7 +267,8 @@ puede avisarle cada QSO apenas lo guardás:
   archivo de log, debajo del principal.
 
 Cuando llega un QSO nuevo, las alertas que ya están en la lista se actualizan solas y dejan
-de decir "banda nueva" si ya la trabajaste.
+de decir "banda nueva" si ya la trabajaste. Los QSOs que llegan por UDP se guardan hasta que tu
+log los tiene: si cerrás DX Agent antes, no se pierden.
 
 ## 8. DXpediciones
 
@@ -293,7 +299,9 @@ IOTA, WWFF, BOTA, COTA** (castillos), **LOTA** (faros), **TOTA, ROTA, JOTA, YOTA
 con cuántas estaciones hay en la última hora.
 
 - Con una actividad elegida, la lista muestra también sus spots que no generaron alerta
-  (filas grises **SPOT**), por ejemplo un parque en un país que ya tenés.
+  (filas **SPOT**), por ejemplo un parque en un país que ya tenés. Va una fila por estación,
+  banda y modo (el spot más reciente, con **×N** la cantidad), en gris si no te suma nada y con
+  color si todavía te suma algo.
 - Cada fila dice la referencia (`POTA US-5584`, `SOTA LU/SA-001`...). Pasando el mouse se ve el
   nombre del parque o de la cumbre, y en las cumbres su altura y sus puntos.
 - **REF NUEVA:** con una actividad elegida, una cumbre, parque, isla o castillo que no
@@ -378,6 +386,7 @@ se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y 
 | El panel no abre | Abrí `http://localhost:8073` a mano. Si dice que el puerto está ocupado, otro programa (u otra copia de DX Agent) lo usa |
 | "Se perdió la conexión con DX Agent" | DX Agent se cerró: abrilo de nuevo con start-dx-agent.bat; la página se reconecta sola |
 | Una estación que acabo de trabajar sigue alertando | Ver la sección 7. Sin aviso del programa de log, se actualiza cuando tu programa escribe el archivo ADIF |
+| Tarda en arrancar con un log muy grande | La primera vez lee todo el log (con 250.000 QSOs, unos 15 segundos); después guarda un caché en `data\cache` y arranca en un segundo, salvo que el log haya cambiado |
 | Demasiadas alertas | En Configuración → Alertas dejá solo **ATNO** y **DXpedición**, o sacá bandas que no operás |
 | Muy pocas alertas del cluster | Es normal: el cluster manda pocos spots por minuto y la RBN suele reportar primero la misma estación |
 | No aparecen notificaciones de Windows | Configuración → **Mostrar notificaciones**, y en Windows: Configuración → Sistema → Notificaciones (incluida "Windows PowerShell") |

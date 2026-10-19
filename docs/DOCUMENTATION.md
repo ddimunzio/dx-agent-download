@@ -130,7 +130,7 @@ python -m dxagent run --no-ui       # console only
 | Area | What it shows |
 |------|---------------|
 | **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); your log totals; DXpeditions active; **Settings**, **About** (what DX Agent is, who made it, the collaborators, how to support it, help), **EN/ES** (language), **Theme** and **Browser sound** buttons; UTC clock. `#about` opens the About window |
-| **Filters** | Chips for alert type, band and mode, plus a search box for call or country. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. Your filters are remembered in the browser |
+| **Filters** | Chips for alert type, band and mode, plus a search box for call or country. Only the alert types turned on in Settings get a chip. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. SPOT rows are one per station, band and mode: the latest spot, with **×N** for how many (a CQ is heard by several RBN skimmers at once; hover for who heard it); those before an alert of the same station, band and mode are that alert's. A SPOT row that still adds to your log (it made no alert of its own because the same alert isn't repeated within the cooldown) is coloured like what it adds, not grey. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. **Only LoTW** leaves the stations that uploaded to LoTW in the last 12 months and the DXpeditions that announced LoTW: the ones likely to confirm there. Your filters are remembered in the browser |
 | **Alert table** | One row per alert, newest on top, coloured by type: UTC, alert, call, kHz, band, mode, country, what you need, LoTW, **near you** (see below), who heard it. New rows flash; rows fade after 10 minutes and fade more after 30 (hover a row for its age) |
 | **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked; a green ring marks the bands and modes where the station was spotted in the last 15 minutes, the latest one blinking, and a dot sits over the band), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button, **Show only** this call and **☆ watchlist** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
 | **DXpeditions tab** | Active DXpeditions and those starting in the next 30 days. Badge: **ATNO**, **Not confirmed**, or how many bands you have (e.g. "1 of 10 bands", highlighted when fewer than half). Tick **only needed** to hide ones you already have on most bands. Sorted by what's **on the air** (spotted in the last 15 minutes, the latest on top), by Club Log's **Most Wanted** rank (most wanted country first) or by start date: **Order** at the top. Each card shows its sources and Club Log's **Most Wanted** rank; one spotted in the last 15 minutes is framed in green as **ON THE AIR**. Click one to open its grid; the **☆** adds it to your watchlist |
@@ -569,6 +569,11 @@ headline, call, frequency (kHz), band, mode, country, then details separated by 
 
 "Default" refers to **Alert me for** on the Settings page (`alert_on` in the file).
 
+The list and the map keep the last 500 alerts. When the list is full, the least important go
+first: the oldest NEW CALL and DXPED HAVE, or any alert over an hour old. The others (ATNO, a
+new band, mode or slot, a DXpedition, the watchlist, the Marathon) stay at least an hour, so
+NEW CALL, which can bring a hundred alerts a minute, doesn't push them out.
+
 ### Where the DXpeditions come from
 
 Three public sources are merged by call sign (choose them in Settings →
@@ -806,7 +811,10 @@ DX Agent reads your log file (the ADIF backup) at start and whenever it changes.
 that tells it each QSO as you save it keeps it current in between: a station you just worked
 stops alerting at once, the alerts already listed say what they need now, and the
 DXpeditions, activations and the map's slots refresh. The QSOs go on top of the file until
-the next backup has them.
+the next backup has them. Those that came over UDP are also kept in `data/dxagent.db`, so
+closing DX Agent before your logger writes its file doesn't lose them: at the next start
+they count again, and each one goes once the log read again has it (at most 2,000, for 30
+days).
 
 **Log4OM 2** needs nothing: DX Agent reads the QSOs since the backup straight from Log4OM's
 database, every 10 seconds (`logbook.live`).
@@ -1052,7 +1060,8 @@ and can be deleted at any time; it is downloaded again when needed.
 | `data/world-countries-50m.json`               | Natural Earth (via world-atlas) | once |
 | `data/dxcc-shapes.json`, `data/cq-zones.json` | GridTracker                     | once |
 | `data/world-map.json`                         | made from the two above (the finished map) | when they change |
-| `data/dxagent.db`                             | DX Agent: alerts (last `keep_days` days), where activators were (last 32 days), your QSOs with them | while it runs |
+| `data/dxagent.db`                             | DX Agent: alerts (last `keep_days` days), where activators were (last 32 days), your QSOs with them, QSOs over UDP not in your log yet | while it runs |
+| `data/cache/log-<CALL>.pickle`                | DX Agent: each callsign's log indexes as last read, so a big log isn't read again at each start. Used only when the log files, the country file, your callsigns, the year and DX Agent's version are all the same; the QSOs since (your logger's database, UDP) are added on top as before. Safe to delete | when the log changes |
 | `data/dx-agent.log`                           | DX Agent (without a window) | while it runs; kept under 5 MB |
 
 ### data/dxagent.db
@@ -1066,6 +1075,7 @@ whole and read whole. The tables:
 | `alerts`     | every alert: time, call, band and the alert as JSON    | `alerts.keep_days` days (7) |
 | `activators` | where each activator was (call, time, references)      | 32 days |
 | `hunted`     | your QSOs with activators seen on the air (call, program, reference, band, time) | for good |
+| `udp_qsos`   | QSOs your programs sent over UDP that your log file doesn't have yet (their ADIF fields) | until the log has them; at most 2,000, 30 days |
 
 Any SQLite tool opens it (DB Browser for SQLite, `sqlite3`), even while DX Agent runs.
 Earlier versions wrote `alerts.jsonl` (and `activations*.jsonl`): the first start reads

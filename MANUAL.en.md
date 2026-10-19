@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.4.0 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.1 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -127,10 +127,13 @@ support it, to this manual and to report a problem.
 
 **Filters**, above the list:
 
-- buttons for **alert type**, **band** and **mode** (none ticked = everything shows);
+- buttons for **alert type** (only the types turned on in Settings), **band** and **mode** (none
+  ticked = everything shows);
 - **Activity:** only POTA, SOTA, IOTA... activations (section 9);
 - **Near you only:** only stations heard by someone near you;
 - **Hide confirmed:** hides what you already have confirmed on that band and mode;
+- **Only LoTW:** only stations that uploaded to LoTW in the last 12 months, and DXpeditions that
+  announced LoTW;
 - a **search** box for a callsign or country;
 - **Clear filters** shows everything again. Your browser remembers the filters.
 
@@ -192,6 +195,8 @@ on the map shows that country in the Station tab (section 10).
   km by default); in grey, the distance to the nearest receiver; **—** = nobody reported it in
   the last 15 minutes.
 - The same alert isn't repeated for 15 minutes (change it in Settings).
+- The list keeps the last 500 alerts. When it's full, NEW CALL ones leave first; the others
+  stay at least an hour.
 - **Windows pop-ups** are shown for ATNO only by default; in Settings you can turn them on for
   more types.
 
@@ -250,7 +255,8 @@ worked keeps alerting. To avoid that, your logger can tell DX Agent each QSO as 
   main one.
 
 When a new QSO comes in, the alerts already listed update by themselves and stop saying "new
-band" once you've worked it.
+band" once you've worked it. QSOs received over UDP are kept until your log has them: closing
+DX Agent before that doesn't lose them.
 
 ## 8. DXpeditions
 
@@ -280,8 +286,9 @@ The **Activity** menu (next to the mode filters) shows only activations: **POTA,
 WWFF, BOTA, COTA** (castles), **LOTA** (lighthouses), **TOTA, ROTA, JOTA, YOTA** and **EME**, with
 how many stations are on in the last hour.
 
-- With an activity picked, the list also shows its spots that made no alert (grey **SPOT**
-  rows), such as a park in a country you already have.
+- With an activity picked, the list also shows its spots that made no alert (**SPOT** rows),
+  such as a park in a country you already have. One row per station, band and mode (the latest
+  spot, **×N** how many), grey if it adds nothing, in colour if it still adds something.
 - Each row shows the reference (`POTA US-5584`, `SOTA W7A/MN-001`...). Hover over it for the
   park's or summit's name, and for summits their altitude and points.
 - **NEW REF:** with an activity picked, a summit, park, island or castle you haven't worked
@@ -362,6 +369,7 @@ one into it.
 | The dashboard doesn't open | Open `http://localhost:8073` yourself. If it says the port is taken, another program (or another copy of DX Agent) is using it |
 | "Lost connection to DX Agent" | DX Agent closed: open it again with start-dx-agent.bat; the page reconnects by itself |
 | A station I just worked keeps alerting | See section 7. Without your logger telling DX Agent, it updates when your logger writes its ADIF file |
+| Slow to start with a very big log | The first time it reads the whole log (250,000 QSOs: about 15 seconds); then it keeps a cache in `data\cache` and starts in a second, unless the log changed |
 | Too many alerts | In Settings → Alerts keep only **ATNO** and **DXpedition**, or untick bands you don't operate |
 | Very few cluster alerts | Normal: the cluster sends a few spots a minute, and the RBN usually reports the same station first |
 | No Windows pop-ups | Settings → **Show pop-ups**, and in Windows: Settings → System → Notifications (including "Windows PowerShell") |
