@@ -197,6 +197,9 @@ on the map shows that country in the Station tab (section 10).
 - The same alert isn't repeated for 15 minutes (change it in Settings).
 - The list keeps the last 500 alerts. When it's full, NEW CALL ones leave first; the others
   stay at least an hour.
+- When you work the station, its alerts in the list change by themselves: a NEW SLOT you worked
+  isn't one any more (nor under that filter), a DXpedition becomes DXPED CFM or DXPED HAVE, and an
+  alert that adds nothing now shows as **WORKED**, in grey.
 - **Windows pop-ups** are shown for ATNO only by default; in Settings you can turn them on for
   more types.
 

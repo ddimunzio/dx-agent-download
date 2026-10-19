@@ -207,6 +207,9 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
 - La misma alerta no se repite durante 15 minutos (se cambia en Configuración).
 - La lista guarda las últimas 500 alertas. Cuando se llena, se van primero las de INDICATIVO
   NUEVO; las demás quedan al menos una hora.
+- Cuando trabajás la estación, sus alertas en la lista cambian solas: una BANDA+MODO que ya
+  trabajaste deja de serlo (y de aparecer con ese filtro), una DXpedición pasa a DXPED CONFIRMAR o
+  DXPED YA TENGO, y una alerta que ya no te suma nada queda como **TRABAJADO**, en gris.
 - Las **notificaciones de Windows** salen de fábrica solo para ATNO; en Configuración se
   pueden activar para más tipos.
 

@@ -574,6 +574,11 @@ first: the oldest NEW CALL and DXPED HAVE, or any alert over an hour old. The ot
 new band, mode or slot, a DXpedition, the watchlist, the Marathon) stay at least an hour, so
 NEW CALL, which can bring a hundred alerts a minute, doesn't push them out.
 
+When your log changes (you work the station), the alerts already listed follow: a reason that
+no longer holds leaves (a NEW SLOT you then worked isn't one any more, nor under that filter),
+and the headline, colour and "What you need" with it. A DXpedition stays one: DXPED NEED, CFM or
+HAVE by what it still adds. An alert with no reason left shows as **WORKED** (grey).
+
 ### Where the DXpeditions come from
 
 Three public sources are merged by call sign (choose them in Settings →

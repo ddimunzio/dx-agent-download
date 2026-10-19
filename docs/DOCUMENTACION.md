@@ -607,6 +607,12 @@ una hora. Las demás (ATNO, banda, modo o banda+modo nuevos, DXpediciones, segui
 quedan al menos una hora, así INDICATIVO NUEVO, que puede traer cien alertas por minuto, no las
 saca.
 
+Cuando cambia tu log (trabajaste la estación), las alertas que ya están en la lista lo siguen: el
+motivo que ya no vale se va (una BANDA+MODO que después trabajaste deja de serlo, y de aparecer
+con ese filtro), y con él el título, el color y "Qué te falta". Una DXpedición sigue siéndolo:
+DXPED FALTA, CONFIRMAR o YA TENGO según lo que todavía te suma. Una alerta sin ningún motivo
+queda como **TRABAJADO** (en gris).
+
 ### De dónde salen las DXpediciones
 
 Se unen tres fuentes públicas por indicativo (se eligen en Configuración →
