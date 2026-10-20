@@ -300,12 +300,30 @@ En la pestaña Estación (clic en una alerta, o en una DXpedición de la pestañ
 
 El menú **Actividad** (después de los botones de modo) muestra solo activaciones: **POTA,
 SOTA, IOTA, WWFF, BOTA, COTA (castillos WCA), LOTA (faros), TOTA, ROTA, JOTA, YOTA** y
-**EME**, o *cualquier activación*. Al lado de cada una, cuántas estaciones hay en la última hora.
+**EME**, o *cualquier activación* (*ninguna*, la primera opción, es sin filtro de Actividad: se ve todo). Al lado de cada una, cuántas estaciones hay en la última hora.
 
 - La lista muestra sus alertas y también sus spots que no generaron alerta (filas grises
   **SPOT**: un parque en un país que ya tenés también aparece), de la última hora.
 - Cada fila dice la activación debajo de *Qué necesitás*, con su referencia: `POTA US-5584`,
   `IOTA EU-038`, `WWFF KFF-6494`...
+- **La pestaña Referencias** (aparece cuando hay una Actividad elegida en el menú, y abre en ese programa): todas las cumbres, parques, islas y castillos que trabajaste (POTA,
+  SOTA, WWFF, IOTA, WCA), programa por programa: cuántas trabajadas y confirmadas, y cada una con
+  su nombre y lugar (listas de POTA y SOTA), las bandas en que la trabajaste, **C** confirmada /
+  **W** trabajada, y tu último QSO con ella. Con buscador, y para ver todas, confirmadas o sin
+  confirmar; al hacer clic en una fila de POTA o SOTA se abre su tarjeta. Sale de tu log (QSOs que
+  dicen la referencia: POTA_REF, SOTA_REF, WWFF_REF, IOTA, SIG_INFO, las referencias de Log4OM) y
+  de tus QSOs con activadores que DX Agent vio en el aire. *Confirmada* quiere decir que un QSO
+  con ella está confirmado en LoTW o por QSL; el crédito oficial de cada programa está en su sitio
+  (pota.app, sotadata, wwff.co). La lista de parques de POTA (`data/pota-parks.csv`, ~10 MB) se
+  baja de nuevo cuando tiene un mes.
+- **Tus parques y cumbres en el mapa:** el menú **Referencias**, al lado de DXCC / WAZ, muestra
+  los parques POTA y/o las cumbres SOTA que trabajaste, en verde confirmadas y en ámbar trabajadas.
+- **El parque o la cumbre en la pestaña Estación (POTA, SOTA):** al hacer clic en la fila, una
+  tarjeta muestra lo que dicen pota.app o SOTA: su nombre, tipo y dónde queda (grid locator), si
+  **vos** la trabajaste y en qué bandas (o "Nueva para vos"), cuántas activaciones y QSOs tiene,
+  quién la activó primero, sus últimas activaciones (indicativo, fecha, QSOs por modo) y links a
+  su página en pota.app o SOTA y al sitio del parque. Se consulta a api.pota.app y
+  api2.sota.org.uk (públicas, sin login) al abrirla, y se guarda 30 minutos.
 - **POTA y WWFF:** DX Agent lee además sus propias listas de quién está activando ahora
   (pota.app y wwff.co, cada 2 minutos). Cualquier spot de esas estaciones lleva su parque,
   incluso un spot de RBN de FT8 (RBN descarta el "POTA" de "CQ POTA"), y los activadores
@@ -317,7 +335,7 @@ SOTA, IOTA, WWFF, BOTA, COTA (castillos WCA), LOTA (faros), TOTA, ROTA, JOTA, YO
   salvo que quien la spoteó haya escrito "SOTA" antes (una cumbre más nueva que nuestra copia).
   Pasando el mouse sobre la activación se ve el nombre de la cumbre, su altura y sus puntos; los
   parques de POTA y WWFF muestran ahí su nombre también.
-- **En el mapa:** las activaciones van en su cumbre (un triángulo) o su parque (un cuadrado),
+- **En el mapa:** las activaciones van en su cumbre (una montaña de cima dentada) o su parque (un pino),
   según la lista de SOTA y las de POTA y WWFF; con el color de su alerta, grises si no generaron
   ninguna.
 - **Cumbres y parques nuevos:** con una Actividad elegida, una cumbre, parque, isla (IOTA) o
@@ -388,8 +406,10 @@ mismas alertas en un mapa del mundo. Los filtros valen para las dos vistas.
 
 - **Los puntos** son alertas, con el color de su tipo. La posición de la estación sale del
   grid locator que informa la RBN en los spots de FT8/FT4; si no, es el centro del país
-  (marcado "aprox." en el detalle). Pasá el mouse para ver los datos y hacé clic para
-  seleccionarla.
+  (marcado "aprox." en el detalle). Pasá el mouse para ver los datos y hace cuánto la
+  spotearon, y hacé clic para seleccionarla. Como en la lista, un punto se atenúa a los 10
+  minutos del último spot de la estación en esa banda y modo, y más a los 30: un punto
+  atenuado es donde estuvo, no donde está.
 - **Hacé clic en un país** (en cualquier parte, o cerca de una isla chica) para verlo en la
   pestaña Estación, como cuando consultás un indicativo: su tarjeta, los rumbos a su centro,
   el estado, el cuadro del CQ DX Marathon y la grilla banda × modo.
@@ -433,6 +453,11 @@ Mixto, Fonía, CW o Digital, una banda en el segundo:
 - **Fonía**, **CW** o **Digital** y una banda, por ejemplo **CW** y **40 m**: tus slots en esa
   banda y modo. No es un diploma de la ARRL, pero así se persiguen los slots;
 - **Satélite**;
+- **Sigue a los filtros de arriba de la lista:** con *todas las bandas* (o **Mixto**) acá y una
+  sola banda (o un solo modo) elegidos en los filtros, por ejemplo 12 m y DIGI, la capa pinta esa
+  banda y ese modo, igual que los puntos; los menús dicen entonces "12 m (filtro)", "Digital
+  (filtro)". Una banda o un modo elegidos acá tienen prioridad. La capa WAZ sigue la banda de la
+  misma forma;
 - **Challenge (160–6 m)**: cuantas más bandas confirmadas, más verde (de 0 a 10); el total
   cuenta banda-entidad, como el DXCC Challenge.
 
@@ -506,7 +531,7 @@ fuentes en pocos segundos. No hace falta reiniciarlo.
 |---------|-------------------------|
 | **Estación** | Tu indicativo; **Tu log**: un archivo ADIF de tu logger, **Solo LoTW** (ver LoTW como log), o **Empezar de cero** (ver Un log nuevo); la ruta del log ADIF (una por línea; `*` elige el archivo más nuevo, por ejemplo `…/CALL_*_backup.adi` para los backups de Log4OM). **Buscar…** abre la ventana de archivos de Windows para elegirlo (si elegís un backup de Log4OM con fecha, se convierte en `…/CALL_*_backup.adi` para usar siempre el más nuevo). **Probar** muestra qué archivo encontró, su tamaño, fecha y cantidad de QSOs; tu grid locator (vacío = se toma de tu log); **Tus otros indicativos**, cada uno con su log (ver Varios indicativos) |
 | **LoTW** | Activar o desactivar la descarga de confirmaciones; usuario de LoTW (vacío = tu indicativo); contraseña de LoTW; cada cuánto descargar. **Probar ingreso** prueba el usuario y la contraseña con LoTW |
-| **Alertas** | Qué tipos de alerta querés; bandas; modos; cuándo una DXpedición o un indicativo de la lista de seguimiento cuenta como trabajado; **Lista de seguimiento**; **Ignorar**; cuánto esperar antes de repetir la misma alerta y **Dejar solo la última fila de cada estación** (mismo indicativo, frecuencia y modo: cuando vuelve a aparecer, sus filas anteriores salen de la lista); **Quitar de la lista después de** N minutos (las estaciones que no se spotean en esa banda y modo durante ese tiempo salen de la lista; 0 = nunca, el valor por defecto); el radio de "cerca tuyo" y **Avisar solo si se escucha cerca tuyo**; notificaciones de Windows y para qué alertas |
+| **Alertas** | Qué tipos de alerta querés (y **Tu propio indicativo**: quién te escucha); bandas; modos; cuándo una DXpedición o un indicativo de la lista de seguimiento cuenta como trabajado; **Lista de seguimiento**; **Ignorar**; cuánto esperar antes de repetir la misma alerta y **Dejar solo la última fila de cada estación** (mismo indicativo, frecuencia y modo: cuando vuelve a aparecer, sus filas anteriores salen de la lista); **Quitar de la lista después de** N minutos (las estaciones que no se spotean en esa banda y modo durante ese tiempo salen de la lista; 0 = nunca, el valor por defecto); el radio de "cerca tuyo" y **Avisar solo si se escucha cerca tuyo**; notificaciones de Windows y para qué alertas |
 | **Fuentes de spots** | DX cluster activado o no, sus servidores (`servidor:puerto`, en orden) y comandos al conectar; **Spots recientes al conectar** (minutos, 0 = no); de qué continentes tomar los spotters del cluster; RBN activada o no, fuentes CW/RTTY y FT8/FT4; de qué continentes cuentan los skimmers |
 | **Radio (botón Sintonizar)** | Qué programa sintoniza la radio (Desactivado, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander), su dirección y puerto (0 = por defecto), si también cambia el modo, y qué radio de OmniRig |
 | **CQ DX Marathon** | Seguirlo o no; el anual o el Sprint, y las fechas del Sprint; los modos que cuentan (todos, CW, fonía, digital, o Classic: CW y fonía); alertas por país nuevo y por zona nueva del Marathon |
@@ -622,6 +647,7 @@ siempre usan los nombres en inglés.
 | BANDA+MODO        | NEW SLOT            | País no trabajado en esta combinación de banda y modo              | desactivada |
 | INDICATIVO NUEVO  | NEW CALL            | Este indicativo exacto no está en tu log (genera muchísimas alertas) | desactivada |
 | MARATHON          | MARATHON            | Un país o una zona CQ que todavía no trabajaste en el CQ DX Marathon (ver CQ DX Marathon) | activada, mientras sigas el Marathon |
+| TE ESCUCHAN       | YOU'RE HEARD        | Spotearon tu propio indicativo (cualquiera de los tuyos, en cualquier banda y modo): quién te escucha y a qué distancia, en Qué te falta ("te escuchan a 8.912 km, en United States"); la fila va resaltada en rosa y sigue al último spot (×N skimmers). Al hacer clic se ven todos los receptores que te escucharon, del más cercano al más lejano, y en el mapa | activada (`alerts.self_spots`) |
 
 "Por defecto" se refiere a **Avisarme de** en la página de configuración
 (`alert_on` en el archivo).
@@ -792,6 +818,7 @@ proyecto. También se puede editar a mano; después hay que reiniciar `run`.
 | alerts      | `near_km`                   | `1500`                                            | "Cerca tuyo" = la escuchó una estación a esta distancia en km o menos |
 | alerts      | `near_only`                 | `false`                                           | Avisar solo si la estación se escucha cerca tuyo |
 | alerts      | `latest_only`               | `false`                                           | Lista del panel: dejar solo la última fila de cada estación en la misma frecuencia y modo |
+| alerts      | `self_spots`                | `true`                                            | Listar los spots de tu propio indicativo (TE ESCUCHAN): quién te escucha y a qué distancia |
 | alerts      | `expire_minutes`            | `0`                                               | Lista del panel: quitar las estaciones que no se spotean en esa banda y modo hace estos minutos (0 = nunca) |
 | alerts      | `keep_days`                 | `7`                                               | Días de alertas que se guardan en `data/dxagent.db` (0 = ninguna). Con la RBN, unas 25.000 alertas por día, unos 15 MB |
 | ui          | `enabled`                   | `true`                                            | Iniciar el panel web con `run` |
@@ -1115,6 +1142,7 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `dxagent/alerts.py`         | Línea en la terminal, colores, notificación, tiempo de espera, historial |
 | `dxagent/queries.py`        | Grilla de la estación, lista de DXpediciones y avance en el DXCC, compartidas por los comandos y el panel |
 | `dxagent/reach.py`          | "Cerca tuyo": quién escuchó cada estación y a qué distancia de vos; lista de skimmers de la RBN; PSKReporter |
+| `dxagent/refinfo.py`        | La página de un parque POTA o una cumbre SOTA, para la pestaña Estación |
 | `dxagent/geo.py`            | Grid locators y distancias |
 | `dxagent/onlinelog.py`      | Busca tus QSOs en el log de una DXpedición en Club Log |
 | `dxagent/wsjtx.py`          | Manda un indicativo a WSJT-X (mensaje UDP Configure) |
@@ -1142,6 +1170,7 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `data/lotw.secret`                            | página de configuración | al guardar una contraseña |
 | `data/rbn-skimmers.json`                      | lista de skimmers de la RBN | cada día |
 | `data/sota-summits.csv`                       | lista de cumbres de SOTA | cada mes  |
+| `data/pota-parks.csv`                          | Lista de parques de POTA (pestaña Referencias) | cada mes  |
 | `data/world-countries-50m.json`               | Natural Earth (vía world-atlas) | una vez |
 | `data/dxcc-shapes.json`, `data/cq-zones.json` | GridTracker                     | una vez |
 | `data/world-map.json`                         | armado con los dos de arriba (el mapa terminado) | cuando cambian |

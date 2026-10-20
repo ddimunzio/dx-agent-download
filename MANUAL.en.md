@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.4.3 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.4 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -194,6 +194,9 @@ station:
   an empty cell: it's on the air on a band you need;
 - whether you worked that exact call, its LoTW status and, for a DXpedition, its details;
 - with the CQ DX Marathon on, what it adds to the Marathon (section 11);
+- for a station on a **POTA park or SOTA summit**, a card with what pota.app or SOTA say about
+  it: name, type and place, how many activations and QSOs, who activated it first, its latest
+  activations, whether **you** worked it and on which bands (or "New for you"), and links;
 - **who hears it**, the receivers nearest to you first, and **Check PSKReporter (FT8/FT4)**;
 - **Show only** this call, **☆ Add to watchlist**, its latest spots, and links to QRZ.com,
   HamQTH and DXWatch.
@@ -221,6 +224,7 @@ on the map shows that country in the Station tab (section 10).
 | **NEW SLOT** | Country not worked on this band and mode combination | off |
 | **NEW CALL** | This exact call isn't in your log (lots of alerts) | off |
 | **MARATHON** | A country or CQ zone you haven't worked yet in the CQ DX Marathon (section 11) | on, while you follow the Marathon |
+| **YOU'RE HEARD** | Your own call spotted, on any band and mode: the row is highlighted in pink and says how far away and in which country the skimmer is ("heard 8,912 km away, in United States"). Click it for every receiver that heard you, on the map too | on |
 
 - **What you need** says exactly what the station adds: "new band", "17m DIGI never worked",
   "entity not confirmed", or "have it".
@@ -326,7 +330,8 @@ gathered from NG3K, 425 DX News and Club Log.
 
 The **Activity** menu (next to the mode filters) shows only activations: **POTA, SOTA, IOTA,
 WWFF, BOTA, COTA** (castles), **LOTA** (lighthouses), **TOTA, ROTA, JOTA, YOTA** and **EME**, with
-how many stations are on in the last hour.
+how many stations are on in the last hour. Its first option, **none**, turns the Activity filter
+off.
 
 - With an activity picked, the list also shows its spots that made no alert (**SPOT** rows),
   such as a park in a country you already have. One row per station, band and mode (the latest
@@ -337,7 +342,13 @@ how many stations are on in the last hour.
   **on that band** is marked new, even if you have the country confirmed. DX Agent knows what
   you worked from the references in your log and from your QSOs with activators it saw on the
   air (since you started using it).
-- On the map, summits are triangles and parks are squares, at their real location.
+- On the map, summits are mountains and parks are pine trees, at their real location.
+- **The References tab** (it shows while an activity is picked): every summit, park, island and
+  castle you worked (POTA, SOTA, WWFF, IOTA, WCA), program by program: how many worked and
+  confirmed, and each one with its name and place, the bands, **C** confirmed / **W** worked and
+  your latest QSO. Click one for **your QSOs with it** (call, date, band, mode, ✓ when confirmed)
+  and, for POTA or SOTA, its card. *Confirmed* means the QSO is confirmed in LoTW or by QSL;
+  each program's own credit is on its site (pota.app, sotadata, wwff.co).
 
 ## 10. The map
 
@@ -346,7 +357,9 @@ how many stations are on in the last hour.
 Click **Map** (next to **List**). The filters work the same as in the list.
 
 - **Dots:** alerts, coloured by type. **Diamonds:** active DXpeditions (green frame = on the
-  air). **Triangles and squares:** summits and parks. **Blue dot:** your QTH.
+  air). **Mountains and pine trees:** summits and parks. **Blue dot:** your QTH.
+- A dot fades 10 minutes after the station's last spot and more after 30: a faded dot is where
+  it was, not where it is. Hover it to see how long ago.
 - The shaded area is where it's night (its edge is the grey line).
 - Picking a station draws the path from your QTH, with heading and distance, and the receivers
   that heard it.
@@ -357,6 +370,10 @@ Click **Map** (next to **List**). The filters work the same as in the list.
 - **DXCC** (top left) paints each entity by your award standing: green = confirmed, amber =
   worked, red = missing. Pick Mixed, Phone, CW, Digital, one band, Satellite or the Challenge.
 - **WAZ** paints the 40 CQ zones the same way, with its variants (by mode, by band, 5BWAZ...).
+- With one band (or mode) picked in the filters above, DXCC and WAZ paint that band ("12 m
+  (filter)"), unless you picked one in their own menus.
+- **References** (next to DXCC / WAZ): your POTA parks and SOTA summits, green confirmed, amber
+  worked.
 
 ## 11. CQ DX Marathon
 

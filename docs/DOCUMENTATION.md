@@ -284,12 +284,29 @@ In the Station tab (click an alert, or a DXpedition in the DXpeditions tab):
 
 The **Activity** menu (after the mode chips) shows only activations: **POTA, SOTA, IOTA,
 WWFF, BOTA, COTA (WCA castles), LOTA (lighthouses), TOTA, ROTA, JOTA, YOTA** and **EME**, or
-*any activation*. Next to each, how many stations are on it in the last hour.
+*any activation* (*none*, the first option, is no Activity filter: everything shows). Next to each, how many stations are on it in the last hour.
 
 - The list shows their alerts and also their spots that made no alert (grey **SPOT**
   rows: a park in a country you already have still shows), from the last hour.
 - Each row says the activation under *What you need*, with its reference: `POTA US-5584`,
   `IOTA EU-038`, `WWFF KFF-6494`...
+- **The References tab** (it shows while an Activity is picked in the menu, and opens on that program): every summit, park, island and castle you worked (POTA, SOTA, WWFF,
+  IOTA, WCA), program by program: how many worked and confirmed, and each one with its name
+  and place (POTA's and SOTA's lists), the bands you worked it on, **C** confirmed / **W** worked,
+  and your latest QSO with it. Search, and show all, confirmed or not confirmed; click a POTA or
+  SOTA row for its card. From your log (QSOs that say the reference: POTA_REF, SOTA_REF,
+  WWFF_REF, IOTA, SIG_INFO, Log4OM's award references) and your QSOs with activators DX Agent saw
+  on the air. *Confirmed* means a QSO with it is confirmed in LoTW or by QSL; each program's own
+  credit is on its site (pota.app, sotadata, wwff.co). POTA's parks list
+  (`data/pota-parks.csv`, ~10 MB) is downloaded again when a month old.
+- **Your parks and summits on the map:** the **References** menu next to DXCC / WAZ shows the
+  POTA parks and/or SOTA summits you worked, green confirmed, amber worked.
+- **The park or summit in the Station tab (POTA, SOTA):** click the row and a card shows what
+  pota.app or SOTA say about it: its name, type and where it is (grid square), whether **you**
+  worked it and on which bands (or "New for you"), how many activations and QSOs it has, who
+  activated it first, its latest activations (call, date, QSOs by mode) and links to its page
+  on pota.app or SOTA and to the park's own website. Asked from api.pota.app and
+  api2.sota.org.uk (public, no login) when you open it, and kept 30 minutes.
 - **POTA and WWFF:** DX Agent also reads their own lists of who is activating now (pota.app
   and wwff.co, every 2 minutes). Any spot of those stations gets its park, even an RBN FT8
   spot (RBN drops the "POTA" of "CQ POTA"), and activators spotted only on those sites show
@@ -299,7 +316,7 @@ WWFF, BOTA, COTA (WCA castles), LOTA (lighthouses), TOTA, ROTA, JOTA, YOTA** and
   when a month old). A summit reference must be a valid summit to count, unless the spotter
   wrote "SOTA" before it (a summit newer than our copy). Hover over the activation to see the
   summit's name, altitude and points; POTA and WWFF parks show their name there too.
-- **On the map:** activations sit at their summit (a triangle) or park (a square), from SOTA's
+- **On the map:** activations sit at their summit (a mountain with a jagged peak) or park (a pine tree), from SOTA's
   list and POTA's and WWFF's; coloured like their alert, grey when they made none.
 - **New summits and parks:** with an Activity picked, a summit, park, island (IOTA) or castle
   you haven't worked **on that band** is marked *new*, even in a country you have confirmed: a
@@ -366,7 +383,10 @@ world map. The filters apply to both views.
 
 - **Dots** are alerts, coloured like their type. A station's position comes from the
   grid square RBN reports for FT8/FT4 spots; otherwise it's the country's centre
-  (marked "approx." in the tooltip). Hover a dot for the details, click it to select it.
+  (marked "approx." in the tooltip). Hover a dot for the details and how long ago the
+  station was spotted, click it to select it. As in the list, a dot fades 10 minutes after
+  the station's last spot on that band and mode, and more after 30: a faded dot is where it
+  was, not where it is.
 - **Click a country** (anywhere on it, or near a small island) to see it in the Station tab,
   as a lookup shows a call's country: its card, beam headings to its centre, status, CQ DX
   Marathon box and band × mode grid.
@@ -409,6 +429,10 @@ Digital, a band in the second:
 - **Phone**, **CW** or **Digital** and a band, say **CW** and **40 m**: your slots on that
   band and mode. That isn't an ARRL award, but it is how you chase slots;
 - **Satellite**;
+- **It follows the filters above the list:** with *all bands* (or **Mixed**) here and a single
+  band (or mode) picked in the filters, say 12 m and DIGI, the layer paints that band and mode,
+  as the dots do; the menus then say "12 m (filter)", "Digital (filter)". A band or mode picked
+  here wins. The WAZ layer follows the band the same way;
 - **Challenge (160–6 m)**: the more bands confirmed, the greener (0 to 10); the total
   counts band-entities, as the DXCC Challenge does.
 
@@ -478,7 +502,7 @@ restart it.
 |---------|------------------|
 | **Station** | Your callsign; **Your log**: an ADIF file from your logger, **LoTW only** (see LoTW as your log), or **Start from scratch** (see A new log); the path to your ADIF log (one per line; `*` picks the newest file, e.g. `…/CALL_*_backup.adi` for Log4OM backups). **Browse…** opens the Windows file window to pick the file (if you pick a dated Log4OM backup, it becomes `…/CALL_*_backup.adi` so the newest is always used). **Test** shows which file it found, its size, date and QSO count; your grid square (empty = taken from your log); **Your other callsigns**, each with its own log (see Several callsigns) |
 | **LoTW** | Turn the confirmation download on or off; LoTW username (empty = your call); LoTW password; how often to download. **Test login** checks the username and password with LoTW |
-| **Alerts** | Which alert types you want; bands; modes; when a DXpedition or watchlist call counts as worked; watchlist; ignore list; how long before the same alert repeats and **Keep only the latest row of each station** (same call, frequency and mode: when it shows up again, its older rows leave the list); **Take out of the list after** N minutes (stations not spotted on that band and mode for that long leave the list; 0 = never, the default); the "near you" radius and **Only alert when heard near you**; Windows pop-ups and for which alerts |
+| **Alerts** | Which alert types you want (and **Your own call**: who hears you); bands; modes; when a DXpedition or watchlist call counts as worked; watchlist; ignore list; how long before the same alert repeats and **Keep only the latest row of each station** (same call, frequency and mode: when it shows up again, its older rows leave the list); **Take out of the list after** N minutes (stations not spotted on that band and mode for that long leave the list; 0 = never, the default); the "near you" radius and **Only alert when heard near you**; Windows pop-ups and for which alerts |
 | **Spot sources** | DX cluster on/off, its servers (`host:port`, tried in order) and login commands; **Recent spots on connecting** (minutes, 0 = off); which continents' cluster spotters to use; RBN on/off, CW/RTTY and FT8/FT4 feeds; which continents' skimmers count |
 | **Radio (Tune button)** | Which program tunes the radio (Off, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander), its address and port (0 = default), whether to set the mode too, and which OmniRig radio |
 | **CQ DX Marathon** | Follow it or not; the year or the Sprint, and the Sprint's dates; the modes that count (all, CW, phone, digital, or Classic: CW and phone); alerts for a new Marathon country and for a new zone |
@@ -590,6 +614,7 @@ headline, call, frequency (kHz), band, mode, country, then details separated by 
 | NEW SLOT   | Country not worked on this band+mode combination                             | off     |
 | NEW CALL   | This exact callsign isn't in your log (very noisy)                           | off     |
 | MARATHON   | A country or CQ zone you haven't worked yet in the CQ DX Marathon (see CQ DX Marathon) | on, while the Marathon is followed |
+| YOU'RE HEARD | Your own callsign spotted (any of yours, on any band and mode): who hears you, and how far away, in What you need ("heard 8,912 km away, in United States"); the row is highlighted in pink and follows the latest spot (×N skimmers). Click it for every receiver that heard you, nearest first, and on the map | on (`alerts.self_spots`) |
 
 "Default" refers to **Alert me for** on the Settings page (`alert_on` in the file).
 
@@ -751,6 +776,7 @@ You can also edit it by hand; restart `run` afterwards.
 | alerts      | `near_km`                   | `1500`                                            | "Near you" = heard by a station within this many km |
 | alerts      | `near_only`                 | `false`                                           | Only alert when the station is heard near you |
 | alerts      | `latest_only`               | `false`                                           | Dashboard list: keep only the latest row of each station on the same frequency and mode |
+| alerts      | `self_spots`                | `true`                                            | List the spots of your own callsign (YOU'RE HEARD): who hears you, and how far away |
 | alerts      | `expire_minutes`            | `0`                                               | Dashboard list: take out stations not spotted on that band and mode for this many minutes (0 = never) |
 | alerts      | `keep_days`                 | `7`                                               | Days of alerts kept in `data/dxagent.db` (0 = none). With RBN on, about 25,000 alerts a day, some 15 MB |
 | ui          | `enabled`                   | `true`                                            | Start the web dashboard with `run` |
@@ -1063,6 +1089,7 @@ and can be deleted at any time; it is downloaded again when needed.
 | `dxagent/alerts.py`         | Console line, colours, pop-up, cooldown, alert history |
 | `dxagent/queries.py`        | Station grid, DXpedition list and DXCC standing, shared by the commands and the dashboard |
 | `dxagent/reach.py`          | "Near you": who heard each station and how far from you; RBN skimmer list; PSKReporter |
+| `dxagent/refinfo.py`        | A POTA park's or SOTA summit's page, for the Station tab |
 | `dxagent/geo.py`            | Grid squares and distances |
 | `dxagent/onlinelog.py`      | Checks a DXpedition's log on Club Log |
 | `dxagent/wsjtx.py`          | Sends a call to WSJT-X (UDP Configure message) |
@@ -1090,6 +1117,7 @@ and can be deleted at any time; it is downloaded again when needed.
 | `data/lotw.secret`                            | Settings page      | when you save a password |
 | `data/rbn-skimmers.json`                      | RBN skimmer list   | daily          |
 | `data/sota-summits.csv`                       | SOTA summits list  | monthly        |
+| `data/pota-parks.csv`                         | POTA parks list (the References tab) | monthly        |
 | `data/world-countries-50m.json`               | Natural Earth (via world-atlas) | once |
 | `data/dxcc-shapes.json`, `data/cq-zones.json` | GridTracker                     | once |
 | `data/world-map.json`                         | made from the two above (the finished map) | when they change |
