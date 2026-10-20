@@ -336,8 +336,9 @@ SOTA, IOTA, WWFF, BOTA, COTA (castillos WCA), LOTA (faros), TOTA, ROTA, JOTA, YO
   Pasando el mouse sobre la activación se ve el nombre de la cumbre, su altura y sus puntos; los
   parques de POTA y WWFF muestran ahí su nombre también.
 - **En el mapa:** las activaciones van en su cumbre (una montaña de cima dentada) o su parque (un pino),
-  según la lista de SOTA y las de POTA y WWFF; con el color de su alerta, grises si no generaron
-  ninguna.
+  según la lista de SOTA y las de POTA y WWFF; con el color de cómo estás con esa referencia, igual
+  que las capas DXCC y Referencias: rojo no trabajada, ámbar trabajada, verde confirmada (pasando
+  el mouse se ve cuál).
 - **Cumbres y parques nuevos:** con una Actividad elegida, una cumbre, parque, isla (IOTA) o
   castillo que no trabajaste **en esa banda** se marca *nueva*, aunque tengas el país confirmado:
   un spot que no generó alerta aparece como **REF NUEVA** ("referencia no trabajada en 20m"), la

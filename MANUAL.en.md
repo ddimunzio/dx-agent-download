@@ -342,7 +342,8 @@ off.
   **on that band** is marked new, even if you have the country confirmed. DX Agent knows what
   you worked from the references in your log and from your QSOs with activators it saw on the
   air (since you started using it).
-- On the map, summits are mountains and parks are pine trees, at their real location.
+- On the map, summits are mountains and parks are pine trees, at their real location: red if you
+  haven't worked that reference, amber worked, green confirmed.
 - **The References tab** (it shows while an activity is picked): every summit, park, island and
   castle you worked (POTA, SOTA, WWFF, IOTA, WCA), program by program: how many worked and
   confirmed, and each one with its name and place, the bands, **C** confirmed / **W** worked and

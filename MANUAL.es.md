@@ -357,7 +357,8 @@ Actividad.
   trabajaste **en esa banda** se marca como nuevo, aunque el país ya lo tengas confirmado.
   DX Agent sabe qué trabajaste por las referencias de tu log y por tus QSOs con activadores
   que vio en el aire (desde que lo usás).
-- En el mapa, las cumbres son montañas y los parques pinos, en su ubicación real.
+- En el mapa, las cumbres son montañas y los parques pinos, en su ubicación real: en rojo si no
+  trabajaste esa referencia, ámbar trabajada, verde confirmada.
 - **La pestaña Referencias** (aparece cuando hay una actividad elegida): todas las cumbres,
   parques, islas y castillos que trabajaste (POTA, SOTA, WWFF, IOTA, WCA), programa por programa:
   cuántas trabajadas y confirmadas, y cada una con su nombre y lugar, las bandas, **C** confirmada /

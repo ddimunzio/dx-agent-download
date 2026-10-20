@@ -317,7 +317,8 @@ WWFF, BOTA, COTA (WCA castles), LOTA (lighthouses), TOTA, ROTA, JOTA, YOTA** and
   wrote "SOTA" before it (a summit newer than our copy). Hover over the activation to see the
   summit's name, altitude and points; POTA and WWFF parks show their name there too.
 - **On the map:** activations sit at their summit (a mountain with a jagged peak) or park (a pine tree), from SOTA's
-  list and POTA's and WWFF's; coloured like their alert, grey when they made none.
+  list and POTA's and WWFF's; coloured by where you stand with that reference, as the DXCC and
+  References layers: red not worked, amber worked, green confirmed (hover for which).
 - **New summits and parks:** with an Activity picked, a summit, park, island (IOTA) or castle
   you haven't worked **on that band** is marked *new*, even in a country you have confirmed: a
   spot that made no alert shows as **NEW REF** ("reference not worked on 20m"), the reference
