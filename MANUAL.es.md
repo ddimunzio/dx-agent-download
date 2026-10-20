@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.2 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
+*Versión 0.4.3 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -29,8 +29,8 @@ Contenido:
 
 ## 1. Qué necesitás
 
-- **Windows 10 u 11, o Linux (x86_64).** El paquete ya trae todo lo necesario (incluido
-  Python): no hay que instalar nada.
+- **Windows 10 u 11, Linux (x86_64) o una Mac (Apple Silicon o Intel).** El paquete ya trae
+  todo lo necesario (incluido Python): no hay que instalar nada.
 - **Conexión a internet**, para recibir los spots y bajar las listas de DXpediciones,
   países y LoTW.
 - **Tu log**, de una de estas dos formas:
@@ -58,7 +58,8 @@ formas**). Para que no aparezca: antes de descomprimir, clic derecho en el zip �
 **Propiedades** → marcar **Desbloquear** → Aceptar.
 
 **Cómo corre:** sin ventana. Mientras está abierto, volver a hacer doble clic en
-start-dx-agent.bat solo abre el panel otra vez. Para cerrarlo, botón **Detener** arriba a
+start-dx-agent.bat solo abre el panel otra vez (si abrís una versión más nueva, detiene la
+anterior y queda ella). Para cerrarlo, botón **Detener** arriba a
 la derecha del panel. Si querés ver lo que va haciendo, usá **start-dx-agent-console.bat**,
 que lo abre en una ventana de consola.
 
@@ -80,9 +81,33 @@ puede abrir desde tu PC; otras computadoras de la red no lo ven.
    El panel se abre en el navegador, en **http://localhost:8073**, igual que en Windows.
    `./start-dx-agent-console.sh` lo corre en la terminal, para ver lo que va haciendo.
 
-Log4OM y OmniRig son programas de Windows: leer la base de Log4OM y sintonizar por OmniRig
-funcionan solo en Windows. Todo lo demás es igual (incluidos los QSOs por UDP de N1MM, DXLog,
-WSJT-X...).
+### En una Mac
+
+1. Bajá el último `dx-agent-<versión>-macos.tar.gz` de la misma página
+   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest). Sirve para
+   cualquier Mac, con Apple Silicon (M1, M2...) o Intel.
+2. Hacé doble clic para descomprimirlo, y mové la carpeta `dx-agent` a una carpeta tuya, por
+   ejemplo Documentos.
+3. Hacé doble clic en **start-dx-agent.command**, adentro de esa carpeta. El panel se abre en el
+   navegador, en **http://localhost:8073**, igual que en Windows.
+
+La primera vez, macOS dice que no lo puede abrir, porque no está firmado por Apple. Abrí
+**Configuración del Sistema → Privacidad y seguridad**, bajá hasta el aviso sobre
+start-dx-agent.command, hacé clic en **Abrir igualmente** y confirmá; después volvé a hacer doble
+clic. Desde ahí alcanza con doble clic. O, en la Terminal:
+
+```sh
+cd ~/Documents/dx-agent
+xattr -dr com.apple.quarantine .
+./start-dx-agent.command
+```
+
+Las notificaciones van al Centro de notificaciones de la Mac (la primera vez macOS puede pedir
+permiso).
+
+Log4OM, N1MM, DXLog.net y OmniRig son programas de Windows: leer la base de Log4OM y sintonizar
+con ellos funcionan solo en Windows. Todo lo demás es igual en Linux y en la Mac (incluidos los
+QSOs por UDP de WSJT-X y sintonizar con flrig o Hamlib).
 
 ## 3. La primera configuración
 
@@ -145,8 +170,13 @@ para reportar un problema.
 
 **La lista de alertas:** una fila por alerta, la más nueva arriba, con el color de su tipo.
 Columnas: hora UTC, tipo de alerta, indicativo, frecuencia, banda, modo, país, **qué te falta**,
-LoTW, **cerca tuyo** y quién la escuchó. Las filas nuevas destellan y se van atenuando a los
-10 y a los 30 minutos.
+LoTW, **cerca tuyo** y quién la escuchó. Las filas nuevas destellan. Cuando la estación vuelve a
+aparecer en la misma banda y modo, su fila se actualiza (hora, frecuencia, quién la escuchó, ×N):
+muestra dónde está ahora. Las filas se atenúan a los 10 y a los 30 minutos del último spot de la
+estación ahí.
+
+**Limpiar lista** (en rojo, arriba a la derecha): vacía la lista, después de preguntar. Lo que
+siga en el aire vuelve a avisar en su próximo spot.
 
 **Ordenar por una columna:** al hacer clic en el encabezado de una columna la lista se ordena por
 ella: por frecuencia, por banda, por modo (CW, fonía y digitales juntos), por país... **Alerta** y
@@ -213,13 +243,16 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
   "cerca" (1.500 km de fábrica); en gris, la distancia al receptor más cercano; **—** = nadie
   la reportó en los últimos 15 minutos.
 - La misma alerta no se repite durante 15 minutos (se cambia en Configuración).
+- En Configuración → Alertas también están **Dejar solo la última fila de cada estación** (mismo
+  indicativo, frecuencia y modo) y **Quitar de la lista después de** N minutos sin spot (0 =
+  nunca): las dos apagadas de fábrica.
 - La lista guarda las últimas 500 alertas. Cuando se llena, se van primero las de INDICATIVO
   NUEVO; las demás quedan al menos una hora.
 - Cuando trabajás la estación, sus alertas en la lista cambian solas: una BANDA+MODO que ya
   trabajaste deja de serlo (y de aparecer con ese filtro), una DXpedición pasa a DXPED CONFIRMAR o
   DXPED YA TENGO, y una alerta que ya no te suma nada queda como **TRABAJADO**, en gris.
 - Las **notificaciones de Windows** salen de fábrica solo para ATNO; en Configuración se
-  pueden activar para más tipos.
+  pueden activar para más tipos. Al hacer clic en una se abre el panel en esa estación.
 
 **Lista de seguimiento:** indicativos que querés que te avisen siempre que salgan, aunque no
 te sumen nada. Admite comodines, por ejemplo `VP8*`. Se edita en Configuración o con la ☆ de
@@ -387,7 +420,13 @@ se instala nada). Para actualizar:
 1. Cerrá DX Agent (botón **Detener**).
 2. Bajá el paquete nuevo y descomprimilo **en la misma carpeta**, reemplazando los archivos
    (en Linux: `tar -xzf` en la carpeta que contiene `dx-agent`).
-3. Abrilo como siempre con **start-dx-agent.bat** (Linux: `./start-dx-agent.sh`).
+3. Abrilo como siempre con **start-dx-agent.bat** (Linux: `./start-dx-agent.sh`; Mac:
+   **start-dx-agent.command**).
+
+¿Te olvidaste de detenerlo? Desde la 0.4.3, al abrir la versión nueva se detiene la anterior y
+arranca la nueva. Igual, detenelo antes de descomprimir encima de la misma carpeta: Windows no
+reemplaza los archivos de un programa que está corriendo. En la Mac, al descomprimir se crea una
+carpeta nueva: copiale `config.toml` y la carpeta `data` de la anterior.
 
 Tu configuración (`config.toml`) y tus datos (la carpeta `data`) no vienen en el zip, así que
 se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y la carpeta
@@ -405,6 +444,7 @@ se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y 
 | Demasiadas alertas | En Configuración → Alertas dejá solo **ATNO** y **DXpedición**, o sacá bandas que no operás |
 | Muy pocas alertas del cluster | Es normal: el cluster manda pocos spots por minuto y la RBN suele reportar primero la misma estación |
 | No aparecen notificaciones de Windows | Configuración → **Mostrar notificaciones**, y en Windows: Configuración → Sistema → Notificaciones (incluida "Windows PowerShell") |
+| Mac: "No se puede abrir start-dx-agent.command" | No está firmado por Apple: Configuración del Sistema → Privacidad y seguridad → **Abrir igualmente** (sección 2) |
 | El botón Sintonizar no mueve la radio | Revisá en tu programa el control remoto (sección 6) y que esté abierto; el mensaje arriba a la derecha dice qué falló |
 | Un cambio de configuración lo empeoró | `config.toml.bak` tiene la configuración anterior: copialo sobre `config.toml` y volvé a abrirlo |
 | "saved password could not be read" | La contraseña de LoTW la guardó otro usuario de Windows u otra PC: escribila de nuevo en Configuración |

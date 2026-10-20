@@ -39,7 +39,8 @@ Contenido:
 hacer doble clic en **start-dx-agent.bat**. Ese zip ya trae Python, así que no hay que
 instalar nada. DX Agent corre sin ventana: el panel se abre en el navegador,
 **Detener** (arriba a la derecha del panel) lo cierra, y si se hace doble clic de nuevo
-mientras corre, solo abre el panel. Si no puede arrancar, un cartel de Windows dice por
+mientras corre, solo abre el panel. Si se abre una versión nueva con la anterior todavía
+corriendo, primero se detiene la anterior (como con su botón Detener) y arranca la nueva. Si no puede arrancar, un cartel de Windows dice por
 qué; lo que va mostrando queda en `data/dx-agent.log`, y **start-dx-agent-console.bat**
 lo corre en una ventana para verlo. (El zip con el código, `dx-agent-<versión>-source.zip`,
 requiere
@@ -59,6 +60,23 @@ cd dx-agent
 Ahí funciona todo salvo los programas de Windows; ver
 [Limitaciones conocidas](#limitaciones-conocidas). Para usar tu propio Python 3.11+ en vez del
 paquete, usar el zip con el código y `python3 -m dxagent run`.
+
+**En una Mac:** descomprimir `dx-agent-<versión>-macos.tar.gz` (doble clic en Finder; trae
+Python para las Mac con Apple Silicon y para las Intel) y hacer doble clic en
+**start-dx-agent.command**, en la carpeta `dx-agent`. Se abre la Terminal un momento y el panel
+se abre en el navegador. El paquete no está firmado por Apple, así que la primera vez macOS no
+lo deja abrir: abrir **Configuración del Sistema > Privacidad y seguridad**, hacer clic en
+**Abrir igualmente** junto al aviso sobre start-dx-agent.command y confirmar (en macOS 14 o
+anterior también sirve clic derecho sobre el archivo > **Abrir**). Desde ahí alcanza con doble
+clic. O, en la Terminal:
+
+```sh
+cd ~/Downloads/dx-agent
+xattr -dr com.apple.quarantine .
+./start-dx-agent.command
+```
+
+En la Mac también funciona todo salvo los programas de Windows ([Limitaciones conocidas](#limitaciones-conocidas)).
 
 El primer inicio crea `config.toml` a partir
 de `config.example.toml`; después configurar indicativo y log en **Configuración**.
@@ -113,8 +131,9 @@ Cada 10 minutos imprime una línea de estado con la cantidad de spots procesados
 alertas generadas.
 
 **Notificaciones:** las alertas también aparecen como notificaciones de Windows
-(Windows 10/11), sin instalar nada adicional. En Linux necesitan `plyer`
-(`pip install plyer`); sin él, las alertas igual se ven en el panel.
+(Windows 10/11), y en el Centro de notificaciones de la Mac, sin instalar nada adicional. En
+Windows, al hacer clic en una se abre el panel en esa estación (su grilla, con su fila a la vista). En
+Linux necesitan `plyer` (`pip install plyer`); sin él, las alertas igual se ven en el panel.
 
 ---
 
@@ -135,8 +154,8 @@ python -m dxagent run --no-ui       # solo terminal
 | Zona | Qué muestra |
 |------|-------------|
 | **Encabezado** | Tu indicativo; una pastilla por fuente de spots (verde = conectada, ámbar = conectando, rojo = caída) con la cantidad de spots (al pasar el mouse muestra el servidor y la hora del último spot); los totales de tu log; DXpediciones activas; botones **Configuración**, **Acerca de** (qué es DX Agent, quién lo hizo, los colaboradores, cómo apoyarlo, ayuda), **ES/EN** (idioma), **Tema** y **Sonido**; reloj UTC. `#about` abre la ventana Acerca de |
-| **Filtros** | Botones por tipo de alerta, banda y modo, y un cuadro de búsqueda por indicativo o país. Solo aparecen los tipos de alerta activados en Configuración. Sin ningún botón seleccionado se muestra todo. Una alerta cuenta para cada uno de sus motivos, así que una DXpedición en tu lista de seguimiento aparece tanto en **DXPED FALTA** como en **SEGUIMIENTO**; **SEGUIMIENTO** además muestra los spots de tus indicativos en seguimiento que no dieron alerta (filas grises **SPOT**), para que veas cuándo están en el aire. Las filas SPOT son una por estación, banda y modo: el spot más reciente, con **×N** la cantidad (un CQ lo escuchan varios skimmers de la RBN a la vez; pasando el mouse se ve quién la escuchó); los anteriores a una alerta de esa estación, banda y modo quedan representados por la alerta. Una fila SPOT que todavía te suma algo (no dio alerta propia porque la misma alerta no se repite durante el tiempo de espera) va con el color de lo que suma, no en gris. **Ocultar confirmados** saca las estaciones cuya entidad ya tenés confirmada en esa banda y modo (una alerta de indicativo nuevo, una fila SPOT): quedan solo las que suman a tu log. **Solo LoTW** deja las estaciones que subieron a LoTW en los últimos 12 meses y las DXpediciones que anunciaron LoTW: las que probablemente confirmen ahí. El navegador recuerda los filtros |
-| **Tabla de alertas** | Una fila por alerta, la más nueva arriba, coloreada según el tipo: UTC, alerta, indicativo, kHz, banda, modo, país, qué te falta, LoTW, **cerca tuyo** (ver más abajo), quién la escuchó. Al hacer clic en el encabezado de una columna se ordena por ella (kHz, banda, modo agrupado CW / fonía / digital, país...; **Alerta** y **Qué te falta** ponen primero lo más buscado, **LoTW** las subidas más recientes); otro clic, al revés; un tercero vuelve a lo más nuevo arriba. La flecha muestra el orden; las filas sin dato en esa columna van al final, los empates quedan con la más nueva primero, las alertas nuevas entran en su lugar y el orden se recuerda en el navegador. Las filas nuevas destellan; se atenúan a los 10 minutos y más a los 30 (al pasar el mouse se ve la antigüedad) |
+| **Filtros** | Botones por tipo de alerta, banda y modo, y un cuadro de búsqueda por indicativo o país. Solo aparecen los tipos de alerta activados en Configuración. Sin ningún botón seleccionado se muestra todo. Una alerta cuenta para cada uno de sus motivos, así que una DXpedición en tu lista de seguimiento aparece tanto en **DXPED FALTA** como en **SEGUIMIENTO**; **SEGUIMIENTO** además muestra los spots de tus indicativos en seguimiento que no dieron alerta (filas grises **SPOT**), para que veas cuándo están en el aire. Las filas SPOT son una por estación, banda y modo: el spot más reciente, con **×N** la cantidad (un CQ lo escuchan varios skimmers de la RBN a la vez; pasando el mouse se ve quién la escuchó); los anteriores a una alerta de esa estación, banda y modo quedan representados por la alerta. Una fila SPOT que todavía te suma algo (no dio alerta propia porque la misma alerta no se repite durante el tiempo de espera) va con el color de lo que suma, no en gris. **Ocultar confirmados** saca las estaciones cuya entidad ya tenés confirmada en esa banda y modo (una alerta de indicativo nuevo, una fila SPOT): quedan solo las que suman a tu log. **Solo LoTW** deja las estaciones que subieron a LoTW en los últimos 12 meses y las DXpediciones que anunciaron LoTW: las que probablemente confirmen ahí. El navegador recuerda los filtros. **Limpiar lista** (después de confirmar) vacía la lista de alertas, en todos los paneles abiertos y también al recargar, y reinicia el tiempo sin repetir: lo que siga en el aire vuelve a avisar en su próximo spot. El historial de alertas (`data/dxagent.db`) y los últimos spots de la pestaña Estación se conservan |
+| **Tabla de alertas** | Una fila por alerta, la más nueva arriba, coloreada según el tipo: UTC, alerta, indicativo, kHz, banda, modo, país, qué te falta, LoTW, **cerca tuyo** (ver más abajo), quién la escuchó. Al hacer clic en el encabezado de una columna se ordena por ella (kHz, banda, modo agrupado CW / fonía / digital, país...; **Alerta** y **Qué te falta** ponen primero lo más buscado, **LoTW** las subidas más recientes); otro clic, al revés; un tercero vuelve a lo más nuevo arriba. La flecha muestra el orden; las filas sin dato en esa columna van al final, los empates quedan con la más nueva primero, las alertas nuevas entran en su lugar y el orden se recuerda en el navegador. Las filas nuevas destellan. Un spot más nuevo de la estación en la misma banda y modo (uno que no avisó porque no se repite) actualiza su fila: hora, frecuencia, modo, quién la escuchó (×N); así la fila muestra dónde está la estación ahora, y el botón Sintonizar va ahí. Las filas se atenúan a los 10 minutos del último spot de la estación y más a los 30 (al pasar el mouse se ve la antigüedad y la hora de la alerta); con **Quitar de la lista después de** en Configuración, salen de la lista pasados esos minutos |
 | **Pestaña Estación** | Al hacer clic en una alerta, o escribir un indicativo en el cuadro, muestra la grilla banda × modo de ese país (C verde = confirmado, W ámbar = trabajado, gris = no trabajado; un anillo verde marca las bandas y modos donde la spotearon en los últimos 15 minutos, el más reciente parpadeando, con un punto sobre la banda), si trabajaste ese indicativo exacto, el estado de LoTW, los datos de la DXpedición, quién lo escucha más cerca tuyo, un botón **Consultar PSKReporter**, los botones **Ver solo** este indicativo y **☆ seguimiento**, sus últimos spots y enlaces a QRZ.com, HamQTH y DXWatch |
 | **Pestaña DXpediciones** | DXpediciones activas y las que empiezan en los próximos 30 días. Etiqueta: **ATNO**, **No confirmado** o cuántas bandas tenés (por ejemplo "1 de 10 bandas", resaltada cuando son menos de la mitad). Marcar **solo las que faltan** oculta las que ya tenés en la mayoría de las bandas. Ordenadas por las que están **en el aire** (spoteadas en los últimos 15 minutos, la más reciente arriba), por el puesto en el **Most Wanted** de Club Log (el país más buscado primero) o por fecha de inicio: **Orden**, arriba. Cada tarjeta muestra sus fuentes y el puesto en el **Most Wanted** de Club Log; las spoteadas en los últimos 15 minutos se marcan en verde como **EN EL AIRE**. Al hacer clic se abre su grilla; la **☆** la agrega a tu lista de seguimiento |
 
@@ -487,7 +506,7 @@ fuentes en pocos segundos. No hace falta reiniciarlo.
 |---------|-------------------------|
 | **Estación** | Tu indicativo; **Tu log**: un archivo ADIF de tu logger, **Solo LoTW** (ver LoTW como log), o **Empezar de cero** (ver Un log nuevo); la ruta del log ADIF (una por línea; `*` elige el archivo más nuevo, por ejemplo `…/CALL_*_backup.adi` para los backups de Log4OM). **Buscar…** abre la ventana de archivos de Windows para elegirlo (si elegís un backup de Log4OM con fecha, se convierte en `…/CALL_*_backup.adi` para usar siempre el más nuevo). **Probar** muestra qué archivo encontró, su tamaño, fecha y cantidad de QSOs; tu grid locator (vacío = se toma de tu log); **Tus otros indicativos**, cada uno con su log (ver Varios indicativos) |
 | **LoTW** | Activar o desactivar la descarga de confirmaciones; usuario de LoTW (vacío = tu indicativo); contraseña de LoTW; cada cuánto descargar. **Probar ingreso** prueba el usuario y la contraseña con LoTW |
-| **Alertas** | Qué tipos de alerta querés; bandas; modos; cuándo una DXpedición o un indicativo de la lista de seguimiento cuenta como trabajado; **Lista de seguimiento**; **Ignorar**; cuánto esperar antes de repetir la misma alerta; el radio de "cerca tuyo" y **Avisar solo si se escucha cerca tuyo**; notificaciones de Windows y para qué alertas |
+| **Alertas** | Qué tipos de alerta querés; bandas; modos; cuándo una DXpedición o un indicativo de la lista de seguimiento cuenta como trabajado; **Lista de seguimiento**; **Ignorar**; cuánto esperar antes de repetir la misma alerta y **Dejar solo la última fila de cada estación** (mismo indicativo, frecuencia y modo: cuando vuelve a aparecer, sus filas anteriores salen de la lista); **Quitar de la lista después de** N minutos (las estaciones que no se spotean en esa banda y modo durante ese tiempo salen de la lista; 0 = nunca, el valor por defecto); el radio de "cerca tuyo" y **Avisar solo si se escucha cerca tuyo**; notificaciones de Windows y para qué alertas |
 | **Fuentes de spots** | DX cluster activado o no, sus servidores (`servidor:puerto`, en orden) y comandos al conectar; **Spots recientes al conectar** (minutos, 0 = no); de qué continentes tomar los spotters del cluster; RBN activada o no, fuentes CW/RTTY y FT8/FT4; de qué continentes cuentan los skimmers |
 | **Radio (botón Sintonizar)** | Qué programa sintoniza la radio (Desactivado, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander), su dirección y puerto (0 = por defecto), si también cambia el modo, y qué radio de OmniRig |
 | **CQ DX Marathon** | Seguirlo o no; el anual o el Sprint, y las fechas del Sprint; los modos que cuentan (todos, CW, fonía, digital, o Classic: CW y fonía); alertas por país nuevo y por zona nueva del Marathon |
@@ -772,6 +791,8 @@ proyecto. También se puede editar a mano; después hay que reiniciar `run`.
 | alerts      | `notify_max_priority`       | `1`                                               | Notificaciones para: 1 = solo ATNO; 3 = también modo nuevo y lista de seguimiento |
 | alerts      | `near_km`                   | `1500`                                            | "Cerca tuyo" = la escuchó una estación a esta distancia en km o menos |
 | alerts      | `near_only`                 | `false`                                           | Avisar solo si la estación se escucha cerca tuyo |
+| alerts      | `latest_only`               | `false`                                           | Lista del panel: dejar solo la última fila de cada estación en la misma frecuencia y modo |
+| alerts      | `expire_minutes`            | `0`                                               | Lista del panel: quitar las estaciones que no se spotean en esa banda y modo hace estos minutos (0 = nunca) |
 | alerts      | `keep_days`                 | `7`                                               | Días de alertas que se guardan en `data/dxagent.db` (0 = ninguna). Con la RBN, unas 25.000 alertas por día, unos 15 MB |
 | ui          | `enabled`                   | `true`                                            | Iniciar el panel web con `run` |
 | ui          | `port`                      | `8073`                                            | Dirección del panel: `http://localhost:8073` |
@@ -1071,8 +1092,9 @@ se puede borrar en cualquier momento; se vuelve a descargar cuando hace falta.
 | `config.example.toml`       | La configuración inicial para una instalación nueva |
 | `start-dx-agent.bat`        | Doble clic para iniciar DX Agent en Windows, sin ventana |
 | `start-dx-agent-console.bat` | Lo mismo, en una ventana que muestra todo lo que va informando |
-| `start-dx-agent.sh`         | Los mismos dos lanzadores para Linux (`-console.sh` muestra lo que va informando); usan la carpeta `python/` si el paquete la trae |
-| `tools/make_package.py`     | Arma los paquetes para compartir: el zip de Windows y el tar.gz de Linux (con Python, programa compilado), y con `--source` el zip con el código; nunca tus datos personales |
+| `start-dx-agent.sh`         | Los mismos dos lanzadores para Linux y macOS (`-console.sh` muestra lo que va informando); usan el Python del paquete si lo trae (`python/`, o en la Mac `python-arm64/` / `python-x86_64/`) |
+| `start-dx-agent.command`    | macOS: doble clic en Finder para arrancarlo; saca la carpeta de cuarentena para que el Python que trae pueda correr |
+| `tools/make_package.py`     | Arma los paquetes para compartir: el zip de Windows y los tar.gz de Linux y macOS (con Python, programa compilado), y con `--source` el zip con el código; nunca tus datos personales |
 | `config.toml.bak`           | La configuración anterior, que se guarda en cada cambio |
 | `README.md`                 | Resumen breve (en inglés) |
 | `DOCUMENTATION.md`          | Esta guía en inglés |
@@ -1160,7 +1182,7 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
 
 ### Limitaciones conocidas
 
-- **Funciones solo de Windows.** Todo lo demás funciona en Linux con el paquete `-linux`. Ahí
+- **Funciones solo de Windows.** Todo lo demás funciona en Linux con el paquete `-linux`, y en la Mac con el `-macos` (notificaciones incluidas, en el Centro de notificaciones). Ahí
   no están: el log en vivo de Log4OM, y los destinos de **Sintonizar** Log4OM / N1MM / DXLog.net /
   OmniRig / DXLab (Hamlib y flrig sí funcionan); el envío del indicativo a WSJT-X; y el cartel de Windows
   cuando no puede arrancar (ahí el motivo va a `data/dx-agent.log`). Las notificaciones necesitan
@@ -1226,6 +1248,7 @@ el primer arranque los lee y los renombra `*.migrated`; se pueden borrar cuando 
 | `ImportError: bad magic number in 'dxagent'` | Estás corriendo el zip de Windows en Linux: está compilado para su propio Python. Usar el paquete `-linux`, o el zip con el código y tu propio Python |
 | `Permission denied` al correr `./start-dx-agent.sh` | `chmod +x start-dx-agent.sh start-dx-agent-console.sh` (con el paquete `-linux` no hace falta) |
 | No aparecen notificaciones en Linux | `pip install plyer`; sin él las alertas igual se ven en el panel |
+| Mac: "No se puede abrir start-dx-agent.command" / "Apple no pudo verificar…" | No está firmado por Apple: Configuración del Sistema > Privacidad y seguridad > **Abrir igualmente**, o `xattr -dr com.apple.quarantine .` en la carpeta dx-agent (ver Inicio rápido) |
 | Datos de países incorrectos o viejos | Borrar `data/cty.csv`; se descarga de nuevo en el próximo inicio |
 | `[ui] could not start on port 8073` | Otro programa (u otra copia de DX Agent) usa ese puerto; cerrarlo o cambiar el puerto del panel |
 | El panel muestra "Se perdió la conexión con el agente" | `run` se detuvo o falló; iniciarlo de nuevo y la página se reconecta sola |

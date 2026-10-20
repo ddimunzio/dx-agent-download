@@ -39,7 +39,8 @@ Contents:
 **start-dx-agent.bat**. That zip already includes Python, so there is nothing to
 install. DX Agent runs without a window: the dashboard opens in your browser,
 **Stop** (top right of the dashboard) closes it, and double-clicking again while it
-runs just opens the dashboard. If it can't start, a Windows message says why; what it
+runs just opens the dashboard. Starting a new version while an older one is still running
+stops the old one first (as its Stop button would) and starts the new one. If it can't start, a Windows message says why; what it
 prints goes to `data/dx-agent.log`, and **start-dx-agent-console.bat** runs it in a
 window to watch it. (The source zip, `dx-agent-<version>-source.zip`, needs
 [Python 3.11+](https://www.python.org/downloads/) installed with "Add python.exe to
@@ -57,6 +58,22 @@ cd dx-agent
 Everything works there except the Windows programs; see
 [Known limitations](#known-limitations). With your own Python 3.11+ instead of the package,
 use the source zip and `python3 -m dxagent run`.
+
+**On a Mac:** unpack `dx-agent-<version>-macos.tar.gz` (double-click it in Finder; it includes
+Python for Apple Silicon and for Intel Macs) and double-click **start-dx-agent.command** in the
+`dx-agent` folder. Terminal opens for a moment and the dashboard opens in your browser. The
+package isn't signed by Apple, so the first time macOS refuses to open it: open **System
+Settings > Privacy & Security**, click **Open Anyway** next to the message about
+start-dx-agent.command, and confirm (on macOS 14 and older, right-click the file > **Open**
+works too). From then on a double-click is enough. Or, in Terminal:
+
+```sh
+cd ~/Downloads/dx-agent
+xattr -dr com.apple.quarantine .
+./start-dx-agent.command
+```
+
+On a Mac, too, everything works except the Windows programs ([Known limitations](#known-limitations)).
 
 The first start creates `config.toml` from `config.example.toml`; then set your
 callsign and log in **Settings**. From a terminal instead:
@@ -107,9 +124,10 @@ station:
 Every 10 minutes it prints a status line with the number of spots processed and
 alerts raised.
 
-**Pop-ups:** alerts also appear as Windows notifications (Windows 10/11), with nothing
-extra to install. On Linux they need `plyer` (`pip install plyer`); without it the alerts
-still appear in the dashboard.
+**Pop-ups:** alerts also appear as Windows notifications (Windows 10/11), and in a Mac's
+Notification Center, with nothing extra to install. On Windows, clicking one opens the
+dashboard at that station (its grid, its row in view). On Linux they need `plyer`
+(`pip install plyer`); without it the alerts still appear in the dashboard.
 
 ---
 
@@ -130,8 +148,8 @@ python -m dxagent run --no-ui       # console only
 | Area | What it shows |
 |------|---------------|
 | **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); your log totals; DXpeditions active; **Settings**, **About** (what DX Agent is, who made it, the collaborators, how to support it, help), **EN/ES** (language), **Theme** and **Browser sound** buttons; UTC clock. `#about` opens the About window |
-| **Filters** | Chips for alert type, band and mode, plus a search box for call or country. Only the alert types turned on in Settings get a chip. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. SPOT rows are one per station, band and mode: the latest spot, with **×N** for how many (a CQ is heard by several RBN skimmers at once; hover for who heard it); those before an alert of the same station, band and mode are that alert's. A SPOT row that still adds to your log (it made no alert of its own because the same alert isn't repeated within the cooldown) is coloured like what it adds, not grey. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. **Only LoTW** leaves the stations that uploaded to LoTW in the last 12 months and the DXpeditions that announced LoTW: the ones likely to confirm there. Your filters are remembered in the browser |
-| **Alert table** | One row per alert, newest on top, coloured by type: UTC, alert, call, kHz, band, mode, country, what you need, LoTW, **near you** (see below), who heard it. Click a column header to sort by it (kHz, band, mode grouped CW / phone / digital, country...; **Alert** and **What you need** put the most wanted first, **LoTW** the latest uploads first); click again for the other way round, a third time for newest first again. The arrow shows the order; rows with nothing in that column go last, ties stay newest first, new alerts slot into place, and the order is remembered in the browser. New rows flash; rows fade after 10 minutes and fade more after 30 (hover a row for its age) |
+| **Filters** | Chips for alert type, band and mode, plus a search box for call or country. Only the alert types turned on in Settings get a chip. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. SPOT rows are one per station, band and mode: the latest spot, with **×N** for how many (a CQ is heard by several RBN skimmers at once; hover for who heard it); those before an alert of the same station, band and mode are that alert's. A SPOT row that still adds to your log (it made no alert of its own because the same alert isn't repeated within the cooldown) is coloured like what it adds, not grey. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. **Only LoTW** leaves the stations that uploaded to LoTW in the last 12 months and the DXpeditions that announced LoTW: the ones likely to confirm there. Your filters are remembered in the browser. **Clear list** (after confirming) empties the alert list, in every open dashboard and after a reload, and starts the cooldown again: whatever is still on the air alerts again at its next spot. The alert history (`data/dxagent.db`) and the Station tab's latest spots are kept |
+| **Alert table** | One row per alert, newest on top, coloured by type: UTC, alert, call, kHz, band, mode, country, what you need, LoTW, **near you** (see below), who heard it. Click a column header to sort by it (kHz, band, mode grouped CW / phone / digital, country...; **Alert** and **What you need** put the most wanted first, **LoTW** the latest uploads first); click again for the other way round, a third time for newest first again. The arrow shows the order; rows with nothing in that column go last, ties stay newest first, new alerts slot into place, and the order is remembered in the browser. New rows flash. A newer spot of the station on the same band and mode (one the cooldown kept from alerting again) updates its row: time, frequency, mode, who heard it (×N) — so the row shows where the station is now, and the Tune button goes there. Rows fade 10 minutes after the station's last spot and fade more after 30 (hover a row for its age and the alert's own time); with **Take out of the list after** set in Settings, they leave the list after that many minutes |
 | **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked; a green ring marks the bands and modes where the station was spotted in the last 15 minutes, the latest one blinking, and a dot sits over the band), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button, **Show only** this call and **☆ watchlist** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
 | **DXpeditions tab** | Active DXpeditions and those starting in the next 30 days. Badge: **ATNO**, **Not confirmed**, or how many bands you have (e.g. "1 of 10 bands", highlighted when fewer than half). Tick **only needed** to hide ones you already have on most bands. Sorted by what's **on the air** (spotted in the last 15 minutes, the latest on top), by Club Log's **Most Wanted** rank (most wanted country first) or by start date: **Order** at the top. Each card shows its sources and Club Log's **Most Wanted** rank; one spotted in the last 15 minutes is framed in green as **ON THE AIR**. Click one to open its grid; the **☆** adds it to your watchlist |
 
@@ -460,7 +478,7 @@ restart it.
 |---------|------------------|
 | **Station** | Your callsign; **Your log**: an ADIF file from your logger, **LoTW only** (see LoTW as your log), or **Start from scratch** (see A new log); the path to your ADIF log (one per line; `*` picks the newest file, e.g. `…/CALL_*_backup.adi` for Log4OM backups). **Browse…** opens the Windows file window to pick the file (if you pick a dated Log4OM backup, it becomes `…/CALL_*_backup.adi` so the newest is always used). **Test** shows which file it found, its size, date and QSO count; your grid square (empty = taken from your log); **Your other callsigns**, each with its own log (see Several callsigns) |
 | **LoTW** | Turn the confirmation download on or off; LoTW username (empty = your call); LoTW password; how often to download. **Test login** checks the username and password with LoTW |
-| **Alerts** | Which alert types you want; bands; modes; when a DXpedition or watchlist call counts as worked; watchlist; ignore list; how long before the same alert repeats; the "near you" radius and **Only alert when heard near you**; Windows pop-ups and for which alerts |
+| **Alerts** | Which alert types you want; bands; modes; when a DXpedition or watchlist call counts as worked; watchlist; ignore list; how long before the same alert repeats and **Keep only the latest row of each station** (same call, frequency and mode: when it shows up again, its older rows leave the list); **Take out of the list after** N minutes (stations not spotted on that band and mode for that long leave the list; 0 = never, the default); the "near you" radius and **Only alert when heard near you**; Windows pop-ups and for which alerts |
 | **Spot sources** | DX cluster on/off, its servers (`host:port`, tried in order) and login commands; **Recent spots on connecting** (minutes, 0 = off); which continents' cluster spotters to use; RBN on/off, CW/RTTY and FT8/FT4 feeds; which continents' skimmers count |
 | **Radio (Tune button)** | Which program tunes the radio (Off, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander), its address and port (0 = default), whether to set the mode too, and which OmniRig radio |
 | **CQ DX Marathon** | Follow it or not; the year or the Sprint, and the Sprint's dates; the modes that count (all, CW, phone, digital, or Classic: CW and phone); alerts for a new Marathon country and for a new zone |
@@ -732,6 +750,8 @@ You can also edit it by hand; restart `run` afterwards.
 | alerts      | `notify_max_priority`       | `1`                                               | Pop-ups for: 1 = ATNO only; 3 = also new mode and watchlist |
 | alerts      | `near_km`                   | `1500`                                            | "Near you" = heard by a station within this many km |
 | alerts      | `near_only`                 | `false`                                           | Only alert when the station is heard near you |
+| alerts      | `latest_only`               | `false`                                           | Dashboard list: keep only the latest row of each station on the same frequency and mode |
+| alerts      | `expire_minutes`            | `0`                                               | Dashboard list: take out stations not spotted on that band and mode for this many minutes (0 = never) |
 | alerts      | `keep_days`                 | `7`                                               | Days of alerts kept in `data/dxagent.db` (0 = none). With RBN on, about 25,000 alerts a day, some 15 MB |
 | ui          | `enabled`                   | `true`                                            | Start the web dashboard with `run` |
 | ui          | `port`                      | `8073`                                            | Dashboard address: `http://localhost:8073` |
@@ -1020,8 +1040,9 @@ and can be deleted at any time; it is downloaded again when needed.
 | `config.example.toml`       | The starting settings for a new installation |
 | `start-dx-agent.bat`        | Double-click to start DX Agent on Windows, without a window |
 | `start-dx-agent-console.bat` | The same, in a console window that shows everything it prints |
-| `start-dx-agent.sh`         | The same two launchers for Linux (`-console.sh` shows what it prints); they use the `python/` folder if the package brings one |
-| `tools/make_package.py`     | Builds the packages to share: the Windows zip and the Linux tarball (Python included, program compiled), plus the source zip with `--source`; never your personal data |
+| `start-dx-agent.sh`         | The same two launchers for Linux and macOS (`-console.sh` shows what it prints); they use the package's Python if it brings one (`python/`, or on a Mac `python-arm64/` / `python-x86_64/`) |
+| `start-dx-agent.command`    | macOS: double-click in Finder to start it; takes the folder out of quarantine so the bundled Python can run |
+| `tools/make_package.py`     | Builds the packages to share: the Windows zip and the Linux and macOS tarballs (Python included, program compiled), plus the source zip with `--source`; never your personal data |
 | `config.toml.bak`           | The previous settings, kept on every save |
 | `README.md`                 | Short overview |
 | `DOCUMENTATION.md`          | This guide |
@@ -1109,7 +1130,7 @@ example (shortened):
 
 ### Known limitations
 
-- **Windows-only features.** Everything else works on Linux with the `-linux` package. Not
+- **Windows-only features.** Everything else works on Linux with the `-linux` package, and on a Mac with the `-macos` one (pop-ups included, in Notification Center). Not
   available there: Log4OM's live log, and the Log4OM / N1MM / DXLog.net / OmniRig / DXLab "Tune" targets
   (Hamlib and flrig do work); sending the call to WSJT-X; and the Windows message box when it
   can't start (there the reason goes to `data/dx-agent.log`). Pop-ups need `plyer`, and the
@@ -1172,6 +1193,7 @@ example (shortened):
 | `ImportError: bad magic number in 'dxagent'` | You are running the Windows zip on Linux: it is compiled for its own Python. Use the `-linux` package, or the source zip with your own Python |
 | `Permission denied` running `./start-dx-agent.sh` | `chmod +x start-dx-agent.sh start-dx-agent-console.sh` (not needed with the `-linux` package) |
 | No pop-ups on Linux | `pip install plyer`; the alerts still appear in the dashboard without it |
+| Mac: "start-dx-agent.command cannot be opened" / "Apple could not verify…" | It isn't signed by Apple: System Settings > Privacy & Security > **Open Anyway**, or `xattr -dr com.apple.quarantine .` in the dx-agent folder (see Quick start) |
 | Wrong or old country data | Delete `data/cty.csv`; it downloads again on the next start |
 | `[ui] could not start on port 8073` | Another program (or a second copy of DX Agent) uses that port; stop it or change the dashboard port |
 | Dashboard shows "Lost connection to the agent" | `run` stopped or crashed; start it again and the page reconnects by itself |
