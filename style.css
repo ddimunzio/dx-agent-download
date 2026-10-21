@@ -1,0 +1,67 @@
+/* DX Agent: the download page. No dependencies, no fonts to fetch: it must open fast on a
+   phone over a bad link, from a forum or a club's WhatsApp group. */
+:root {
+  --bg: #f6f7f9; --panel: #fff; --text: #1b2027; --muted: #5b6672; --line: #dfe3e9;
+  --accent: #1f6feb; --accent-text: #fff; --good: #1a7f37; --shadow: 0 1px 2px rgba(16,24,40,.06), 0 8px 24px rgba(16,24,40,.06);
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e1116; --panel: #161b22; --text: #e6edf3; --muted: #9aa7b4; --line: #262d36;
+    --accent: #388bfd; --accent-text: #04101f; --good: #3fb950; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+a { color: var(--accent); }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 .5em; letter-spacing: -.01em; }
+h1 { font-size: clamp(2rem, 5vw, 2.9rem); }
+h2 { font-size: clamp(1.35rem, 3vw, 1.75rem); margin-top: 2.4em; }
+h3 { font-size: 1.05rem; }
+p { margin: 0 0 1em; }
+code { font-family: var(--mono); font-size: .9em; background: var(--panel); border: 1px solid var(--line); border-radius: 5px; padding: .1em .35em; }
+
+header { border-bottom: 1px solid var(--line); background: var(--panel); position: sticky; top: 0; z-index: 5; }
+header .wrap { display: flex; align-items: center; gap: 14px; min-height: 58px; flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+header img { width: 30px; height: 30px; }
+header .name { font-weight: 700; letter-spacing: -.01em; }
+header nav { margin-left: auto; display: flex; gap: 16px; align-items: center; font-size: .94rem; flex-wrap: wrap; }
+header nav a { color: var(--muted); text-decoration: none; }
+header nav a:hover { color: var(--text); }
+
+.hero { padding: 48px 0 8px; }
+.lead { font-size: 1.12rem; color: var(--muted); max-width: 62ch; }
+.cta { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin: 26px 0 10px; }
+.btn {
+  display: inline-block; background: var(--accent); color: var(--accent-text); text-decoration: none;
+  font-weight: 650; padding: 13px 22px; border-radius: 9px; box-shadow: var(--shadow);
+}
+.btn:hover { filter: brightness(1.08); }
+.btn.secondary { background: transparent; color: var(--text); border: 1px solid var(--line); box-shadow: none; }
+.small { font-size: .9rem; color: var(--muted); }
+
+figure { margin: 26px 0; }
+figure img { width: 100%; height: auto; display: block; border-radius: 12px; border: 1px solid var(--line); box-shadow: var(--shadow); }
+figcaption { font-size: .88rem; color: var(--muted); margin-top: 8px; }
+.grid2 { display: grid; gap: 22px; grid-template-columns: 1fr 1fr; }
+@media (max-width: 760px) { .grid2 { grid-template-columns: 1fr; } }
+
+ul.features { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+ul.features li { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+ul.features b { display: block; }
+
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; }
+.card ol, .card ul { margin: 0; padding-left: 1.2em; }
+.card li { margin-bottom: .45em; }
+
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+details summary { cursor: pointer; font-weight: 620; }
+details p { margin: 10px 0 0; color: var(--muted); }
+
+footer { margin-top: 56px; border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: .9rem; }
+footer a { color: var(--muted); }

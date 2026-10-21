@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DX Agent — alertas del DX cluster y del RBN para lo que te falta</title>
+<meta name="description" content="Vigila el DX cluster y el RBN y te avisa cuando está en el aire un país, banda, modo o DXpedición que te falta. Gratis, open source, Windows, Linux y Mac.">
+<link rel="canonical" href="https://ddimunzio.github.io/dx-agent-download/es/">
+<link rel="alternate" hreflang="en" href="https://ddimunzio.github.io/dx-agent-download/">
+<link rel="alternate" hreflang="es" href="https://ddimunzio.github.io/dx-agent-download/es/">
+<link rel="alternate" hreflang="x-default" href="https://ddimunzio.github.io/dx-agent-download/">
+<link rel="icon" href="../images/list.es.png" type="image/png">
+<link rel="stylesheet" href="../style.css">
+<meta property="og:type" content="website">
+<meta property="og:title" content="DX Agent — alertas del DX cluster para lo que te falta">
+<meta property="og:description" content="Vigila el DX cluster y el RBN y te avisa cuando está en el aire algo que te falta. Windows, Linux y Mac. Gratis y open source.">
+<meta property="og:url" content="https://ddimunzio.github.io/dx-agent-download/es/">
+<meta property="og:image" content="https://ddimunzio.github.io/dx-agent-download/images/station.es.png">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DX Agent — alertas del DX cluster para lo que te falta">
+<meta name="twitter:description" content="Vigila el DX cluster y el RBN y te avisa cuando está en el aire algo que te falta.">
+<meta name="twitter:image" content="https://ddimunzio.github.io/dx-agent-download/images/station.es.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "DX Agent",
+  "applicationCategory": "UtilitiesApplication",
+  "applicationSubCategory": "Radioaficion",
+  "operatingSystem": "Windows, Linux, macOS",
+  "inLanguage": "es",
+  "description": "Vigila el DX cluster y el Reverse Beacon Network, compara cada spot con tu log ADIF y te avisa cuando esta en el aire una estacion que te falta.",
+  "url": "https://ddimunzio.github.io/dx-agent-download/es/",
+  "downloadUrl": "https://github.com/ddimunzio/dx-agent-download/releases/latest",
+  "softwareVersion": "0.4.5",
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "screenshot": "https://ddimunzio.github.io/dx-agent-download/images/station.es.png",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "sameAs": ["https://github.com/ddimunzio/dx-agent-download"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "inLanguage": "es",
+  "mainEntity": [
+    { "@type": "Question", "name": "¿Hay que instalar Python para usar DX Agent?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. El zip de Windows, el tar.gz de Linux y el paquete de Mac traen su propio Python: se descomprime y se arranca. No hay nada mas que instalar." } },
+    { "@type": "Question", "name": "¿Usa mis confirmaciones de LoTW?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Si. Con tu contrasena de LoTW baja tus confirmaciones y las suma a tu log, asi una entidad cuenta como confirmada aunque tu programa de log todavia no la haya sincronizado. Tambien podes usar lo que subiste a LoTW como log, sin archivo ADIF." } },
+    { "@type": "Question", "name": "¿Con que programas de log funciona?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Con cualquiera que escriba un archivo ADIF: WSJT-X, Log4OM, N1MM Logger+, DXLog.net, Ham Radio Deluxe, DXLab y otros. Con Log4OM 2 un QSO se lee directo de su base en unos 10 segundos, y los QSOs que N1MM, DXLog.net, Log4OM o WSJT-X mandan por UDP cuentan al instante." } },
+    { "@type": "Question", "name": "¿Que son el DX cluster y el Reverse Beacon Network?",
+      "acceptedAnswer": { "@type": "Answer", "text": "El DX cluster es donde los radioaficionados anuncian las estaciones que escuchan. El Reverse Beacon Network es una red mundial de receptores automaticos que decodifican CW y modos digitales y reportan cada estacion que oyen. DX Agent escucha a los dos y se queda con lo que importa para tu log." } },
+    { "@type": "Question", "name": "¿Funciona en Linux y en Mac?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Si. Windows, Linux (x86_64) y macOS tienen su propio paquete con Python adentro. Lo unico que no esta fuera de Windows es el log en vivo de Log4OM y los destinos de sintonia Log4OM, N1MM, OmniRig y DXLab; Hamlib y flrig funcionan en todas las plataformas." } },
+    { "@type": "Question", "name": "¿Es gratis?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Si: licencia MIT, sin cuenta, sin telemetria y sin servicio en la nube. Corre en tu computadora." } }
+  ]
+}
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <img src="../images/station.es.png" alt="DX Agent" width="30" height="30" style="object-fit:cover;border-radius:7px">
+    <span class="name">DX Agent</span>
+    <nav>
+      <a href="#pantallas">Pantallas</a>
+      <a href="#preguntas">Preguntas</a>
+      <a href="https://github.com/ddimunzio/dx-agent-download/blob/main/MANUAL.es.md">Manual</a>
+      <a href="https://github.com/ddimunzio/dx-agent-download">GitHub</a>
+      <a href="../" hreflang="en" lang="en">English</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <h1>DX Agent</h1>
+    <p class="lead">Vigila el DX cluster y el Reverse Beacon Network, compara cada spot con
+      <strong>tu</strong> log y te avisa en el momento en que está en el aire una estación que te
+      falta: un país nuevo, una banda o un modo nuevo, una DXpedición que suma algo, un parque o una
+      cumbre que no trabajaste.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/ddimunzio/dx-agent-download/releases/latest">Bajar la última versión</a>
+      <a class="btn secondary" href="https://github.com/ddimunzio/dx-agent-download/blob/main/MANUAL.es.md">Leer el manual</a>
+    </div>
+    <p class="small">Windows, Linux y macOS. No hay que instalar nada: cada paquete trae su propio
+      Python. Gratis y open source (MIT).</p>
+  </section>
+
+  <figure>
+    <img src="../images/station.es.png" alt="Panel de DX Agent: la lista de alertas, con una DXpedición que hacía falta en 20 m y la grilla de bandas y modos de esa estación" width="1000" loading="eager">
+    <figcaption>La lista de alertas y lo que cada estación suma a tu log: qué te falta, el estado en
+      LoTW y las bandas y modos que ya tenés.</figcaption>
+  </figure>
+
+  <h2>Qué te avisa</h2>
+  <ul class="features">
+    <li><b>ATNO, banda nueva, modo nuevo</b> Avisa solo cuando trabajar esa estación suma algo de
+      verdad: el país nunca trabajado, la banda o el modo que te falta, o una combinación que no tenés.</li>
+    <li><b>DXpediciones que valen la pena</b> Las DXpediciones anunciadas en NG3K, 425 DX News y Club
+      Log, cada una diciendo si te suma una entidad, una banda o un modo, y si ya estás en su log
+      online.</li>
+    <li><b>Tu watchlist y tus estaciones</b> Indicativos que siempre querés escuchar, con comodines, y
+      los indicativos exactos que estás persiguiendo.</li>
+    <li><b>POTA, SOTA, IOTA, WWFF</b> Cumbres, parques e islas, marcadas como nuevas cuando no las
+      trabajaste en esa banda.</li>
+    <li><b>Cerca tuyo</b> Si la estación está siendo escuchada por receptores cerca de tu estación, para
+      saber si el camino está abierto para vos.</li>
+    <li><b>Un clic a la radio</b> Sintonizá el spot desde el panel: Log4OM, N1MM, DXLog.net, OmniRig,
+      Hamlib, flrig, DXLab o WSJT-X.</li>
+  </ul>
+
+  <h2 id="pantallas">Pantallas</h2>
+  <div class="grid2">
+    <figure>
+      <img src="../images/list.es.png" alt="DX Agent: la lista de spots, filtrada a las estaciones que faltan, con los chips de banda y modo" loading="lazy">
+      <figcaption>Todos los spots, o solo lo que te falta.</figcaption>
+    </figure>
+    <figure>
+      <img src="../images/grid-onair.es.png" alt="DX Agent: la grilla de bandas y modos, con un anillo verde en la banda donde la estación está en el aire ahora" loading="lazy">
+      <figcaption>Lo que tenés de ese país, banda por banda y modo por modo.</figcaption>
+    </figure>
+    <figure>
+      <img src="../images/dxpeditions.es.png" alt="DX Agent: la pestaña de DXpediciones, con las que están en el aire ahora y lo que cada una suma al log" loading="lazy">
+      <figcaption>DXpediciones en el aire ahora, y qué suma cada una a tu log.</figcaption>
+    </figure>
+    <figure>
+      <img src="../images/map.es.png" alt="DX Agent: el mapa mundial con los países trabajados y confirmados y la posición de la estación" loading="lazy">
+      <figcaption>Tu DXCC y tu WAZ en un mapa mundial.</figcaption>
+    </figure>
+  </div>
+
+  <h2>Funciona con lo que ya usás</h2>
+  <div class="card">
+    <p>Lee el archivo ADIF de cualquier programa de log — WSJT-X, Log4OM, N1MM Logger+, DXLog.net, Ham
+      Radio Deluxe, DXLab… — y tus confirmaciones de LoTW. Un QSO que acabás de guardar se tiene en
+      cuenta en segundos: directo de la base de Log4OM 2, o por UDP desde N1MM, DXLog.net, Log4OM y
+      WSJT-X. Tus datos y tu configuración quedan en tu computadora.</p>
+    <p class="small">Solo biblioteca estándar de Python 3.11+: sin cuentas, sin nube, sin telemetría.</p>
+  </div>
+
+  <h2>Instalar</h2>
+  <div class="card">
+    <ol>
+      <li>Bajá la última versión desde la
+        <a href="https://github.com/ddimunzio/dx-agent-download/releases/latest">página de releases</a>.</li>
+      <li><b>Windows:</b> descomprimí <code>dx-agent-&lt;versión&gt;-windows.zip</code> y hacé doble clic
+        en <code>start-dx-agent.bat</code>.<br>
+        <b>Linux (x86_64):</b> descomprimí <code>dx-agent-&lt;versión&gt;-linux-x86_64.tar.gz</code> y
+        ejecutá <code>./start-dx-agent.sh</code>.<br>
+        <b>Mac:</b> descomprimí <code>dx-agent-&lt;versión&gt;-macos.tar.gz</code> y hacé doble clic en
+        <code>start-dx-agent.command</code>.</li>
+      <li>El panel se abre en el navegador en <code>http://localhost:8073</code>. Entrá a
+        <b>Configuración</b> y poné tu indicativo y la ruta de tu log ADIF.</li>
+    </ol>
+  </div>
+
+  <h2 id="preguntas">Preguntas</h2>
+  <details>
+    <summary>¿Hay que instalar Python?</summary>
+    <p>No. Cada paquete trae su propio Python: se descomprime y se arranca. No hay nada más que instalar.</p>
+  </details>
+  <details>
+    <summary>¿Usa mis confirmaciones de LoTW?</summary>
+    <p>Sí. Con tu contraseña de LoTW baja tus confirmaciones y las suma a tu log, así una entidad
+      cuenta como confirmada aunque tu programa de log todavía no la haya sincronizado. También podés
+      usar lo que subiste a LoTW como log, sin archivo ADIF.</p>
+  </details>
+  <details>
+    <summary>¿Con qué programas de log funciona?</summary>
+    <p>Con cualquiera que escriba un archivo ADIF. Con Log4OM 2 un QSO se lee directo de su base en
+      unos 10 segundos; los QSOs que N1MM Logger+, DXLog.net, Log4OM o WSJT-X mandan por UDP cuentan
+      al instante.</p>
+  </details>
+  <details>
+    <summary>¿Qué son el DX cluster y el RBN?</summary>
+    <p>El DX cluster es donde los radioaficionados anuncian las estaciones que escuchan. El Reverse
+      Beacon Network es una red mundial de receptores automáticos que decodifican CW y modos digitales
+      y reportan cada estación que oyen. DX Agent escucha a los dos y se queda con lo que importa para
+      tu log.</p>
+  </details>
+  <details>
+    <summary>¿Y en Windows, Linux o Mac?</summary>
+    <p>En los tres, cada uno con su paquete. Lo único que no está fuera de Windows es el log en vivo
+      de Log4OM y los destinos de sintonía Log4OM, N1MM, OmniRig y DXLab; Hamlib y flrig funcionan en
+      todas las plataformas.</p>
+  </details>
+  <details>
+    <summary>¿Es gratis de verdad?</summary>
+    <p>Sí: licencia MIT, sin cuenta, sin telemetría y sin servicio en la nube. Corre en tu
+      computadora.</p>
+  </details>
+
+  <h2>Más</h2>
+  <div class="card">
+    <ul>
+      <li><a href="https://github.com/ddimunzio/dx-agent-download/blob/main/MANUAL.es.md">Manual de uso</a>
+        — instalación, primera configuración, la pantalla, las alertas, sintonizar la radio, tu
+        programa de log, DXpediciones, POTA/SOTA, el mapa, el CQ DX Marathon, LoTW.</li>
+      <li><a href="https://github.com/ddimunzio/dx-agent-download/blob/main/docs/DOCUMENTACION.md">Documentación técnica</a>
+        — cada ajuste y cómo funciona por dentro.</li>
+      <li><a href="https://github.com/ddimunzio/dx-agent-download/releases">Todas las versiones</a>, con
+        lo que cambió en cada una.</li>
+      <li>Problemas o ideas: <a href="https://github.com/ddimunzio/dx-agent-download/issues">issues</a>.</li>
+      <li lang="en">In English: <a href="../" hreflang="en">English page</a> ·
+        <a href="https://github.com/ddimunzio/dx-agent-download/blob/main/MANUAL.en.md" hreflang="en">manual</a>.</li>
+    </ul>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    DX Agent — creado por Diego (LW5HR), con Franco (LU2PWY), Juan Pablo (LU9HVR),
+    Gustavo (LU7HW) y Daniel (LU1HLH). Licencia MIT.
+    <a href="https://github.com/ddimunzio/dx-agent-download">Código y versiones en GitHub</a>.
+  </div>
+</footer>
+
+</body>
+</html>
