@@ -24,6 +24,7 @@ Nothing to install: Python comes inside.
   radio, your logger, DXpeditions, POTA/SOTA, the map, the CQ DX Marathon, LoTW.
 - [Technical documentation](docs/DOCUMENTATION.md) — every setting and how it works inside.
 - Problems or ideas: [Issues](https://github.com/ddimunzio/dx-agent-download/issues).
+- Page for sharing: **https://ddimunzio.github.io/dx-agent-download/** (and [/es/](https://ddimunzio.github.io/dx-agent-download/es/) in Spanish) — screenshots and the answers to the usual questions, to send someone instead of the whole README.
 
 What it does:
 

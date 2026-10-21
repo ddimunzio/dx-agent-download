@@ -1,0 +1,7 @@
+# The published page: LF keeps the deployed bytes identical to the ones committed, whatever
+# the checkout does with line endings.
+*.html text eol=lf
+*.css  text eol=lf
+*.yml  text eol=lf
+*.xml  text eol=lf
+robots.txt text eol=lf
