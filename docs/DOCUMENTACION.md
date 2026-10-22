@@ -838,10 +838,15 @@ estación más cercana a vos que la escuchó en esa banda en los últimos 15 min
   `MY_GRIDSQUARE` en tu log.
 - **Actualización:** la columna se refresca cada 20 segundos, porque los receptores
   cercanos suelen reportar una estación un poco después del primer spot.
-- **Filtro:** el botón **Solo cerca tuyo** muestra solo las alertas que se escuchan
-  cerca tuyo. Para recibir *alertas* solo de esas, marcar **Avisar solo si se escucha
-  cerca tuyo** en la configuración; la estación avisa apenas alguien cerca tuyo la
-  escucha.
+- **Filtro o ajuste:** el botón **Solo cerca tuyo** solo *oculta* las alertas que no se
+  escuchan cerca tuyo: siguen avisando, y vuelven a verse al desmarcarlo. **Avisar solo si se
+  escucha cerca tuyo**, en la configuración, decide qué *avisa*: una estación que solo se
+  escucha lejos no avisa nunca (no entra a la lista ni hay notificación) hasta que alguien
+  cerca tuyo la escucha. Donde hay pocos receptores cerca (el sur de Sudamérica, por ejemplo)
+  eso descarta casi todos los spots y la lista queda casi vacía: entonces el panel dice, junto
+  a cuántas se listan, cuántas estaciones no avisaron en la última hora ("1.240 no avisaron:
+  solo se escuchan lejos"; con un clic se abre la configuración). Casi siempre lo que conviene
+  es el filtro.
 - **Pestaña Estación:** **Quién lo escucha** lista los receptores más cercanos a vos
   primero, con banda, SNR y antigüedad. **Consultar PSKReporter (FT8/FT4)** le
   pregunta a PSKReporter, que tiene muchos más receptores de FT8 en Sudamérica que

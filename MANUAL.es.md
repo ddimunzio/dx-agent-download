@@ -170,7 +170,10 @@ problema.
   estaciones de los continentes elegidos, para quedarte con hacia donde apunta tu antena. Tu propio
   indicativo spoteado se ve siempre;
 - **Actividad:** solo activaciones POTA, SOTA, IOTA... (sección 9);
-- **Solo cerca tuyo:** solo las estaciones que escucha alguien cerca tuyo;
+- **Solo cerca tuyo:** solo las estaciones que escucha alguien cerca tuyo. Solo oculta las demás: siguen avisando.
+  El ajuste **Avisar solo si se escucha cerca tuyo** (Configuración → Alertas) es otra cosa: con él, una estación que solo
+  se escucha lejos no avisa nunca, y donde hay pocos receptores cerca la lista queda casi vacía (el panel avisa cuántas no
+  avisaron). Casi siempre lo que conviene es el filtro;
 - **Ocultar confirmados:** saca lo que ya tenés confirmado en esa banda y modo;
 - **Solo LoTW:** solo las estaciones que subieron a LoTW en los últimos 12 meses y las
   DXpediciones que anunciaron LoTW;

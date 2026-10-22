@@ -164,7 +164,10 @@ problem.
   from the continents picked, to stay with where your antenna points. Your own call spotted
   always shows;
 - **Activity:** only POTA, SOTA, IOTA... activations (section 9);
-- **Near you only:** only stations heard by someone near you;
+- **Near you only:** only stations heard by someone near you. It only hides the others: they still alert. The
+  setting **Only alert when heard near you** (Settings → Alerts) is different: with it, a station heard only far away
+  never alerts, and where few receivers are near you the list stays almost empty (the dashboard then says how many
+  didn't alert). Usually the filter is what you want;
 - **Hide confirmed:** hides what you already have confirmed on that band and mode;
 - **Only LoTW:** only stations that uploaded to LoTW in the last 12 months, and DXpeditions that
   announced LoTW;

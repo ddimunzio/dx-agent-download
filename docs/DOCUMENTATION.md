@@ -798,9 +798,14 @@ it in the last 15 minutes on that band:
   `MY_GRIDSQUARE` in your log.
 - **Updates:** the column refreshes every 20 seconds, because nearby receivers often
   report a station a little after the first spot.
-- **Filter:** the **Near you only** chip shows only alerts heard near you. To get
-  *alerts* only for those, tick **Only alert when heard near you** in Settings; a
-  station then alerts as soon as someone near you hears it.
+- **Filter or setting:** the **Near you only** chip only *hides* the alerts not heard
+  near you: they still alert, and show again when you untick it. **Only alert when heard
+  near you** in Settings decides what *alerts*: a station heard only far away never
+  alerts (no row, no pop-up) until someone near you hears it. Where few receivers are
+  near you (the south of South America, say) that drops nearly every spot, and the list
+  stays almost empty: then the dashboard says, next to how many are listed, how many
+  stations it kept from alerting in the last hour ("1,240 didn't alert: heard only far
+  away", a click opens Settings). Usually the filter is what you want.
 - **Station tab:** **Who hears it** lists the receivers nearest you first, with band,
   SNR and age. **Check PSKReporter (FT8/FT4)** asks PSKReporter, which has many more
   FT8 receivers in South America than RBN has skimmers. Its receptions are added to
