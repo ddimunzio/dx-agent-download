@@ -164,8 +164,9 @@ problema.
 **Filtros**, arriba de la lista, en tres filas:
 
 - botones por **tipo de alerta** (solo los tipos activados en Configuración), **banda** y **modo**
-  (sin ninguno marcado se ve todo);
-- **Continente** (AF, AN, AS, EU, NA, OC, SA, con cuántas alertas hay de cada uno): deja las
+  (sin ninguno marcado se ve todo). Cada opción dice cuántas estaciones mostraría, con los demás
+  filtros como están: con 20 m elegido, los modos dicen cuántas hay en 20 m;
+- **Continente** (AF, AN, AS, EU, NA, OC, SA): deja las
   estaciones de los continentes elegidos, para quedarte con hacia donde apunta tu antena. Tu propio
   indicativo spoteado se ve siempre;
 - **Actividad:** solo activaciones POTA, SOTA, IOTA... (sección 9);

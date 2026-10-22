@@ -158,8 +158,9 @@ problem.
 **Filters**, above the list, in three rows:
 
 - buttons for **alert type** (only the types turned on in Settings), **band** and **mode** (none
-  ticked = everything shows);
-- **Continent** (AF, AN, AS, EU, NA, OC, SA, with how many alerts from each): keeps the stations
+  ticked = everything shows). Each option says how many stations it would show, with the other
+  filters as they are: with 20 m picked, the modes say how many on 20 m;
+- **Continent** (AF, AN, AS, EU, NA, OC, SA): keeps the stations
   from the continents picked, to stay with where your antenna points. Your own call spotted
   always shows;
 - **Activity:** only POTA, SOTA, IOTA... activations (section 9);
