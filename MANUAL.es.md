@@ -251,7 +251,7 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
 | **DXPED YA TENGO** | DXpedición que ya tenés confirmada en esa banda y modo (gris) | activada |
 | **BANDA NUEVA** | País trabajado, pero no en esta banda | activada |
 | **MODO NUEVO** | País trabajado, pero no en este modo (CW, fonía, digital) | activada |
-| **SEGUIMIENTO** | Un indicativo de tu lista de seguimiento | activada |
+| **SIGUIENDO** | Un indicativo de tu lista de seguimiento | activada |
 | **BANDA+MODO** | País no trabajado en esta combinación de banda y modo | desactivada |
 | **INDICATIVO NUEVO** | Este indicativo exacto no está en tu log (genera muchísimas alertas) | desactivada |
 | **MARATHON** | Un país o una zona CQ que todavía no trabajaste en el CQ DX Marathon (sección 11) | activada, si seguís el Marathon |
@@ -280,8 +280,8 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
 **Lista de seguimiento:** indicativos que querés que te avisen siempre que salgan, aunque no
 te sumen nada. Admite comodines, por ejemplo `VP8*`. Se edita en Configuración o con la ☆ de
 la pestaña Estación. **Ignorar** hace lo contrario: esos indicativos nunca alertan. En los
-filtros, **SEGUIMIENTO** junto con otro tipo muestra solo los que seguís que además son de ese
-tipo: **SEGUIMIENTO** + **BANDA+MODO** son tus indicativos en seguimiento en una banda y modo que
+filtros, **SIGUIENDO** junto con otro tipo muestra solo los que seguís que además son de ese
+tipo: **SIGUIENDO** + **BANDA+MODO** son tus indicativos en seguimiento en una banda y modo que
 te faltan.
 
 **PSKReporter en vivo:** en Configuración → Fuentes de spots → **PSKReporter** podés elegir
