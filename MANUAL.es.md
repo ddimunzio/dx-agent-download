@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.4 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
+*Versión 0.4.8 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -46,9 +46,9 @@ Contenido:
 
 1. Bajá el último `dx-agent-<versión>-windows.zip` de la página
    [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest).
-2. Descomprimilo en una carpeta tuya, por ejemplo `Documentos\dx-agent` (no en
-   `Archivos de programa`: DX Agent guarda su configuración y sus datos dentro de su
-   carpeta).
+2. Descomprimilo donde quieras, por ejemplo en `Documentos`. Tu configuración y tus datos no
+   quedan ahí, sino en una carpeta tuya que usan todas las versiones (sección 13): la carpeta
+   del programa se puede reemplazar o borrar.
 3. Hacé doble clic en **start-dx-agent.bat**. El panel se abre en el navegador, en
    **http://localhost:8073**.
 
@@ -86,8 +86,8 @@ puede abrir desde tu PC; otras computadoras de la red no lo ven.
 1. Bajá el último `dx-agent-<versión>-macos.tar.gz` de la misma página
    [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest). Sirve para
    cualquier Mac, con Apple Silicon (M1, M2...) o Intel.
-2. Hacé doble clic para descomprimirlo, y mové la carpeta `dx-agent` a una carpeta tuya, por
-   ejemplo Documentos.
+2. Hacé doble clic para descomprimirlo, y mové la carpeta `dx-agent` adonde quieras, por
+   ejemplo a Documentos.
 3. Hacé doble clic en **start-dx-agent.command**, adentro de esa carpeta. El panel se abre en el
    navegador, en **http://localhost:8073**, igual que en Windows.
 
@@ -107,7 +107,7 @@ permiso).
 
 Log4OM, N1MM, DXLog.net y OmniRig son programas de Windows: leer la base de Log4OM y sintonizar
 con ellos funcionan solo en Windows. Todo lo demás es igual en Linux y en la Mac (incluidos los
-QSOs por UDP de WSJT-X y sintonizar con flrig o Hamlib).
+QSOs por UDP de WSJT-X y sintonizar con flrig, Hamlib o TCI).
 
 ## 3. La primera configuración
 
@@ -117,7 +117,7 @@ log. Hacé clic en **Configuración** (arriba a la derecha) y completá:
 1. **Estación**
    - **Indicativo:** el tuyo. Se usa para entrar al cluster y a la RBN.
    - **Tu log:** *Archivo ADIF*, *Solo LoTW* o *Empezar de cero (log nuevo)*: DX Agent crea un
-     log vacío, `data\<INDICATIVO>.adi`, y le agrega los QSOs que tus programas le mandan al
+     log vacío, `data\<INDICATIVO>.adi` en tu carpeta de DX Agent, y le agrega los QSOs que tus programas le mandan al
      loguearlos (WSJT-X, N1MM... ver la sección 7). Cuando empieces a usar un programa de log,
      importá ese archivo ahí y elegí Archivo ADIF.
    - **Ruta del log:** hacé clic en **Buscar…** y elegí el archivo. Si elegís un backup de
@@ -131,7 +131,8 @@ log. Hacé clic en **Configuración** (arriba a la derecha) y completá:
      Log4OM (el archivo `.SQLite`, sin exportar nada). Las alertas, el DXCC y el WAZ suman todos
      tus indicativos juntos; el selector del encabezado permite ver uno solo.
 2. **LoTW** (opcional): tu usuario y contraseña de LoTW, **Probar ingreso**. La contraseña
-   queda guardada cifrada para tu usuario de Windows, nunca en texto.
+   queda guardada cifrada para tu usuario de Windows (en Linux y en la Mac, legible solo por vos),
+   nunca en texto.
 3. **Alertas:** qué tipos de alerta querés, en qué bandas y modos. Para empezar, los valores
    de fábrica andan bien.
 4. **Radio (botón Sintonizar):** el programa que maneja tu radio (ver sección 6). Si no
@@ -142,7 +143,8 @@ log. Hacé clic en **Configuración** (arriba a la derecha) y completá:
 Si algo está mal (un indicativo inválido, ninguna banda elegida...), aparece una lista en
 rojo junto al botón y no se guarda nada hasta corregirlo.
 
-El panel aparece en el idioma del navegador; el botón **ES/EN** del encabezado lo cambia.
+El panel aparece en el idioma del navegador; el botón **EN/ES/PT** del encabezado lo cambia:
+inglés, español o portugués (Brasil).
 
 ## 4. La pantalla
 
@@ -150,16 +152,22 @@ El panel aparece en el idioma del navegador; el botón **ES/EN** del encabezado 
 
 **Encabezado:** tu indicativo (con varios, un selector: **Todos** o uno solo, para ver qué le
 falta a ese); una pastilla por cada fuente de spots (verde = conectada,
-ámbar = conectando, rojo = caída); los totales de tu log; los botones **Configuración**,
-**Acerca de**, **ES/EN**, **Tema** (claro / oscuro / automático), **Sonido** (un pitido para las
-alertas importantes, apagado de fábrica) y **Detener**; el reloj UTC. **Acerca de** cuenta qué es
-DX Agent, quién lo hizo y sus colaboradores, y tiene los links para apoyarlo, a este manual y
-para reportar un problema.
+ámbar = conectando, rojo = caída); la pastilla **DXpediciones** ("48 · 6 en el aire": cuántas
+están dentro de sus fechas y cuántas se spotearon en los últimos 15 minutos; un clic abre su
+pestaña); los totales de tu log, en una pastilla azul; botones con íconos (al pasar el mouse
+dicen qué hace cada uno): **Acerca de** ⓘ, **Configuración** ⚙, **EN/ES/PT**, **Tema** (claro /
+oscuro / automático), **Sonido** (un pitido para las alertas importantes, apagado de fábrica) y
+**Detener**, en rojo; el reloj UTC. **Acerca de** cuenta qué es DX Agent, quién lo hizo y sus
+colaboradores, y tiene los links para apoyarlo, al sitio, a este manual y para reportar un
+problema.
 
-**Filtros**, arriba de la lista:
+**Filtros**, arriba de la lista, en tres filas:
 
 - botones por **tipo de alerta** (solo los tipos activados en Configuración), **banda** y **modo**
   (sin ninguno marcado se ve todo);
+- **Continente** (AF, AN, AS, EU, NA, OC, SA, con cuántas alertas hay de cada uno): deja las
+  estaciones de los continentes elegidos, para quedarte con hacia donde apunta tu antena. Tu propio
+  indicativo spoteado se ve siempre;
 - **Actividad:** solo activaciones POTA, SOTA, IOTA... (sección 9);
 - **Solo cerca tuyo:** solo las estaciones que escucha alguien cerca tuyo;
 - **Ocultar confirmados:** saca lo que ya tenés confirmado en esa banda y modo;
@@ -208,10 +216,21 @@ frecuencia) se abre la estación:
 - para una estación en un **parque POTA o una cumbre SOTA**, una tarjeta con lo que dicen pota.app
   o SOTA: nombre, tipo y lugar, cuántas activaciones y QSOs, quién la activó primero, sus últimas
   activaciones, si **vos** la trabajaste y en qué bandas (o "Nueva para vos"), y enlaces;
-- **quién la escucha**, los receptores más cercanos a vos primero, y el botón **Consultar
-  PSKReporter** para FT8/FT4;
-- **Ver solo** este indicativo, **☆ seguimiento** para sumarlo a tu lista de seguimiento, sus
-  últimos spots y enlaces a QRZ.com, HamQTH y DXWatch.
+- **Quién lo escucha**, los receptores más cercanos a vos primero, y el botón **Consultar
+  PSKReporter** para FT8/FT4 (o, con PSKReporter en vivo, los receptores a medida que la
+  reportan: sección 5);
+- **Ver solo** este indicativo, **☆ seguimiento** para sumarlo a tu lista de seguimiento,
+  **Spotear** (ver abajo), sus **Últimos spots** y enlaces a QRZ.com, HamQTH y DXWatch.
+  **Últimos spots** y **Quién lo escucha** son pastillas: al pasar el mouse dicen qué lista cada
+  una.
+
+**Spotear** (el botón de la antena) publica un spot de la estación en el DX cluster al que está
+conectado DX Agent, con tu indicativo: por ejemplo `DX 14025.0 3Y0K up 2`. Abre un formulario
+chico con la frecuencia de la fila en la que hiciste clic (la podés cambiar) y un comentario
+(hasta 30 caracteres, sin acentos), y pide confirmación. Después te dice si el cluster lo tomó:
+**publicado** cuando te lo devuelve, **enviado** cuando no lo devuelve (W3LPL, por ejemplo), o lo
+que respondió si lo rechazó. Como máximo un spot cada 30 segundos; con el cluster apagado o caído
+el botón queda gris.
 
 ![La pestaña Estación, con una DXpedición en el aire](images/station.es.png)
 
@@ -260,7 +279,17 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
 
 **Lista de seguimiento:** indicativos que querés que te avisen siempre que salgan, aunque no
 te sumen nada. Admite comodines, por ejemplo `VP8*`. Se edita en Configuración o con la ☆ de
-la pestaña Estación. **Ignorar** hace lo contrario: esos indicativos nunca alertan.
+la pestaña Estación. **Ignorar** hace lo contrario: esos indicativos nunca alertan. En los
+filtros, **SEGUIMIENTO** junto con otro tipo muestra solo los que seguís que además son de ese
+tipo: **SEGUIMIENTO** + **BANDA+MODO** son tus indicativos en seguimiento en una banda y modo que
+te faltan.
+
+**PSKReporter en vivo:** en Configuración → Fuentes de spots → **PSKReporter** podés elegir
+**Cuando lo pedís** (una consulta cada 5 minutos, con el botón de la pestaña Estación; es lo de
+fábrica) o **En vivo (MQTT)**: los reportes de PSKReporter a medida que llegan, sin límite, para la
+estación abierta en la pestaña Estación y las alertas digitales de la lista. Sus receptores
+cuentan para "cerca tuyo" y el mapa sin apretar ningún botón, y una pastilla **PSKReporter** en el
+encabezado muestra la conexión. Necesita tu grid locator.
 
 ## 6. Sintonizar la radio y pasar el indicativo al logger
 
@@ -276,6 +305,7 @@ derecha dice si funcionó.
 | **DXLog.net** | Options → Configure network: agregar el puerto `13064` al **UDP broadcast listener**; Options → Broadcast → **Receive broadcasts** | no |
 | **OmniRig** | elegir en DX Agent la radio 1 o 2 de OmniRig | sí |
 | **Hamlib (rigctld)**, **flrig**, **DXLab Commander** | que el programa esté abierto | sí |
+| **TCI** (AetherSDR para FlexRadio, ExpertSDR, Thetis) | AetherSDR: Settings → **Autostart TCI with AetherSDR** (o **Enable** en su applet TCI, puerto 50001) | sí |
 
 - **Con Log4OM, además de la frecuencia se completa el indicativo** en su ventana de QSO,
   listo para loguear. Si ya escribiste un indicativo a mano ahí, Log4OM no lo reemplaza.
@@ -286,6 +316,14 @@ derecha dice si funcionó.
   radio en USB-D una vez. Desde ahí, los clics en spots de FT8/FT4 solo cambian la frecuencia y
   el USB-D se mantiene. Un spot de fonía la pasa a USB o LSB, y el siguiente spot de FT8 queda en
   USB: volvé a poner USB-D a mano. Con CW pasa lo mismo: una radio en CW o CW-R lo conserva.
+- **FlexRadio con AetherSDR (TCI), en prueba:** Sintonizar mueve el slice activo y pone el modo
+  (CW, USB/LSB, RTTY, DIGU para FT8). Con **Mostrar las alertas en el panadaptador de la radio**
+  (activado de fábrica), cada estación de la lista aparece en el panadaptador de AetherSDR con su
+  color, su título y su país; se mueve cuando cambia de frecuencia y se saca cuando dejan de
+  spotearla. Un clic en una sintoniza ahí y la abre en la pestaña Estación de DX Agent. Una
+  pastilla **TCI** en el encabezado muestra la conexión. Está probado con la radio de demostración
+  de AetherSDR; si lo usás con una Flex, contanos cómo te fue en el
+  [issue #10](https://github.com/ddimunzio/dx-agent-download/issues/10).
 - **WSJT-X:** marcá en DX Agent **Mandar también el indicativo a WSJT-X** y en WSJT-X
   Settings → Reporting → **Accept UDP requests**. Un clic en un spot de FT8/FT4 pone la radio
   en la frecuencia de FT8/FT4, completa **DX Call** y **DX Grid** y mueve el audio a la
@@ -357,13 +395,16 @@ Actividad.
   trabajaste **en esa banda** se marca como nuevo, aunque el país ya lo tengas confirmado.
   DX Agent sabe qué trabajaste por las referencias de tu log y por tus QSOs con activadores
   que vio en el aire (desde que lo usás).
-- En el mapa, las cumbres son montañas y los parques pinos, en su ubicación real: en rojo si no
-  trabajaste esa referencia, ámbar trabajada, verde confirmada.
+- En el mapa, con una actividad elegida, las cumbres son montañas y los parques pinos, en su
+  ubicación real: en rojo si no trabajaste esa referencia, ámbar trabajada, verde confirmada. Sin
+  actividad elegida son un punto como las demás estaciones.
 - **La pestaña Referencias** (aparece cuando hay una actividad elegida): todas las cumbres,
   parques, islas y castillos que trabajaste (POTA, SOTA, WWFF, IOTA, WCA), programa por programa:
-  cuántas trabajadas y confirmadas, y cada una con su nombre y lugar, las bandas, **C** confirmada /
-  **W** trabajada y tu último QSO. Al hacer clic en una se ven **tus QSOs con ella** (indicativo,
-  fecha, banda, modo, ✓ si está confirmado) y, en POTA o SOTA, su tarjeta. *Confirmada* quiere
+  cuántas trabajadas, confirmadas y confirmadas por QSL en papel, y cada una con su nombre y lugar,
+  las bandas, **C** confirmada / **W** trabajada y tu último QSO. Se pueden ver todas, las
+  confirmadas, las de **QSL** (tarjeta en papel) o las sin confirmar. Al hacer clic en una se ven
+  **tus QSOs con ella** (indicativo, fecha, banda, modo, ✓ confirmado en LoTW, ✓ QSL por tarjeta) y,
+  en POTA o SOTA, su tarjeta. *Confirmada* quiere
   decir que el QSO está confirmado en LoTW o por QSL; el crédito oficial de cada programa está en
   su sitio (pota.app, sotadata, wwff.co).
 
@@ -393,7 +434,12 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
 - Con una sola banda (o un solo modo) elegidos en los filtros de arriba, DXCC y WAZ pintan esa
   banda ("12 m (filtro)"), salvo que hayas elegido una en sus propios menús.
 - **Referencias** (al lado de DXCC / WAZ): tus parques POTA y cumbres SOTA, en verde confirmadas y
-  en ámbar trabajadas.
+  en ámbar trabajadas. Un clic en uno muestra su tarjeta y tus QSOs con él, en la pestaña Estación.
+- **DXpediciones** (al lado de DXCC / WAZ / Referencias): qué rombos se ven: las que están **en el
+  aire** (de fábrica), **las que faltan**, **todas** las activas, o **no**. La estación abierta en la
+  pestaña Estación se ve siempre.
+- Varias DXpediciones en el mismo lugar (por ejemplo cuatro en Koror, Palau) van en un círculo chico
+  alrededor, así se puede hacer clic en cada una.
 
 ## 11. CQ DX Marathon
 
@@ -424,7 +470,8 @@ como permiten las reglas).
   muestra si la estación sube a LoTW. No necesita tu contraseña.
 - **Tus confirmaciones:** con tu usuario y contraseña de LoTW (Configuración → LoTW), DX Agent
   baja tus QSL confirmadas cada 12 horas, así "confirmado" está al día aunque tu programa de
-  log no se haya sincronizado. La primera descarga puede tardar unos minutos.
+  log no se haya sincronizado. La primera descarga puede tardar unos minutos; si LoTW está
+  ocupado o no responde, DX Agent reintenta solo cada 10 minutos y sigue donde quedó.
 - **LoTW como log:** si no tenés archivo ADIF, en Configuración → Estación → **Tu log**
   elegí **Solo LoTW**. Solo cuenta lo que subiste a LoTW.
 - **Varios indicativos:** alcanza con una cuenta de LoTW con los certificados de todos tus
@@ -432,24 +479,30 @@ como permiten las reglas).
 
 ## 13. Actualizar a una versión nueva
 
-Desde la versión 0.4.2, una pastilla junto al número de versión te avisa cuando sale una nueva,
-con un link a su página (DX Agent le pregunta a GitHub una vez por día; no se manda nada tuyo ni
-se instala nada). Para actualizar:
+Una pastilla junto al número de versión te avisa cuando sale una nueva, con un link a su página
+(DX Agent le pregunta a GitHub cada hora; no se manda nada tuyo ni se instala nada). Para
+actualizar:
 
-1. Cerrá DX Agent (botón **Detener**).
-2. Bajá el paquete nuevo y descomprimilo **en la misma carpeta**, reemplazando los archivos
-   (en Linux: `tar -xzf` en la carpeta que contiene `dx-agent`).
-3. Abrilo como siempre con **start-dx-agent.bat** (Linux: `./start-dx-agent.sh`; Mac:
-   **start-dx-agent.command**).
+1. Bajá el paquete nuevo y descomprimilo donde quieras: en otra carpeta o encima de la anterior.
+2. Abrilo como siempre con **start-dx-agent.bat** (Linux: `./start-dx-agent.sh`; Mac:
+   **start-dx-agent.command**). Si la versión anterior está corriendo, se detiene sola y queda la
+   nueva.
+3. La carpeta de la versión vieja se puede borrar.
 
-¿Te olvidaste de detenerlo? Desde la 0.4.3, al abrir la versión nueva se detiene la anterior y
-arranca la nueva. Igual, detenelo antes de descomprimir encima de la misma carpeta: Windows no
-reemplaza los archivos de un programa que está corriendo. En la Mac, al descomprimir se crea una
-carpeta nueva: copiale `config.toml` y la carpeta `data` de la anterior.
+**Tu configuración y tus datos** (`config.toml` y la carpeta `data`: el historial de alertas, la
+contraseña de LoTW guardada, el log si empezaste de cero) no están en la carpeta del programa,
+sino en una carpeta tuya que usan todas las versiones:
 
-Tu configuración (`config.toml`) y tus datos (la carpeta `data`) no vienen en el zip, así que
-se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y la carpeta
-`data` de la anterior.
+| Sistema | Carpeta |
+|---|---|
+| Windows | `%APPDATA%\DX Agent` |
+| Mac | `~/Library/Application Support/DX Agent` |
+| Linux | `~/.config/dx-agent` |
+
+**Configuración** muestra la ruta exacta. Hasta la 0.4.4 se guardaban en la carpeta del
+programa: la primera vez que abrís una versión más nueva, copia tu configuración y tus datos
+desde ahí (o desde la versión anterior que esté al lado) y lo avisa en el panel. La versión vieja
+queda como estaba.
 
 ## 14. Problemas frecuentes
 
@@ -457,20 +510,21 @@ se conservan. Si preferís usar otra carpeta, copiá a la nueva `config.toml` y 
 |----------|-----------|
 | Franja amarilla "No se encontró ningún archivo ADIF" | Configuración → **Buscar…** el archivo del log, **Probar** hasta que lo encuentre, y **Guardar y aplicar** |
 | El panel no abre | Abrí `http://localhost:8073` a mano. Si dice que el puerto está ocupado, otro programa (u otra copia de DX Agent) lo usa |
-| "Se perdió la conexión con DX Agent" | DX Agent se cerró: abrilo de nuevo con start-dx-agent.bat; la página se reconecta sola |
+| "Se perdió la conexión con DX Agent" | DX Agent se cerró: abrilo de nuevo con start-dx-agent.bat (Mac: start-dx-agent.command; Linux: start-dx-agent.sh); la página se reconecta sola |
 | Una estación que acabo de trabajar sigue alertando | Ver la sección 7. Sin aviso del programa de log, se actualiza cuando tu programa escribe el archivo ADIF |
-| Tarda en arrancar con un log muy grande | La primera vez lee todo el log (con 250.000 QSOs, unos 15 segundos); después guarda un caché en `data\cache` y arranca en un segundo, salvo que el log haya cambiado |
+| Tarda en arrancar con un log muy grande | La primera vez lee todo el log (con 250.000 QSOs, unos 15 segundos); después guarda un caché en `data\cache` (en tu carpeta de DX Agent) y arranca en un segundo, salvo que el log haya cambiado |
 | Demasiadas alertas | En Configuración → Alertas dejá solo **ATNO** y **DXpedición**, o sacá bandas que no operás |
 | Muy pocas alertas del cluster | Es normal: el cluster manda pocos spots por minuto y la RBN suele reportar primero la misma estación |
 | No aparecen notificaciones de Windows | Configuración → **Mostrar notificaciones**, y en Windows: Configuración → Sistema → Notificaciones (incluida "Windows PowerShell") |
 | Mac: "No se puede abrir start-dx-agent.command" | No está firmado por Apple: Configuración del Sistema → Privacidad y seguridad → **Abrir igualmente** (sección 2) |
 | El botón Sintonizar no mueve la radio | Revisá en tu programa el control remoto (sección 6) y que esté abierto; el mensaje arriba a la derecha dice qué falló |
-| Un cambio de configuración lo empeoró | `config.toml.bak` tiene la configuración anterior: copialo sobre `config.toml` y volvé a abrirlo |
+| AetherSDR: la pastilla **TCI** está en rojo o ámbar | En AetherSDR activá Settings → **Autostart TCI with AetherSDR** (o **Enable** en su applet TCI) y revisá que el puerto sea 50001 |
+| Un cambio de configuración lo empeoró | `config.toml.bak`, en tu carpeta de DX Agent (sección 13), tiene la configuración anterior: copialo sobre `config.toml` y volvé a abrirlo |
 | "saved password could not be read" | La contraseña de LoTW la guardó otro usuario de Windows u otra PC: escribila de nuevo en Configuración |
 | Mi programa de log dice que una banda y modo está confirmada y DX Agent dice que no (**W** ámbar) | Lo más probable es que la única confirmación sea una **eQSL**. DX Agent sigue las reglas del DXCC de la ARRL: solo cuentan LoTW o la QSL en papel, eQSL no (para el WAZ, que acepta eQSL, sí cuenta). Muchos programas de log cuentan eQSL como confirmado. Para la ARRL, esa banda y modo todavía necesita una confirmación por LoTW o en papel |
 
-Lo que DX Agent va haciendo queda en `data\dx-agent.log`, dentro de su carpeta. Si reportás
-un problema, ese archivo ayuda mucho.
+Lo que DX Agent va haciendo queda en `data\dx-agent.log`, en tu carpeta de DX Agent (en Windows,
+`%APPDATA%\DX Agent\data\dx-agent.log`). Si reportás un problema, ese archivo ayuda mucho.
 
 ## 15. Ayuda y contacto
 
@@ -481,8 +535,8 @@ un problema, ese archivo ayuda mucho.
   Contá qué hiciste, qué esperabas y qué pasó, y si podés adjuntá `data\dx-agent.log`
   (no tiene tu contraseña).
 - **Documentación técnica completa** (todas las opciones del archivo de configuración, cómo
-  funciona por dentro): `DOCUMENTACION.md`, dentro del zip.
-- **Apoyá DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) (también en la ventana **Acerca de** del panel)
+  funciona por dentro): [docs/DOCUMENTACION.md](docs/DOCUMENTACION.md), y dentro del zip.
+- **Apoyá DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · desde Argentina, [Cafecito](https://cafecito.app/lw5hr) (también en la ventana **Acerca de** del panel)
 - **Hecho por** Diego – LW5HR, con Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF.
 - **Licencia:** software libre, [MIT](LICENSE): cualquiera puede usarlo, copiarlo y compartirlo.
 

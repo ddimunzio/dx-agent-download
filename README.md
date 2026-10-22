@@ -35,7 +35,8 @@ What it does:
 - **Near you:** whether the station is being heard close to your QTH.
 - **LoTW:** who uploads, and your own confirmations.
 - **Tune** your radio with one click (Log4OM, N1MM, DXLog.net, OmniRig, Hamlib, flrig, DXLab, WSJT-X), with
-  the call filled in in Log4OM and WSJT-X.
+  the call filled in in Log4OM and WSJT-X; with a FlexRadio on AetherSDR (TCI, in testing) the alerts
+  also show on its panadapter.
 - **POTA, SOTA, IOTA, WWFF** and more, with the summits and parks you haven't worked.
 - A **world map** with your DXCC and WAZ standing; click a country to see what you have of it.
 - The **CQ DX Marathon**, the year or the Sprint: your countries and zones, and alerts for the

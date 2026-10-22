@@ -56,7 +56,7 @@
     { "@type": "Question", "name": "What is the DX cluster and what is the Reverse Beacon Network?",
       "acceptedAnswer": { "@type": "Answer", "text": "The DX cluster is where radio amateurs announce the stations they hear; the Reverse Beacon Network is a worldwide set of automatic receivers (skimmers) that decode CW and digital modes and report every station they hear. DX Agent listens to both and keeps the spots that matter to your log." } },
     { "@type": "Question", "name": "Does it run on Linux and macOS?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Windows, Linux (x86_64) and macOS each have their own package with Python inside. The Windows-only parts are Log4OM's live log and the Log4OM, N1MM, OmniRig and DXLab tuning targets; Hamlib and flrig work everywhere." } },
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Windows, Linux (x86_64) and macOS each have their own package with Python inside. The Windows-only parts are Log4OM's live log and the Log4OM, N1MM, OmniRig and DXLab tuning targets; Hamlib, flrig and TCI work everywhere." } },
     { "@type": "Question", "name": "Is it free?",
       "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is free and open source under the MIT licence, with no account, no telemetry and no cloud service: it runs on your own computer." } }
   ]
@@ -116,7 +116,8 @@
     <li><b>Near you</b> Whether the station is being heard by receivers close to your own station,
       so you know if the path is open to you.</li>
     <li><b>One click to the radio</b> Tune to the spot from the dashboard: Log4OM, N1MM, DXLog.net,
-      OmniRig, Hamlib, flrig, DXLab or WSJT-X.</li>
+      OmniRig, Hamlib, flrig, DXLab, WSJT-X or TCI (a FlexRadio on AetherSDR, with the alerts on its
+      panadapter; in testing).</li>
   </ul>
 
   <h2 id="screens">Screens</h2>
@@ -190,7 +191,7 @@
   <details>
     <summary>Windows, Linux or Mac?</summary>
     <p>All three, each with its own package. The Windows-only parts are Log4OM's live log and the
-      Log4OM, N1MM, OmniRig and DXLab tuning targets; Hamlib and flrig work everywhere.</p>
+      Log4OM, N1MM, OmniRig and DXLab tuning targets; Hamlib, flrig and TCI work everywhere.</p>
   </details>
   <details>
     <summary>Is it really free?</summary>

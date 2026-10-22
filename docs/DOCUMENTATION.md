@@ -1,6 +1,6 @@
 # DX Agent — User Guide
 
-*Created by Diego – LW5HR, with Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1).
+*Created by Diego – LW5HR, with Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · from Argentina, [Cafecito](https://cafecito.app/lw5hr).
 Versión en español: [DOCUMENTACION.md](DOCUMENTACION.md).*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every
@@ -41,7 +41,7 @@ install. DX Agent runs without a window: the dashboard opens in your browser,
 **Stop** (top right of the dashboard) closes it, and double-clicking again while it
 runs just opens the dashboard. Starting a new version while an older one is still running
 stops the old one first (as its Stop button would) and starts the new one. If it can't start, a Windows message says why; what it
-prints goes to `data/dx-agent.log`, and **start-dx-agent-console.bat** runs it in a
+prints goes to `data/dx-agent.log` in your DX Agent folder (see below), and **start-dx-agent-console.bat** runs it in a
 window to watch it. (The source zip, `dx-agent-<version>-source.zip`, needs
 [Python 3.11+](https://www.python.org/downloads/) installed with "Add python.exe to
 PATH"; without it, start-dx-agent.bat says so and offers to install it with winget.)
@@ -75,8 +75,26 @@ xattr -dr com.apple.quarantine .
 
 On a Mac, too, everything works except the Windows programs ([Known limitations](#known-limitations)).
 
-The first start creates `config.toml` from `config.example.toml`; then set your
-callsign and log in **Settings**. From a terminal instead:
+**Your settings and data** are kept outside the program's folder, in a folder of your own that
+every version uses. They are `config.toml` and the `data` folder, which holds your alert
+history, the saved LoTW password, and the log if you started from scratch:
+
+| System | Folder |
+|---|---|
+| Windows | `%APPDATA%\DX Agent` |
+| Mac | `~/Library/Application Support/DX Agent` |
+| Linux | `~/.config/dx-agent` (or `$XDG_CONFIG_HOME/dx-agent`) |
+
+To update, unzip the new version anywhere and start it; the old folder can be deleted.
+**Settings** shows the exact path of `config.toml`. Up to 0.4.x they were kept in the
+program's folder: the first time a newer version starts, it copies the settings and data from
+there, or from the older version next to it (for example `dx-agent-0.4.3-windows\dx-agent`), and
+says so on the dashboard. The older version is left as it was. When there is none, the first
+start creates `config.toml` from `config.example.toml`; then set your callsign and log in
+**Settings**. To use another `config.toml`: `python -m dxagent -c path/config.toml run` (its data
+goes in `data`, next to it), or the `DXAGENT_HOME` environment variable with another folder.
+
+From a terminal instead:
 
 1. Open a terminal. In VS Code: **Terminal → New Terminal**.
 2. Go to the project folder:
@@ -96,11 +114,11 @@ callsign and log in **Settings**. From a terminal instead:
    to your ADIF log and, if you want, your LoTW password. **Save and apply**.
 5. Press **Ctrl+C** in the terminal to stop (it prints `73!`).
 
-Run it from the `dx-agent` folder, because it looks for `config.toml` there. From
-anywhere else, pass the config path:
+It uses the `config.toml` in your DX Agent folder (above), wherever you run it from. To use
+another one, pass its path (its data goes in `data` beside it):
 
 ```powershell
-python -m dxagent -c C:\path\to\dx-agent\config.toml run
+python -m dxagent -c C:\path\to\config.toml run
 ```
 
 On Linux the commands are the same with `python3` and `/path/to/dx-agent`.
@@ -147,10 +165,10 @@ python -m dxagent run --no-ui       # console only
 
 | Area | What it shows |
 |------|---------------|
-| **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); your log totals; DXpeditions active; **Settings**, **About** (what DX Agent is, who made it, the collaborators, how to support it, help), **EN/ES** (language), **Theme** and **Browser sound** buttons; UTC clock. `#about` opens the About window |
-| **Filters** | Chips for alert type, band and mode, plus a search box for call or country. Only the alert types turned on in Settings get a chip. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. SPOT rows are one per station, band and mode: the latest spot, with **×N** for how many (a CQ is heard by several RBN skimmers at once; hover for who heard it); those before an alert of the same station, band and mode are that alert's. A SPOT row that still adds to your log (it made no alert of its own because the same alert isn't repeated within the cooldown) is coloured like what it adds, not grey. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. **Only LoTW** leaves the stations that uploaded to LoTW in the last 12 months and the DXpeditions that announced LoTW: the ones likely to confirm there. Your filters are remembered in the browser. **Clear list** (after confirming) empties the alert list, in every open dashboard and after a reload, and starts the cooldown again: whatever is still on the air alerts again at its next spot. The alert history (`data/dxagent.db`) and the Station tab's latest spots are kept |
+| **Header** | Your call; one pill per feed (green = online, amber = connecting, red = down) with its spot count (hover for the server and last spot time); a **DXpeditions** pill next to them: how many are within their dates and how many of them were spotted in the last 15 minutes ("48 · 6 on the air", its dot green while one is; a click opens the DXpeditions tab); your log totals; icon buttons (hover for what each does): **About** ⓘ (what DX Agent is, who made it, the collaborators, how to support it, and help: the website, the user manual and the issues page), **Settings** ⚙ (on the Settings page, a list icon back to the alerts), **EN/ES/PT** (language), **Theme** (half circle = Auto, sun = Light, moon = Dark), **Browser sound** (speaker, crossed out when off) and **Stop** (red); UTC clock. `#about` opens the About window |
+| **Filters** | Three rows, a line between them: alert type (with **List** / **Map** and **Clear list**); band, mode and the others; continent and a search box for call or country. **Continent** (AF, AN, AS, EU, NA, OC, SA) leaves the stations from the continents picked, to keep to where your antenna points; your own call spotted always shows. Only the alert types turned on in Settings get a chip. No chip selected = show everything. An alert counts for each of its reasons, so a DXpedition on your watchlist shows under both **DXPED NEED** and **WATCHLIST**; **WATCHLIST** also lists your watchlist calls' spots that made no alert (grey **SPOT** rows), so you see when they are on the air. Several types picked show any of them, except **WATCHLIST**: with another type, only your watchlist calls that are also that type (**WATCHLIST** + **NEW SLOT**: the calls you follow on a band and mode you still need; their SPOT rows by what they add). SPOT rows are one per station, band and mode: the latest spot, with **×N** for how many (a CQ is heard by several RBN skimmers at once; hover for who heard it); those before an alert of the same station, band and mode are that alert's. A SPOT row that still adds to your log (it made no alert of its own because the same alert isn't repeated within the cooldown) is coloured like what it adds, not grey. **Hide confirmed** leaves out stations whose entity you already have confirmed on that band and mode (an alert for a new call, a SPOT row): only what adds to your log stays. **Only LoTW** leaves the stations that uploaded to LoTW in the last 12 months and the DXpeditions that announced LoTW: the ones likely to confirm there. Your filters are remembered in the browser. **Clear list** (after confirming) empties the alert list, in every open dashboard and after a reload, and starts the cooldown again: whatever is still on the air alerts again at its next spot. The alert history (`data/dxagent.db`) and the Station tab's latest spots are kept |
 | **Alert table** | One row per alert, newest on top, coloured by type: UTC, alert, call, kHz, band, mode, country, what you need, LoTW, **near you** (see below), who heard it. Click a column header to sort by it (kHz, band, mode grouped CW / phone / digital, country...; **Alert** and **What you need** put the most wanted first, **LoTW** the latest uploads first); click again for the other way round, a third time for newest first again. The arrow shows the order; rows with nothing in that column go last, ties stay newest first, new alerts slot into place, and the order is remembered in the browser. New rows flash. A newer spot of the station on the same band and mode (one the cooldown kept from alerting again) updates its row: time, frequency, mode, who heard it (×N) — so the row shows where the station is now, and the Tune button goes there. Rows fade 10 minutes after the station's last spot and fade more after 30 (hover a row for its age and the alert's own time); with **Take out of the list after** set in Settings, they leave the list after that many minutes |
-| **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked; a green ring marks the bands and modes where the station was spotted in the last 15 minutes, the latest one blinking, and a dot sits over the band), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button, **Show only** this call and **☆ watchlist** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
+| **Station tab** | Click any alert, or type a call in the box, to see that country's band × mode grid (green C = confirmed, amber W = worked, grey = not worked; a green ring marks the bands and modes where the station was spotted in the last 15 minutes, the latest one blinking, and a dot sits over the band), whether you worked this exact call, LoTW status, DXpedition details, who hears it nearest you, a **Check PSKReporter** button (or, live, the receivers reporting it as they arrive), **Show only** this call, **☆ watchlist** and **Spot it** buttons, its latest spots, and links to QRZ.com, HamQTH and DXWatch |
 | **DXpeditions tab** | Active DXpeditions and those starting in the next 30 days. Badge: **ATNO**, **Not confirmed**, or how many bands you have (e.g. "1 of 10 bands", highlighted when fewer than half). Tick **only needed** to hide ones you already have on most bands. Sorted by what's **on the air** (spotted in the last 15 minutes, the latest on top), by Club Log's **Most Wanted** rank (most wanted country first) or by start date: **Order** at the top. Each card shows its sources and Club Log's **Most Wanted** rank; one spotted in the last 15 minutes is framed in green as **ON THE AIR**. Click one to open its grid; the **☆** adds it to your watchlist |
 
 **Which station was it?** Hover over a **C** or **W** cell of the Station tab's grid and a
@@ -179,14 +197,20 @@ is transmitting now:
 
 **Band colours.** Each HF band and 6 m has its own colour, used for the band tag in
 the table, the band filter chips, the station grid and the Settings page: 160 amber,
-80 violet, 60 red, 40 blue, 30 olive, 20 pink, 17 green, 15 teal, 12 orange, 10 navy,
-6 brown (4 m, 2 m and 70 cm share grey). The order was checked with a colour-blindness
+80 violet, 60 red, 40 blue, 30 olive, 20 pink, 17 green, 15 teal, 12 brown, 10 purple,
+6 orange (4 m, 2 m and 70 cm share grey). The order was checked with a colour-blindness
 simulator so that neighbouring bands stay distinct, and the band name is always shown
 in the tag, so colour is never the only cue.
 
-**EN/ES** switches the dashboard between English and Spanish. The first time it
-follows your browser's language; after that it remembers your choice. A link can force
-one: `http://localhost:8073/?lang=es`. Country names and DXpedition notes stay in
+**Mode colours.** The mode tag in the table (and in a station's spots) takes its group's
+colour: CW blue, phone (SSB, AM, FM) amber, digital (FT8, FT4, RTTY...) pink; the mode
+filter chips too. A mode DX Agent guessed has a dashed border, an unknown one is grey.
+
+**EN/ES/PT** switches the dashboard between English, Spanish and Portuguese (Brazil): each
+click goes to the next one. The first time it follows your browser's language; after that
+it remembers your choice. A link can force one: `http://localhost:8073/?lang=es` (or
+`?lang=pt`). In Portuguese, the About window's website and manual links open the English
+ones. Country names and DXpedition notes stay in
 English, as they come from their sources; the terminal and the alerts kept in
 `data/dxagent.db` are always in English.
 
@@ -222,6 +246,7 @@ the top-right corner says whether it worked.
 | Hamlib rigctld | TCP `F <Hz>` / `M <mode> -1` | 4532 | yes |
 | flrig | XML-RPC `rig.set_frequency` / `rig.set_mode` | 12345 | yes |
 | DXLab Commander | TCP `CmdSetFreqMode` | 52002 | yes |
+| TCI (AetherSDR, ExpertSDR, Thetis) | WebSocket `vfo` / `modulation`, on a connection DX Agent keeps open; it also puts the alerts on the panadapter | 50001 | yes |
 
 - **Mode chosen:** CW for CW spots; USB or LSB for phone (LSB below 10 MHz, except
   60 m); RTTY for RTTY; for FT8/FT4, USB through OmniRig (how WSJT-X runs the radio)
@@ -252,6 +277,27 @@ the top-right corner says whether it worked.
 - **Tested:** every target against stand-in programs; Log4OM 2.42 with an IC-9100 on
   OmniRig: frequency, mode (through OmniRig) and call.
 
+**FlexRadio with AetherSDR (TCI).** AetherSDR, the FlexRadio client, has a TCI server
+(as ExpertSDR for SunSDR and Thetis do). In AetherSDR turn on Settings → **Autostart TCI
+with AetherSDR**, or **Enable** in its TCI applet (port 50001); in DX Agent, Settings →
+Radio → Tune through **TCI**. DX Agent then keeps one connection open (the header shows a
+**TCI** pill: green while connected, with the number of spots on the panadapter), and:
+
+- **Tune** moves the active slice (receiver) to the spot, and sets the mode (CW, USB/LSB,
+  RTTY, DIGU for FT8/FT4); a slice in CW-R keeps it for a CW spot. An FT8 spot always sets DIGU (a
+  Flex sends DAX audio in DIGU), even from USB.
+- **The alerts go on the panadapter** (**Show the alerts on the radio's panadapter**, on by
+  default): each station of the alert list in its colour (ATNO red, new band orange, new
+  mode cyan...), with its headline and country. It moves when a newer spot puts it on
+  another frequency, and is taken off when it is no longer spotted (after **Take out of the
+  list after**, or 15 minutes), when the list is cleared, or when your log says you no
+  longer need it. Your own call's spots are not shown. AetherSDR's own DX cluster and RBN
+  spots stay as they are: DX Agent only adds, and takes off, its own.
+- **A click on one of those spots** tunes the radio there (AetherSDR does it), and opens the
+  station in DX Agent's Station tab.
+- If AetherSDR is closed or restarted, DX Agent connects again by itself and puts the spots
+  back. AetherSDR on another computer: its address in **Address**.
+
 **WSJT-X.** Settings → Radio → tick **Also send the call to WSJT-X**, and in WSJT-X tick
 Settings → Reporting → **Accept UDP requests**. Then Tune on an FT8/FT4 spot puts the
 radio on the FT8/FT4 dial frequency (14074, not the spot's 14075.6) and fills WSJT-X's
@@ -275,6 +321,16 @@ In the Station tab (click an alert, or a DXpedition in the DXpeditions tab):
   A call covered by a wildcard such as `VP8*` shows **★ In the watchlist (VP8*)**;
   wildcards are edited on the Settings page. The DXpeditions tab has the same star on
   each card.
+- **Spot it** posts a DX spot of the station on the DX cluster DX Agent is logged in to
+  (Settings → Spot sources), as your callsign: `DX 14025.0 3Y0K up 2`. It opens a small form
+  with the frequency of its latest spot (you can change it) and a comment (at most 30 plain
+  characters, no accents: what DXSpider and AR-Cluster keep); after you confirm, the spot
+  goes out: **posted** when the cluster sends it back to you (most do), **sent** when it doesn't
+  (W3LPL, for one: check it on DXSummit), and an error with what the cluster answered when it
+  refuses it within 5 seconds (some nodes only take spots from registered users). Every station connected to that cluster sees
+  it, and it goes on to the other clusters: spotting yourself is frowned upon, and DX Agent
+  asks again if you try. At most one spot every 30 seconds. With the cluster off or down the
+  button is greyed out; the RBN only receives.
 - **Latest spots** lists the call's spots from the last 60 minutes, from the cluster
   and RBN, including ones that didn't make an alert (for example a band you already
   have). It's kept for DXpeditions, watchlist calls and calls that alerted, from the
@@ -291,16 +347,24 @@ WWFF, BOTA, COTA (WCA castles), LOTA (lighthouses), TOTA, ROTA, JOTA, YOTA** and
 - Each row says the activation under *What you need*, with its reference: `POTA US-5584`,
   `IOTA EU-038`, `WWFF KFF-6494`...
 - **The References tab** (it shows while an Activity is picked in the menu, and opens on that program): every summit, park, island and castle you worked (POTA, SOTA, WWFF,
-  IOTA, WCA), program by program: how many worked and confirmed, and each one with its name
-  and place (POTA's and SOTA's lists), the bands you worked it on, **C** confirmed / **W** worked,
-  and your latest QSO with it. Search, and show all, confirmed or not confirmed; click a POTA or
-  SOTA row for its card. From your log (QSOs that say the reference: POTA_REF, SOTA_REF,
+  IOTA, WCA), program by program: how many worked, confirmed and confirmed by QSL, and each one
+  with its name and place (POTA's and SOTA's lists), the bands you worked it on, **C** confirmed /
+  **W** worked, and your latest QSO with it. Search, and show all, confirmed, by QSL (a paper QSL)
+  or not confirmed; click a row for your QSOs with it (**✓** confirmed in LoTW, **✓ QSL** by a
+  card), and a POTA or SOTA row for its card too. From your log (QSOs that say the reference: POTA_REF, SOTA_REF,
   WWFF_REF, IOTA, SIG_INFO, Log4OM's award references) and your QSOs with activators DX Agent saw
   on the air. *Confirmed* means a QSO with it is confirmed in LoTW or by QSL; each program's own
-  credit is on its site (pota.app, sotadata, wwff.co). POTA's parks list
+  credit is on its site (pota.app, sotadata, wwff.co, iota-world.org). **IOTA** credits an island
+  by QSL card, or through LoTW when the LoTW confirmation says the island (the station put it in
+  its LoTW location) or the country is a single island group, so not every island confirmed here
+  counts there: upload your log at iota-world.org to see the ones it matches. **By QSL** shows
+  those with a paper QSL (`QSL_RCVD` in your log; in a log downloaded from LoTW it is LoTW's own
+  confirmation, so it doesn't count as a card). POTA's parks list
   (`data/pota-parks.csv`, ~10 MB) is downloaded again when a month old.
 - **Your parks and summits on the map:** the **References** menu next to DXCC / WAZ shows the
-  POTA parks and/or SOTA summits you worked, green confirmed, amber worked.
+  POTA parks and/or SOTA summits you worked, green confirmed, amber worked. Click one to see it in
+  the Station tab: its pota.app or SOTA card and your QSOs with it (click one to open that
+  station), and on the map the path, beam heading and distance from your QTH.
 - **The park or summit in the Station tab (POTA, SOTA):** click the row and a card shows what
   pota.app or SOTA say about it: its name, type and where it is (grid square), whether **you**
   worked it and on which bands (or "New for you"), how many activations and QSOs it has, who
@@ -318,14 +382,20 @@ WWFF, BOTA, COTA (WCA castles), LOTA (lighthouses), TOTA, ROTA, JOTA, YOTA** and
   summit's name, altitude and points; POTA and WWFF parks show their name there too.
 - **On the map:** activations sit at their summit (a mountain with a jagged peak) or park (a pine tree), from SOTA's
   list and POTA's and WWFF's; coloured by where you stand with that reference, as the DXCC and
-  References layers: red not worked, amber worked, green confirmed (hover for which).
+  References layers: red not worked, amber worked, green confirmed (hover for which). Drawn so
+  only with an Activity picked: with "none", a station in a park or on a summit is a dot like
+  the others, still at its place.
 - **New summits and parks:** with an Activity picked, a summit, park, island (IOTA) or castle
   you haven't worked **on that band** is marked *new*, even in a country you have confirmed: a
   spot that made no alert shows as **NEW REF** ("reference not worked on 20m"), the reference
   says *new*, the map paints it like NEW BAND and *Hide confirmed* keeps it. With no Activity
   picked nothing changes. What you have worked comes from:
   - your log, when the QSO says the reference: `SOTA_REF`, `POTA_REF` (a two-fer counts for each
-    park), `WWFF_REF`, `IOTA`, `SIG` + `SIG_INFO`, and Log4OM's award references;
+    park), `WWFF_REF`, `IOTA`, `SIG` + `SIG_INFO`, and Log4OM's award references. A POTA
+    reference from before POTA's 2024 prefixes is read as it is now, using the QSO's country:
+    Canada's VE- is CA- now (VE-1596 is CA-1596), the USA's K- is US-, with the same numbers. An
+    old one that is another country's park now (VE- is Venezuela's) and has no known new
+    reference keeps the log's reference, with no place on the map, and counts for no park;
   - what DX Agent saw on the air: it remembers where each activator was and when (the last 32
     days, in `data/dxagent.db`). A QSO in your log with that station within 45 minutes of
     one of its spots counts for the summit or park it was on, even if your logger didn't write
@@ -394,7 +464,12 @@ world map. The filters apply to both views.
 - **Diamonds** are active DXpeditions: red = ATNO, amber = not confirmed, teal = you have the
   country but on fewer than half of your bands, grey = you have it. With an alert in the last
   15 minutes the diamond takes the alert's colour. A **green frame** means it was spotted in
-  the last 15 minutes (on the air). The legend in the bottom-left corner sums this up.
+  the last 15 minutes (on the air). The legend in the bottom-left corner sums this up. Several at
+  the same place (four at Koror, Palau, say) sit on a small ring around it, each with its own
+  click, the ones on the air on top. Which ones show: the **DXpeditions** menu (next to DXCC /
+  WAZ / References): those **on the air** (the default), those **needed** (as the tab's "only
+  needed"), **all** the active ones, or **no**; the station open in the Station tab always shows,
+  and your browser remembers it.
 - **Blue dot:** your QTH, from your grid square.
 - **Shaded area:** where it is night right now (the greyline is its edge), updated every minute.
 - **Selected station:** a dashed great-circle path from your QTH, the **beam heading**
@@ -505,7 +580,7 @@ restart it.
 | **LoTW** | Turn the confirmation download on or off; LoTW username (empty = your call); LoTW password; how often to download. **Test login** checks the username and password with LoTW |
 | **Alerts** | Which alert types you want (and **Your own call**: who hears you); bands; modes; when a DXpedition or watchlist call counts as worked; watchlist; ignore list; how long before the same alert repeats and **Keep only the latest row of each station** (same call, frequency and mode: when it shows up again, its older rows leave the list); **Take out of the list after** N minutes (stations not spotted on that band and mode for that long leave the list; 0 = never, the default); the "near you" radius and **Only alert when heard near you**; Windows pop-ups and for which alerts |
 | **Spot sources** | DX cluster on/off, its servers (`host:port`, tried in order) and login commands; **Recent spots on connecting** (minutes, 0 = off); which continents' cluster spotters to use; RBN on/off, CW/RTTY and FT8/FT4 feeds; which continents' skimmers count |
-| **Radio (Tune button)** | Which program tunes the radio (Off, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander), its address and port (0 = default), whether to set the mode too, and which OmniRig radio |
+| **Radio (Tune button)** | Which program tunes the radio (Off, Log4OM 2, N1MM Logger+, DXLog.net, OmniRig, Hamlib rigctld, flrig, DXLab Commander, TCI), its address and port (0 = default), whether to set the mode too, which OmniRig radio, and with TCI whether the alerts go on the panadapter |
 | **CQ DX Marathon** | Follow it or not; the year or the Sprint, and the Sprint's dates; the modes that count (all, CW, phone, digital, or Classic: CW and phone); alerts for a new Marathon country and for a new zone |
 | **DXpeditions, log and dashboard** | Show DXpeditions you already have; DXpedition sources and how often to re-read them; how often to check the log file; dashboard port; open the browser on start |
 
@@ -734,6 +809,24 @@ it in the last 15 minutes on that band:
   (for all stations together) and blocks connections that query more often (HTTP
   429), so DX Agent enforces that limit, shows when the next query is allowed, and
   after a block waits at least 15 minutes before trying again.
+- **PSKReporter live:** in Settings → Spot sources, **PSKReporter** can be **Live
+  (MQTT)** instead of **When you ask**. DX Agent then connects to
+  mqtt.pskreporter.info, which passes on every report sent to PSKReporter as it
+  arrives, with no account and no query limit, and follows:
+  - the station open in the Station tab, from the moment you open it, for 15
+    minutes after you last looked at it;
+  - the digital (FT8, FT4…) alerts in the list spotted in the last 15 minutes;
+  - with **Only alert when heard near you** on, the digital stations it kept from
+    alerting, so a nearby receiver lets their next spot alert.
+
+  It follows at most 100 stations, by call: never a whole country (receivers in the
+  USA alone send about 300 reports a second). Their receivers count for "near you" on
+  their own, with no button. **Who hears it** lists them as PSK, and the Station tab
+  says since when the station is followed and how many receivers have reported it.
+  Only new reports arrive: right after you open a station the list is empty, and
+  receivers show up as their programs send them, usually within a few minutes. A
+  **PSKReporter** pill next to the feeds shows the connection and the reports
+  received. Live needs your grid square.
 
 How many receivers are near you depends on where you are: RBN skimmers are dense in
 North America and Europe and sparse elsewhere, while PSKReporter usually has many
@@ -753,7 +846,8 @@ The same alert isn't repeated within the cooldown (default 15 minutes):
 
 ## 6. The configuration file
 
-Everything on the Settings page is stored in `config.toml` in the project folder.
+Everything on the Settings page is stored in `config.toml` in your DX Agent folder (see
+[Quick start](#1-quick-start); **Settings** shows its exact path).
 You can also edit it by hand; restart `run` afterwards.
 
 | Section     | Setting                     | Default                                           | What it does |
@@ -783,7 +877,7 @@ You can also edit it by hand; restart `run` afterwards.
 | ui          | `enabled`                   | `true`                                            | Start the web dashboard with `run` |
 | ui          | `port`                      | `8073`                                            | Dashboard address: `http://localhost:8073` |
 | ui          | `open_browser`              | `true`                                            | Open the dashboard automatically when `run` starts |
-| ui          | `check_updates`             | `true`                                            | Say on the dashboard (a pill next to the version) when a newer DX Agent is out: asks GitHub once a day for the latest release of the download repository. Nothing of yours is sent, nothing is installed |
+| ui          | `check_updates`             | `true`                                            | Say on the dashboard (a pill next to the version) when a newer DX Agent is out: asks GitHub every hour for the latest release of the download repository. Nothing of yours is sent, nothing is installed |
 | logbook     | `reload_seconds`            | `60`                                              | How often to check the ADIF file for changes |
 | logbook     | `live`                      | `true`                                            | Also read the QSOs Log4OM 2 saved since its last backup, every 10 seconds, from its database |
 | logbook     | `udp_port`                  | `12065`                                           | QSOs your logger sends over UDP as you log them (N1MM, DXLog.net, Log4OM, WSJT-X; see "Your QSOs as you log them"); 0 = off |
@@ -1050,6 +1144,7 @@ stay.
 | ARRL LoTW report | Your confirmations | https://lotw.arrl.org/lotwuser/lotwreport.adi |
 | RBN skimmer list | Where each skimmer is (grid square) | https://www.reversebeacon.net/nodes/ |
 | PSKReporter | Who received a station on FT8/FT4 (on request only) | https://pskreporter.info/ |
+| PSKReporter live (MQTT) | The same reports as they arrive, for the stations followed (PSKReporter → Live) | https://mqtt.pskreporter.info/ |
 | POTA, WWFF spots | Who is activating a park now (every 2 minutes) | https://api.pota.app/spot/activator, https://spots.wwff.co/static/spots.json |
 | Natural Earth (world-atlas) | Coasts and country borders for the map | https://www.naturalearthdata.com/ |
 | GridTracker DXCC map shapes | DXCC entities, DXCC-only borders and CQ zones for the map | https://gitlab.com/gridtracker.org/gridtracker2 |
@@ -1058,8 +1153,9 @@ stay.
 
 ## 9. Project files and data cache
 
-The code is in `dxagent/`, one module per job. Everything downloaded goes to `data/`
-and can be deleted at any time; it is downloaded again when needed.
+The code is in `dxagent/`, one module per job. `config.toml`, `config.toml.bak` and `data/`
+are in your DX Agent folder, not the program's ([Quick start](#1-quick-start)). Everything
+downloaded goes to `data/` and can be deleted at any time; it is downloaded again when needed.
 
 | File                        | Job |
 |-----------------------------|-----|
@@ -1077,7 +1173,8 @@ and can be deleted at any time; it is downloaded again when needed.
 | `dxagent/__main__.py`       | Command line: `run`, `dxpeditions`, `check`, `stats` |
 | `dxagent/agent.py`          | Main loop: starts the feeds, filters spots, reloads the log, refreshes DXpeditions and LoTW, applies saved settings |
 | `dxagent/config.py`         | Reads `config.toml` with defaults; validates and writes it for the Settings page |
-| `dxagent/credentials.py`    | Stores the LoTW password encrypted for your Windows user (on Linux, readable only by you) |
+| `dxagent/home.py`           | Where your settings and data live (your DX Agent folder); copies them there from an older version's folder on the first start |
+| `dxagent/credentials.py`    | Stores the LoTW password encrypted for your Windows user (on Linux and a Mac, readable only by you) |
 | `dxagent/telnet.py`         | Connects to the cluster and RBN, logs in, reconnects |
 | `dxagent/spots.py`          | Parses `DX de ...` lines into call, frequency, band, mode, SNR, WPM |
 | `dxagent/bands.py`          | Band from frequency, mode groups, band-plan mode guess |
@@ -1090,6 +1187,7 @@ and can be deleted at any time; it is downloaded again when needed.
 | `dxagent/alerts.py`         | Console line, colours, pop-up, cooldown, alert history |
 | `dxagent/queries.py`        | Station grid, DXpedition list and DXCC standing, shared by the commands and the dashboard |
 | `dxagent/reach.py`          | "Near you": who heard each station and how far from you; RBN skimmer list; PSKReporter |
+| `dxagent/pskmqtt.py`        | PSKReporter live: an MQTT client for mqtt.pskreporter.info, and the stations followed |
 | `dxagent/refinfo.py`        | A POTA park's or SOTA summit's page, for the Station tab |
 | `dxagent/geo.py`            | Grid squares and distances |
 | `dxagent/onlinelog.py`      | Checks a DXpedition's log on Club Log |
@@ -1102,6 +1200,7 @@ and can be deleted at any time; it is downloaded again when needed.
 | `dxagent/worldmap.py`       | Land, DXCC borders and DXCC entities for the map view |
 | `dxagent/marathon.py`       | CQ DX Marathon: which QSOs count, the countries and zones worked in the period, what a spot would add |
 | `dxagent/rig.py`            | Tune: talks to Log4OM, N1MM, DXLog.net, OmniRig, Hamlib, flrig or DXLab |
+| `dxagent/tci.py`            | TCI (AetherSDR, ExpertSDR, Thetis): tunes the radio and keeps the alerts on its panadapter |
 | `dxagent/web.py`            | Dashboard web server: page, JSON API, live event stream, settings |
 | `dxagent/static/index.html` | The dashboard and Settings page (HTML, CSS and JavaScript in one file) |
 | `dxagent/static/logo.svg`  | The DX Agent logo (dashboard header and browser tab icon) |
@@ -1124,7 +1223,7 @@ and can be deleted at any time; it is downloaded again when needed.
 | `data/world-map.json`                         | made from the two above (the finished map) | when they change |
 | `data/dxagent.db`                             | DX Agent: alerts (last `keep_days` days), where activators were (last 32 days), your QSOs with them, QSOs over UDP not in your log yet | while it runs |
 | `data/cache/log-<CALL>.pickle`                | DX Agent: each callsign's log indexes as last read, so a big log isn't read again at each start. Used only when the log files, the country file, your callsigns, the year and DX Agent's version are all the same; the QSOs since (your logger's database, UDP) are added on top as before. Safe to delete | when the log changes |
-| `data/update.json`                            | DX Agent: the latest version on GitHub, asked once a day (`ui.check_updates`) | once a day |
+| `data/update.json`                            | DX Agent: the latest version on GitHub, asked every hour (`ui.check_updates`) | every hour |
 | `data/dx-agent.log`                           | DX Agent (without a window) | while it runs; kept under 5 MB |
 
 ### data/dxagent.db
@@ -1161,10 +1260,11 @@ example (shortened):
 
 - **Windows-only features.** Everything else works on Linux with the `-linux` package, and on a Mac with the `-macos` one (pop-ups included, in Notification Center). Not
   available there: Log4OM's live log, and the Log4OM / N1MM / DXLog.net / OmniRig / DXLab "Tune" targets
-  (Hamlib and flrig do work); sending the call to WSJT-X; and the Windows message box when it
-  can't start (there the reason goes to `data/dx-agent.log`). Pop-ups need `plyer`, and the
-  Settings "Browse…" button needs tkinter (`python3-tk`). The LoTW password is encrypted with
-  Windows DPAPI; on Linux it is only obfuscated, with file permissions `0600`.
+  (Hamlib, flrig and TCI do work); sending the call to WSJT-X; and the Windows message box when it
+  can't start (there the reason goes to `data/dx-agent.log`). On Linux, pop-ups need `plyer`, and
+  the Settings "Browse…" button needs tkinter (`python3-tk`); a Mac uses its own Choose file
+  window. The LoTW password is encrypted with Windows DPAPI; on Linux and a Mac it is only
+  obfuscated, with file permissions `0600`.
 - **A QSO you just saved, with Log4OM 2:** DX Agent reads it straight from Log4OM's
   database within about 10 seconds, without waiting for the next ADIF backup
   (`logbook.live`, on by default). It finds the database in Log4OM's `l4ong.status`, opens
@@ -1210,7 +1310,7 @@ example (shortened):
 | Symptom | Fix |
 |---------|-----|
 | Yellow banner "DX Agent can't start: No ADIF file found" | Open Settings, fix the log path and use **Test** until it finds the file, then save |
-| `config.toml` not found | Run from the `dx-agent` folder, or pass `-c` with the full path |
+| `config.toml` not found | It is in your DX Agent folder ([Quick start](#1-quick-start)); with `-c`, give the full path |
 | Settings won't save, red list under the button | Fix each item listed; nothing is saved until they are all fixed |
 | A setting change made things worse | `config.toml.bak` holds the previous settings: copy it over `config.toml` and restart |
 | "saved password could not be read" | The password was saved by another Windows user or PC; type it again in Settings |
