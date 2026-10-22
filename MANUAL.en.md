@@ -170,6 +170,9 @@ problem.
   announced LoTW;
 - a **search** box for a callsign or country;
 - **Clear filters** shows everything again. Your browser remembers the filters.
+- **⚙** (next to Clear filters, or Settings → **Filters above the list**): which of Continent, Near you only, Hide
+  confirmed, Only LoTW and Activity show. A hidden one is turned off. The alert types, bands and modes are the ones you
+  alert on (Settings → Alerts).
 
 **The alert list:** one row per alert, newest on top, coloured by type. Columns: UTC time,
 alert type, callsign, frequency, band, mode, country, **what you need**, LoTW, **near you** and

@@ -176,6 +176,9 @@ problema.
   DXpediciones que anunciaron LoTW;
 - un cuadro de **búsqueda** por indicativo o país;
 - **Limpiar filtros** vuelve a mostrar todo. El navegador recuerda los filtros.
+- **⚙** (junto a Limpiar filtros, o Configuración → **Filtros sobre la lista**): cuáles de Continente, Solo cerca tuyo,
+  Ocultar confirmados, Solo LoTW y Actividad se ven. Uno oculto queda apagado. Los tipos de alerta, las bandas y los modos
+  son los de tus alertas (Configuración → Alertas).
 
 **La lista de alertas:** una fila por alerta, la más nueva arriba, con el color de su tipo.
 Columnas: hora UTC, tipo de alerta, indicativo, frecuencia, banda, modo, país, **qué te falta**,
