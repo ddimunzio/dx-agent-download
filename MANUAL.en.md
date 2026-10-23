@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.4.10 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.11 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -253,13 +253,21 @@ on the map shows that country in the Station tab (section 10).
 
 - **What you need** says exactly what the station adds: "new band", "17m DIGI never worked",
   "entity not confirmed", or "have it".
-- **Confirmed** means LoTW or paper QSL, as in the ARRL's DXCC (eQSL doesn't count).
+- **Confirmed** means LoTW or paper QSL, as in the ARRL's DXCC (eQSL doesn't count). Only the
+  current entities count: a deleted one that old QSOs carry (85 Netherlands Antilles, as LoTW
+  reports it) is in no total, the header's worked and confirmed either.
 - **LoTW** says whether the station uploads to LoTW (and its last upload), whether the
   DXpedition announced LoTW, or "no LoTW".
 - **Near you:** green **● 732 km · 7 dB** = heard by a receiver within your "near" radius (1,500
   km by default); in grey, the distance to the nearest receiver; **—** = nobody reported it in
   the last 15 minutes.
-- The same alert isn't repeated for 15 minutes (change it in Settings).
+- The same alert isn't repeated for 15 minutes (change it in Settings), not even after saving
+  Settings or opening DX Agent again: the station is listed again as it is spotted, but doesn't
+  pop up or beep a second time.
+- **RBN alerts: wait for a second skimmer** (Settings → Alerts, on by default): a station heard by
+  one RBN skimmer only alerts once another skimmer, or someone on the cluster or PSKReporter,
+  hears it too (a few minutes at most), so a skimmer's busted call (P9DX as an ATNO) doesn't
+  alert. Cluster spots, posted by people, alert at once. Off: they alert at once, marked **?**.
 - Settings → Alerts also has **Keep only the latest row of each station** (same call,
   frequency and mode) and **Take out of the list after** N minutes without a spot (0 = never):
   both off by default.
@@ -308,7 +316,9 @@ has a **Tune** button. A message at the top right says whether it worked.
   USB-D on. A phone spot switches to USB or LSB, and the next FT8 spot stays in USB: put USB-D
   back by hand. The same goes for CW: a radio in CW or CW-R keeps it.
 - **FlexRadio with AetherSDR (TCI), in testing:** Tune moves the active slice and sets the mode
-  (CW, USB/LSB, RTTY, DIGU for FT8). With **Show the alerts on the radio's panadapter (TCI)** (on
+  (CW, USB/LSB, RTTY, DIGU for FT8). With two or more slices open, the Station tab has a Tune
+  button per slice: its letter (or its RX number, until it has had the focus) and where it is
+  now; the one with the focus stands out. With **Show the alerts on the radio's panadapter (TCI)** (on
   by default), each station of the list shows on AetherSDR's panadapter in its colour, with its
   headline and country; it moves when the station changes frequency and leaves when it's no
   longer spotted. A click on one tunes there and opens it in DX Agent's Station tab. A **TCI**

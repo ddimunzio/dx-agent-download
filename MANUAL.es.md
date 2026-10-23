@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.10 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
+*Versión 0.4.11 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -266,13 +266,23 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
 
 - **Qué te falta** dice exactamente qué te suma la estación: "banda nueva", "17m DIGI nunca
   trabajado", "país no confirmado", o "ya lo tenés".
-- **Confirmado** es LoTW o QSL en papel, como en el DXCC de la ARRL (eQSL no cuenta).
+- **Confirmado** es LoTW o QSL en papel, como en el DXCC de la ARRL (eQSL no cuenta). Solo
+  cuentan las entidades vigentes: una borrada que traen QSOs viejos (85 Antillas Neerlandesas,
+  como la informa LoTW) no entra en ningún total, tampoco en los trabajados y confirmados del
+  encabezado.
 - **LoTW** dice si la estación sube a LoTW (y cuándo subió por última vez), si la DXpedición
   anunció LoTW, o "no LoTW".
 - **Cerca tuyo:** **● 732 km · 7 dB** en verde = la escuchó un receptor dentro de tu radio
   "cerca" (1.500 km de fábrica); en gris, la distancia al receptor más cercano; **—** = nadie
   la reportó en los últimos 15 minutos.
-- La misma alerta no se repite durante 15 minutos (se cambia en Configuración).
+- La misma alerta no se repite durante 15 minutos (se cambia en Configuración), ni siquiera al
+  guardar la Configuración o volver a abrir DX Agent: la estación vuelve a la lista cuando la
+  spotean, pero no muestra otra notificación ni vuelve a sonar.
+- **Alertas de la RBN: esperar a un 2.º skimmer** (Configuración → Alertas, activado de fábrica):
+  una estación que escuchó un solo skimmer de la RBN avisa cuando la escucha otro skimmer, o
+  alguien en el cluster o en PSKReporter (unos minutos como mucho), así un indicativo mal
+  decodificado por un skimmer (P9DX como ATNO) no avisa. Los spots del cluster, que publican
+  personas, avisan enseguida. Desmarcado: avisan enseguida, marcados con **?**.
 - En Configuración → Alertas también están **Dejar solo la última fila de cada estación** (mismo
   indicativo, frecuencia y modo) y **Quitar de la lista después de** N minutos sin spot (0 =
   nunca): las dos apagadas de fábrica.
@@ -324,7 +334,9 @@ derecha dice si funcionó.
   el USB-D se mantiene. Un spot de fonía la pasa a USB o LSB, y el siguiente spot de FT8 queda en
   USB: volvé a poner USB-D a mano. Con CW pasa lo mismo: una radio en CW o CW-R lo conserva.
 - **FlexRadio con AetherSDR (TCI), en prueba:** Sintonizar mueve el slice activo y pone el modo
-  (CW, USB/LSB, RTTY, DIGU para FT8). Con **Mostrar las alertas en el panadaptador de la radio**
+  (CW, USB/LSB, RTTY, DIGU para FT8). Con dos o más slices abiertos, la pestaña Estación tiene un
+  botón Sintonizar por slice: su letra (o su número de RX, hasta que tuvo el foco) y dónde está
+  ahora; el que tiene el foco se destaca. Con **Mostrar las alertas en el panadaptador de la radio**
   (activado de fábrica), cada estación de la lista aparece en el panadaptador de AetherSDR con su
   color, su título y su país; se mueve cuando cambia de frecuencia y se saca cuando dejan de
   spotearla. Un clic en una sintoniza ahí y la abre en la pestaña Estación de DX Agent. Una
