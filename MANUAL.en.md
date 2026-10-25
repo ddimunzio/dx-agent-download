@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.4.11 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.12 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -167,7 +167,8 @@ problem.
 - **Near you only:** only stations heard by someone near you. It only hides the others: they still alert. The
   setting **Only alert when heard near you** (Settings → Alerts) is different: with it, a station heard only far away
   never alerts, and where few receivers are near you the list stays almost empty (the dashboard then says how many
-  didn't alert). Usually the filter is what you want;
+  didn't alert). Usually the filter is what you want. What your own WSJT-X decodes always counts as near
+  (section 7);
 - **Hide confirmed:** hides what you already have confirmed on that band and mode;
 - **Only LoTW:** only stations that uploaded to LoTW in the last 12 months, and DXpeditions that
   announced LoTW;
@@ -289,7 +290,9 @@ and mode you still need.
 (one query every 5 minutes, with the Station tab's button; the default) or **Live (MQTT)**:
 PSKReporter's reports as they arrive, with no limit, for the station open in the Station tab and
 the digital alerts in the list. Their receivers count for "near you" and the map without a button,
-and a **PSKReporter** pill in the header shows the connection. It needs your grid square.
+and a **PSKReporter** pill in the header shows the connection. It needs your grid square. With
+**Only alert when heard near you**, a digital station kept back for being heard only far away
+alerts as soon as a PSKReporter receiver near you reports it on that band.
 
 ## 6. Tune the radio and pass the call to your logger
 
@@ -322,7 +325,8 @@ has a **Tune** button. A message at the top right says whether it worked.
   by default), each station of the list shows on AetherSDR's panadapter in its colour, with its
   headline and country; it moves when the station changes frequency and leaves when it's no
   longer spotted. A click on one tunes there and opens it in DX Agent's Station tab. A **TCI**
-  pill in the header shows the connection. Tested with AetherSDR's demo radio; if you use it with
+  pill in the header shows the connection; if you open AetherSDR after DX Agent, Tune connects
+  right then. Tested with AetherSDR's demo radio; if you use it with
   a Flex, tell us how it went in [issue #10](https://github.com/ddimunzio/dx-agent-download/issues/10).
 - **WSJT-X:** tick **Also send the call to WSJT-X** in DX Agent, and in WSJT-X tick Settings →
   Reporting → **Accept UDP requests**. Clicking an FT8/FT4 spot puts the radio on the FT8/FT4
@@ -345,7 +349,7 @@ worked keeps alerting. To avoid that, your logger can tell DX Agent each QSO as 
 | **N1MM Logger+** | Config → Configure Ports… → **Broadcast Data**: tick **Contacts** and add `127.0.0.1:12065` |
 | **DXLog.net** | Options → Configure network: QSO broadcast `127.0.0.1:12065`; Options → Broadcast: QSO and **Use N1MM QSO format** |
 | **HRD Logbook** | Tools → Configure → QSO Forwarding → **UDP Send**: `127.0.0.1`, port `12065` (not tested with HRD yet) |
-| **WSJT-X / JTDX** | usually not needed: your logger gets their QSOs and passes them on to DX Agent |
+| **WSJT-X / JTDX** | for their QSOs, usually not needed: your logger gets them and passes them on to DX Agent. Needed for what they decode (below) |
 
 - **Loggers without UDP** (DXKeeper, Logger32, N3FJP...): if they write an ADIF file as you log
   (or export one automatically), add that file in Settings as a second log file, under the
@@ -354,6 +358,23 @@ worked keeps alerting. To avoid that, your logger can tell DX Agent each QSO as 
 When a new QSO comes in, the alerts already listed update by themselves and stop saying "new
 band" once you've worked it. QSOs received over UDP are kept until your log has them: closing
 DX Agent before that doesn't lose them.
+
+### What your WSJT-X decodes
+
+If WSJT-X (or JTDX) sends its messages to DX Agent, each station you decode is one more spot, like
+a cluster one: if it's something you want (a new country, a new band, your watchlist...) it shows
+in the list even if no one spotted it. It counts as heard **0 km from you**, so the **Near you
+only** filter always shows it. The row says your call, the SNR and the message (WSJT-X), and a
+**WSJT-X** pill in the header shows the decodes coming in.
+
+It comes on the same port as the QSOs. WSJT-X sends to one destination (Settings → Reporting → UDP
+Server), so if another program already uses it (Log4OM, JTAlert, GridTracker):
+
+- **a multicast group:** in WSJT-X, UDP Server `239.255.0.1`, port `2237`; in DX Agent, in
+  `config.toml`, `[logbook]` → `udp_group = "239.255.0.1"` and `udp_port = 2237`. DX Agent and
+  the programs that join groups (GridTracker, JTAlert) hear it at once;
+- or **the program that already gets it forwards it** to `127.0.0.1:12065` (JTAlert and
+  GridTracker can resend WSJT-X's messages).
 
 ## 8. DXpeditions
 

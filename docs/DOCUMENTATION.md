@@ -286,6 +286,13 @@ Radio → Tune through **TCI**. DX Agent then keeps one connection open (the hea
 - **Tune** moves the active slice (receiver) to the spot, and sets the mode (CW, USB/LSB,
   RTTY, DIGU for FT8/FT4); a slice in CW-R keeps it for a CW spot. An FT8 spot always sets DIGU (a
   Flex sends DAX audio in DIGU), even from USB.
+- **With two or more slices open**, the Station tab's Tune button becomes a button per slice:
+  under "Tune 14025.0 kHz CW on slice", its letter and where it is now (**A** 7074.0 DIGU ·
+  **B** 14010.0 CW). The one with the focus in AetherSDR stands out; it is the one the list's
+  and the grid's frequencies tune. A slice shows its letter once it has had the focus (AetherSDR
+  only says it then); until then, its RX number in AetherSDR's TCI applet (**RX2** = the slice the
+  applet shows on RX2). The buttons follow AetherSDR: a slice opened, closed or given the focus
+  shows within a few seconds.
 - **The alerts go on the panadapter** (**Show the alerts on the radio's panadapter**, on by
   default): each station of the alert list in its colour (ATNO red, new band orange, new
   mode cyan...), with its headline and country. It moves when a newer spot puts it on
@@ -520,7 +527,9 @@ It follows the ARRL's DXCC rules (arrl.org/dxcc-rules):
 - Satellite QSOs (PROP_MODE SAT) count only for Satellite; repeater and internet QSOs
   (RPT, INTERNET, ECH, IRL), 60 m QSOs and stations at sea or in the air (/MM, /AM) don't
   count at all; QSOs before 15 Nov 1945 don't count, and CW before 1975 counts for Mixed only.
-- Only the current DXCC list counts: deleted entities are left out.
+- Only the current DXCC list counts: deleted entities are left out, here and in the header's
+  worked and confirmed totals (an old QSO's DXCC, as LoTW reports it, may be one: 85
+  Netherlands Antilles, 151 Malyj Vysotskij).
 - It doesn't check where you operated from or under which call: every QSO in your log counts.
 
 Small entities (islands, microstates, enclaves like Vatican City or Guantanamo Bay) also get a
@@ -822,7 +831,8 @@ it in the last 15 minutes on that band:
     minutes after you last looked at it;
   - the digital (FT8, FT4…) alerts in the list spotted in the last 15 minutes;
   - with **Only alert when heard near you** on, the digital stations it kept from
-    alerting, so a nearby receiver lets their next spot alert.
+    alerting: as soon as a nearby receiver reports one on that band, it alerts right
+    then, on the spot it was kept from.
 
   It follows at most 100 stations, by call: never a whole country (receivers in the
   USA alone send about 300 reports a second). Their receivers count for "near you" on
@@ -837,6 +847,17 @@ How many receivers are near you depends on where you are: RBN skimmers are dense
 North America and Europe and sparse elsewhere, while PSKReporter usually has many
 more FT8 receivers.
 
+### Busted RBN calls
+
+An RBN skimmer sometimes decodes a call wrong: P9DX, F6A for F6ABW. One like that is heard by that
+skimmer only, while a real station is soon heard by several, or spotted on the cluster. So, with
+**RBN alerts: wait for a second skimmer** (Settings → Alerts, on by default, `alerts.rbn_confirm`),
+a station one RBN skimmer only heard alerts once a second skimmer, or a cluster spotter or a
+PSKReporter receiver, hears it on that band within 10 minutes (usually a minute or two). Cluster
+spots, posted by people, alert at once; a skimmer's spot the cluster passes on (spotter `K9LC-#`) is
+that skimmer's, and waits too. With it off, they alert at once, and the call is marked
+with an amber **?** until someone else hears it.
+
 ### Repeat alerts (cooldown)
 
 The same alert isn't repeated within the cooldown (default 15 minutes):
@@ -846,6 +867,9 @@ The same alert isn't repeated within the cooldown (default 15 minutes):
   for every other US station on 30 m CW for the next 15 minutes.
 - **Call alerts** (DXPEDITION, WATCHLIST, NEW CALL) are limited per call + band + mode,
   so the DXpedition alerts again when it moves to another band or mode.
+
+Saving Settings keeps the cooldown, and so does closing and opening DX Agent again: what alerted in
+the last cooldown minutes is listed again as it is spotted, but doesn't pop up or beep a second time.
 
 ---
 
@@ -875,6 +899,7 @@ You can also edit it by hand; restart `run` afterwards.
 | alerts      | `notify_max_priority`       | `1`                                               | Pop-ups for: 1 = ATNO only; 3 = also new mode and watchlist |
 | alerts      | `near_km`                   | `1500`                                            | "Near you" = heard by a station within this many km |
 | alerts      | `near_only`                 | `false`                                           | Only alert when the station is heard near you |
+| alerts      | `rbn_confirm`               | `true`                                            | An RBN spot alerts once a second skimmer, or a cluster or PSKReporter spot, hears the station (a busted call doesn't alert) |
 | alerts      | `latest_only`               | `false`                                           | Dashboard list: keep only the latest row of each station on the same frequency and mode |
 | alerts      | `self_spots`                | `true`                                            | List the spots of your own callsign (YOU'RE HEARD): who hears you, and how far away |
 | alerts      | `expire_minutes`            | `0`                                               | Dashboard list: take out stations not spotted on that band and mode for this many minutes (0 = never) |
@@ -987,13 +1012,35 @@ destination, next to the ones you already have:
 | **N1MM Logger+** | Config → Configure Ports… → **Broadcast Data**: tick **Contacts**, add `127.0.0.1:12065` to the addresses | its documented format |
 | **DXLog.net** | Options → Configure network: QSO broadcast `127.0.0.1:12065` (up to three, separated by spaces); Options → Broadcast: QSO, and **Use N1MM QSO format** | its format (as N1MM's) |
 | **Log4OM 2** (without the database) | Settings → Software integration → Connections → UDP outbound, type **ADIF_MESSAGE**, `127.0.0.1` port `12065` | ADIF format |
-| **WSJT-X / JTDX** | Usually not needed: your logger gets their QSOs and tells DX Agent. If they log on their own: Settings → Reporting → UDP Server. A multicast group (`239.255.0.1`, port `2237`) lets DX Agent (`udp_group = "239.255.0.1"`, `udp_port = 2237`) and a program that joins groups (GridTracker, JTAlert) hear it at once; a plain address goes to one program only | WSJT-X's Logged ADIF message |
+| **WSJT-X / JTDX** | For their QSOs, usually not needed: your logger gets them and tells DX Agent. Needed for what they decode (see "What your WSJT-X decodes"), or if they log on their own: Settings → Reporting → UDP Server. A multicast group (`239.255.0.1`, port `2237`) lets DX Agent (`udp_group = "239.255.0.1"`, `udp_port = 2237`) and a program that joins groups (GridTracker, JTAlert) hear it at once; a plain address goes to one program only | WSJT-X's Logged ADIF message |
 | **HRD Logbook** | Tools → Configure → QSO Forwarding → **UDP Send**: `127.0.0.1`, port `12065` | not tested: HRD doesn't say its format; it works if it sends ADIF or N1MM's XML |
 
 Without UDP (DXKeeper, Logger32, N3FJP, others): a logger that writes an ADIF file as it
 goes, or exports one automatically, can be added as a second log file in Settings, next
 to the backup; WSJT-X's own `wsjtx_log.adi` is one. UDP has no delivery check: a lost
 packet only waits for the next backup.
+
+### What your WSJT-X decodes
+
+If WSJT-X (or JTDX) sends its messages to DX Agent, each station it decodes is one more spot,
+like a cluster or RBN one: it alerts even if no one spotted it, when it's something you want
+(a new country, a new band, your watchlist...). It counts as heard **0 km from you**, at the
+grid square WSJT-X says: for "near you", its filter and **Only alert when heard near you**, a
+station your radio decodes is always near. Doubtful decodes (those WSJT-X marks `?`), decodes
+from a `.wav` file and the ones WSJT-X sends again (Replay) don't count. The frequency is the
+dial plus the audio offset.
+
+It comes on the same port as the QSOs (`logbook.udp_port`). WSJT-X sends to one UDP server, and
+if another program already uses it (Log4OM, JTAlert, GridTracker):
+
+- **a multicast group**: in WSJT-X, Settings → Reporting → UDP Server `239.255.0.1`, port
+  `2237`; in DX Agent, `udp_group = "239.255.0.1"` and `udp_port = 2237`. DX Agent and the
+  programs that join groups (GridTracker, JTAlert) hear it at once;
+- or **the program that gets it forwards it** to `127.0.0.1:12065` (JTAlert and GridTracker
+  can resend WSJT-X's messages).
+
+A **WSJT-X** pill next to the feeds shows the decodes received, and in the list the row says
+who heard it: your call, the SNR and the message (WSJT-X).
 
 ---
 
@@ -1201,7 +1248,7 @@ downloaded goes to `data/` and can be deleted at any time; it is downloaded agai
 | `dxagent/activities.py`    | Activations (POTA, SOTA, IOTA...) found in the spots' comments |
 | `dxagent/hunting.py`       | Summits, parks, islands... you have worked, band by band |
 | `dxagent/livelog.py`       | The QSOs Log4OM saved since its last backup, from its database |
-| `dxagent/udplog.py`        | QSOs other programs send over UDP as they log them (N1MM / DXLog.net XML, ADIF, WSJT-X) |
+| `dxagent/udplog.py`        | QSOs other programs send over UDP as they log them (N1MM / DXLog.net XML, ADIF, WSJT-X), and what WSJT-X decodes |
 | `dxagent/store.py`         | `data/dxagent.db` (SQLite): DX Agent's own records |
 | `dxagent/worldmap.py`       | Land, DXCC borders and DXCC entities for the map view |
 | `dxagent/marathon.py`       | CQ DX Marathon: which QSOs count, the countries and zones worked in the period, what a spot would add |

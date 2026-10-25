@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.11 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
+*Versión 0.4.12 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -173,7 +173,8 @@ problema.
 - **Solo cerca tuyo:** solo las estaciones que escucha alguien cerca tuyo. Solo oculta las demás: siguen avisando.
   El ajuste **Avisar solo si se escucha cerca tuyo** (Configuración → Alertas) es otra cosa: con él, una estación que solo
   se escucha lejos no avisa nunca, y donde hay pocos receptores cerca la lista queda casi vacía (el panel avisa cuántas no
-  avisaron). Casi siempre lo que conviene es el filtro;
+  avisaron). Casi siempre lo que conviene es el filtro. Lo que decodifica tu propio WSJT-X siempre cuenta como cerca
+  (sección 7);
 - **Ocultar confirmados:** saca lo que ya tenés confirmado en esa banda y modo;
 - **Solo LoTW:** solo las estaciones que subieron a LoTW en los últimos 12 meses y las
   DXpediciones que anunciaron LoTW;
@@ -306,7 +307,9 @@ te faltan.
 fábrica) o **En vivo (MQTT)**: los reportes de PSKReporter a medida que llegan, sin límite, para la
 estación abierta en la pestaña Estación y las alertas digitales de la lista. Sus receptores
 cuentan para "cerca tuyo" y el mapa sin apretar ningún botón, y una pastilla **PSKReporter** en el
-encabezado muestra la conexión. Necesita tu grid locator.
+encabezado muestra la conexión. Necesita tu grid locator. Con **Avisar solo si se escucha cerca
+tuyo**, una estación digital que no avisó por escucharse solo lejos avisa apenas un receptor de
+PSKReporter cerca tuyo la reporta en esa banda.
 
 ## 6. Sintonizar la radio y pasar el indicativo al logger
 
@@ -340,7 +343,8 @@ derecha dice si funcionó.
   (activado de fábrica), cada estación de la lista aparece en el panadaptador de AetherSDR con su
   color, su título y su país; se mueve cuando cambia de frecuencia y se saca cuando dejan de
   spotearla. Un clic en una sintoniza ahí y la abre en la pestaña Estación de DX Agent. Una
-  pastilla **TCI** en el encabezado muestra la conexión. Está probado con la radio de demostración
+  pastilla **TCI** en el encabezado muestra la conexión; si abrís AetherSDR después de DX Agent,
+  Sintonizar se conecta en el momento. Está probado con la radio de demostración
   de AetherSDR; si lo usás con una Flex, contanos cómo te fue en el
   [issue #10](https://github.com/ddimunzio/dx-agent-download/issues/10).
 - **WSJT-X:** marcá en DX Agent **Mandar también el indicativo a WSJT-X** y en WSJT-X
@@ -365,7 +369,7 @@ puede avisarle cada QSO apenas lo guardás:
 | **N1MM Logger+** | Config → Configure Ports… → **Broadcast Data**: marcar **Contacts** y agregar `127.0.0.1:12065` |
 | **DXLog.net** | Options → Configure network: QSO broadcast `127.0.0.1:12065`; Options → Broadcast: QSO y **Use N1MM QSO format** |
 | **HRD Logbook** | Tools → Configure → QSO Forwarding → **UDP Send**: `127.0.0.1`, puerto `12065` (todavía sin probar con HRD) |
-| **WSJT-X / JTDX** | en general no hace falta: tu programa de log recibe sus QSOs y se los pasa a DX Agent |
+| **WSJT-X / JTDX** | para sus QSOs, en general no hace falta: tu programa de log los recibe y se los pasa a DX Agent. Sí para lo que decodifican (abajo) |
 
 - **Programas sin UDP** (DXKeeper, Logger32, N3FJP...): si escriben un archivo ADIF a medida
   que logueás (o lo exportan solos), agregá ese archivo en Configuración como segundo
@@ -374,6 +378,23 @@ puede avisarle cada QSO apenas lo guardás:
 Cuando llega un QSO nuevo, las alertas que ya están en la lista se actualizan solas y dejan
 de decir "banda nueva" si ya la trabajaste. Los QSOs que llegan por UDP se guardan hasta que tu
 log los tiene: si cerrás DX Agent antes, no se pierden.
+
+### Lo que decodifica tu WSJT-X
+
+Si WSJT-X (o JTDX) le manda sus mensajes a DX Agent, cada estación que decodificás es un spot más,
+como uno del cluster: si es lo que buscás (país nuevo, banda nueva, lista de seguimiento...) aparece
+en la lista aunque nadie la haya spoteado. Cuenta como escuchada **a 0 km tuyo**, así que el filtro
+**Solo cerca tuyo** siempre la muestra. En la fila dice tu indicativo, el SNR y el mensaje
+(WSJT-X), y una pastilla **WSJT-X** en el encabezado muestra los decodificados que llegan.
+
+Llega al mismo puerto que los QSOs. WSJT-X manda a un solo destino (Settings → Reporting → UDP
+Server), así que si ya lo usa otro programa (Log4OM, JTAlert, GridTracker):
+
+- **un grupo multicast:** en WSJT-X, UDP Server `239.255.0.1`, puerto `2237`; en DX Agent, en
+  `config.toml`, `[logbook]` → `udp_group = "239.255.0.1"` y `udp_port = 2237`. Lo escuchan a la
+  vez DX Agent y los programas que se unen a grupos (GridTracker, JTAlert);
+- o **que el programa que ya lo recibe lo reenvíe** a `127.0.0.1:12065` (JTAlert y GridTracker
+  pueden reenviar los mensajes de WSJT-X).
 
 ## 8. DXpediciones
 

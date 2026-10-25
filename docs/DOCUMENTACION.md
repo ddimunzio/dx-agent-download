@@ -301,6 +301,13 @@ panadaptador), y:
 - **Sintonizar** mueve el slice (receptor) activo al spot y pone el modo (CW, USB/LSB, RTTY,
   DIGU para FT8/FT4); un slice en CW-R lo mantiene para un spot de CW. Un spot de FT8 siempre pone
   DIGU (una Flex manda el audio DAX en DIGU), aunque esté en USB.
+- **Con dos o más slices abiertos**, el botón Sintonizar de la pestaña Estación pasa a ser un
+  botón por slice, debajo de "Sintonizar 14025.0 kHz CW en el slice": su letra, y dónde está
+  ahora (**A** 7074.0 DIGU · **B** 14010.0 CW). El que tiene el foco en AetherSDR se destaca; es
+  el que sintonizan las frecuencias de la lista y la grilla. Un slice aparece con su letra desde
+  que tuvo el foco alguna vez (AetherSDR la informa solo entonces); hasta ahí, con el número de RX
+  del applet TCI de AetherSDR (**RX2** = el slice que el applet muestra en RX2). Los botones siguen
+  a AetherSDR: un slice que se abre, se cierra o toma el foco se ve en unos segundos.
 - **Las alertas van al panadaptador** (**Mostrar las alertas en el panadaptador de la radio**,
   activado por defecto): cada estación de la lista de alertas en su color (ATNO rojo, banda
   nueva naranja, modo nuevo celeste...), con su título y su país. Se mueve cuando un spot más
@@ -548,7 +555,9 @@ Sigue las reglas del DXCC de la ARRL (arrl.org/dxcc-rules):
   internet (RPT, INTERNET, ECH, IRL), los de 60 m y las estaciones en barcos o aviones (/MM,
   /AM) no cuentan; los QSOs anteriores al 15/11/1945 no cuentan, y el CW anterior a 1975
   cuenta solo para Mixto.
-- Solo cuenta la lista DXCC actual: las entidades eliminadas quedan afuera.
+- Solo cuenta la lista DXCC actual: las entidades eliminadas quedan afuera, acá y en los totales
+  de trabajados y confirmados del encabezado (el DXCC de un QSO viejo, como lo informa LoTW, puede
+  ser una: 85 Antillas Neerlandesas, 151 Malyj Vysotskij).
 - No revisa desde dónde operaste ni con qué indicativo: cuenta todo QSO de tu log.
 
 Las entidades chicas (islas, microestados, enclaves como el Vaticano o Guantánamo) llevan además
@@ -865,8 +874,8 @@ estación más cercana a vos que la escuchó en esa banda en los últimos 15 min
   - las alertas digitales (FT8, FT4…) de la lista que se spotearon en los últimos 15
     minutos;
   - con **Avisar solo si se escucha cerca tuyo** marcado, las estaciones digitales
-    que no avisaron por eso, para que un receptor cercano deje avisar a su próximo
-    spot.
+    que no avisaron por eso: apenas un receptor cercano la reporta en esa banda,
+    avisa en el momento, con el spot que se había retenido.
 
   Sigue como máximo 100 estaciones, por indicativo: nunca un país entero (solo los
   receptores de EE. UU. mandan unos 300 reportes por segundo). Sus receptores cuentan
@@ -881,6 +890,18 @@ Cuántos receptores hay cerca tuyo depende de dónde estés: los skimmers de la 
 abundan en América del Norte y Europa y escasean en otras zonas, mientras que
 PSKReporter suele tener muchos más receptores de FT8.
 
+### Indicativos mal decodificados de la RBN
+
+A veces un skimmer de la RBN decodifica mal un indicativo: P9DX, F6A por F6ABW. Uno así lo escucha
+solo ese skimmer, mientras que una estación real enseguida la escuchan varios, o aparece en el
+cluster. Por eso, con **Alertas de la RBN: esperar a un 2.º skimmer** (Configuración → Alertas,
+activado de fábrica, `alerts.rbn_confirm`), una estación que escuchó un solo skimmer de la RBN avisa
+cuando la escucha otro skimmer, o un spotter del cluster o un receptor de PSKReporter, en esa banda
+dentro de 10 minutos (normalmente uno o dos). Los spots del cluster, que publican personas, avisan
+enseguida; el spot de un skimmer que pasa el cluster (spotter `K9LC-#`) es de ese skimmer, y también
+espera. Desmarcado, avisan enseguida y el indicativo lleva un **?** ámbar hasta que lo escucha
+alguien más.
+
 ### Alertas repetidas (tiempo de espera)
 
 La misma alerta no se repite dentro del tiempo de espera (15 minutos por defecto):
@@ -892,6 +913,10 @@ La misma alerta no se repite dentro del tiempo de espera (15 minutos por defecto
 - **Alertas de indicativo** (DXPEDITION, WATCHLIST, NEW CALL): se limitan por
   indicativo + banda + modo, así que la DXpedición vuelve a avisar cuando pasa a otra
   banda o modo.
+
+Guardar la Configuración no reinicia el tiempo de espera, y cerrar y volver a abrir DX Agent tampoco:
+lo que avisó en esos últimos minutos vuelve a la lista cuando llega su spot, pero no muestra otra
+notificación ni vuelve a sonar.
 
 ---
 
@@ -920,6 +945,7 @@ Todo lo de la página de configuración se guarda en `config.toml`, en tu carpet
 | alerts      | `notify_max_priority`       | `1`                                               | Notificaciones para: 1 = solo ATNO; 3 = también modo nuevo y lista de seguimiento |
 | alerts      | `near_km`                   | `1500`                                            | "Cerca tuyo" = la escuchó una estación a esta distancia en km o menos |
 | alerts      | `near_only`                 | `false`                                           | Avisar solo si la estación se escucha cerca tuyo |
+| alerts      | `rbn_confirm`               | `true`                                            | Un spot de la RBN avisa cuando la estación la escucha un 2.º skimmer, o un spot del cluster o de PSKReporter (un indicativo mal decodificado no avisa) |
 | alerts      | `latest_only`               | `false`                                           | Lista del panel: dejar solo la última fila de cada estación en la misma frecuencia y modo |
 | alerts      | `self_spots`                | `true`                                            | Listar los spots de tu propio indicativo (TE ESCUCHAN): quién te escucha y a qué distancia |
 | alerts      | `expire_minutes`            | `0`                                               | Lista del panel: quitar las estaciones que no se spotean en esa banda y modo hace estos minutos (0 = nunca) |
@@ -1035,13 +1061,35 @@ de contactos de N1MM, texto ADIF y los mensajes de WSJT-X. En el programa de log
 | **N1MM Logger+** | Config → Configure Ports… → **Broadcast Data**: marcar **Contacts** y agregar `127.0.0.1:12065` a las direcciones | su formato documentado |
 | **DXLog.net** | Options → Configure network: QSO broadcast `127.0.0.1:12065` (hasta tres, separadas por espacios); Options → Broadcast: QSO, y **Use N1MM QSO format** | su formato (el de N1MM) |
 | **Log4OM 2** (sin la base) | Settings → Software integration → Connections → UDP outbound, tipo **ADIF_MESSAGE**, `127.0.0.1` puerto `12065` | formato ADIF |
-| **WSJT-X / JTDX** | En general no hace falta: tu programa de log recibe sus QSOs y se los avisa a DX Agent. Si loguean solos: Settings → Reporting → UDP Server. Un grupo multicast (`239.255.0.1`, puerto `2237`) deja que DX Agent (`udp_group = "239.255.0.1"`, `udp_port = 2237`) y un programa que se une a grupos (GridTracker, JTAlert) lo escuchen a la vez; una dirección común llega a un solo programa | el mensaje Logged ADIF de WSJT-X |
+| **WSJT-X / JTDX** | Para sus QSOs, en general no hace falta: tu programa de log los recibe y se los avisa a DX Agent. Sí para lo que decodifican (ver "Lo que decodifica tu WSJT-X"), o si loguean solos: Settings → Reporting → UDP Server. Un grupo multicast (`239.255.0.1`, puerto `2237`) deja que DX Agent (`udp_group = "239.255.0.1"`, `udp_port = 2237`) y un programa que se une a grupos (GridTracker, JTAlert) lo escuchen a la vez; una dirección común llega a un solo programa | el mensaje Logged ADIF de WSJT-X |
 | **HRD Logbook** | Tools → Configure → QSO Forwarding → **UDP Send**: `127.0.0.1`, puerto `12065` | sin probar: HRD no dice su formato; funciona si manda ADIF o el XML de N1MM |
 
 Sin UDP (DXKeeper, Logger32, N3FJP, otros): un programa que escribe un archivo ADIF a medida
 que logueás, o lo exporta solo, se puede agregar como segundo archivo de log en la
 configuración, junto al backup; el `wsjtx_log.adi` de WSJT-X es uno. UDP no confirma la
 entrega: un paquete perdido solo espera al siguiente backup.
+
+### Lo que decodifica tu WSJT-X
+
+Si WSJT-X (o JTDX) le manda sus mensajes a DX Agent, cada estación que decodifica es un spot
+más, como uno del cluster o de la RBN: avisa aunque nadie la haya spoteado, si es lo que
+buscás (país nuevo, banda nueva, lista de seguimiento...). Cuenta como escuchada **a 0 km de
+vos**, en el grid que dice WSJT-X: para "cerca tuyo", su filtro y **Avisar solo si se escucha
+cerca tuyo**, una estación que tu radio decodifica siempre está cerca. Los decodificados
+dudosos (los que WSJT-X marca con `?`), los de un archivo `.wav` y los que WSJT-X vuelve a
+mandar (Replay) no cuentan. La frecuencia es la del dial más el desplazamiento de audio.
+
+Llega por el mismo puerto que los QSOs (`logbook.udp_port`). WSJT-X manda a un solo servidor
+UDP, y si ya lo usa otro programa (Log4OM, JTAlert, GridTracker):
+
+- **un grupo multicast**: en WSJT-X, Settings → Reporting → UDP Server `239.255.0.1`, puerto
+  `2237`; en DX Agent, `udp_group = "239.255.0.1"` y `udp_port = 2237`. Lo escuchan a la vez
+  DX Agent y los programas que se unen a grupos (GridTracker, JTAlert);
+- o **el programa que ya lo recibe lo reenvía** a `127.0.0.1:12065` (JTAlert y GridTracker
+  pueden reenviar los mensajes de WSJT-X).
+
+Una píldora **WSJT-X** junto a las fuentes muestra los decodificados recibidos, y en la lista
+la fila dice quién la escuchó: tu indicativo, el SNR y el mensaje (WSJT-X).
 
 ---
 
@@ -1258,7 +1306,7 @@ hace falta.
 | `dxagent/activities.py`    | Activaciones (POTA, SOTA, IOTA...) leídas del comentario de los spots |
 | `dxagent/hunting.py`       | Cumbres, parques, islas... que trabajaste, banda por banda |
 | `dxagent/livelog.py`       | Los QSOs que Log4OM guardó desde su último backup, de su base |
-| `dxagent/udplog.py`        | QSOs que otros programas mandan por UDP al loguearlos (XML de N1MM / DXLog.net, ADIF, WSJT-X) |
+| `dxagent/udplog.py`        | QSOs que otros programas mandan por UDP al loguearlos (XML de N1MM / DXLog.net, ADIF, WSJT-X), y lo que decodifica WSJT-X |
 | `dxagent/store.py`         | `data/dxagent.db` (SQLite): los registros propios de DX Agent |
 | `dxagent/worldmap.py`       | Tierra, fronteras DXCC y entidades DXCC para el mapa |
 | `dxagent/marathon.py`       | CQ DX Marathon: qué QSOs cuentan, los países y zonas trabajados en el período, qué te sumaría un spot |
