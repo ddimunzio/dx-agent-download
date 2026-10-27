@@ -1,6 +1,6 @@
 # DX Agent — User Guide
 
-*Created by Diego – LW5HR, with **Javi – LU5FF** (testing), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · from Argentina, [Cafecito](https://cafecito.app/lw5hr).
+*Created by Diego – LW5HR, with **Javi – LU5FF** (QA Product Advocate), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. MIT License. Support DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · from Argentina, [Cafecito](https://cafecito.app/lw5hr).
 Versión en español: [DOCUMENTACION.md](DOCUMENTACION.md).*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every
@@ -475,7 +475,8 @@ world map. The filters apply to both views.
 - **Diamonds** are active DXpeditions: red = ATNO, amber = not confirmed, teal = you have the
   country but on fewer than half of your bands, grey = you have it. With an alert in the last
   15 minutes the diamond takes the alert's colour. A **green frame** means it was spotted in
-  the last 15 minutes (on the air). The legend in the bottom-left corner sums this up. Several at
+  the last 15 minutes (on the air). The legend in the bottom-left corner sums this up (its chevron folds it to one word,
+  "Legend", remembered in the browser). Several at
   the same place (four at Koror, Palau, say) sit on a small ring around it, each with its own
   click, the ones on the air on top. Which ones show: the **DXpeditions** menu (next to DXCC /
   WAZ / References): those **on the air** (the default), those **needed** (as the tab's "only
@@ -563,6 +564,37 @@ It follows CQ's rules (n4baa.com/9_Rules.pdf, August 2026):
 - Ships and aircraft (/MM, /AM), repeaters and internet links never count; QSOs before
   14 Nov 1945 don't either.
 - Not checked: that you operated from one DXCC entity, and the Traditional / Remote categories.
+
+#### Your grid squares on the map (as GridTracker)
+
+Pick **Grids** in the first menu (instead of DXCC or WAZ) to see the Maidenhead grid: the 324
+fields (FN, GF...) with their lines and names, and zoomed in the squares (FN31) with theirs. The
+squares you worked are painted: green confirmed, amber worked. Pick what counts:
+
+- **Mixed, Phone, CW, Digital**, and a band: **6 m** for FFMA, one band for VUCC (all bands by
+  default); a band or mode picked in the filters above the list is used while the menus say
+  "all bands" or Mixed, as for DXCC;
+- **Satellite**: the QSOs by satellite (PROP_MODE SAT), which count for no band.
+
+The summary says how many squares are confirmed and worked, and in how many fields. Hover a
+square for what you have there (each band and mode, ✓ confirmed) and who is on the air in it.
+
+**On the air** (ticked by default) puts the stations heard with a locator in the last 15
+minutes in their square, alert or not, like GridTracker: those your WSJT-X decodes (their CQ
+says the locator) and the RBN's FT8/FT4 spots, on the bands and modes you alert on. A square
+outlined in **red** is one you haven't worked on that station's band; in green, one you have.
+Their calls show zoomed in; click one for the Station tab.
+
+It follows VUCC's rules: confirmed means **LoTW or a paper QSL** (eQSL doesn't count), and
+repeaters and internet links never count. The square is the QSO's GRIDSQUARE (its first 4
+characters), and every square in VUCC_GRIDS for a station on a line or a corner. LoTW's
+confirmations carry the other station's locator, so they confirm its square. A QSO your logger
+saved without the locator counts for no square.
+
+To be told when a new square is on the air, tick **New grid square** under **Alert me for** in
+Settings (off by default): a **NEW GRID** alert for a station in a square you haven't worked
+on that band, any mode. Only spots that say the locator can: your WSJT-X's decodes and RBN's
+FT8/FT4 spots, not the DX cluster's.
 
 **CQ zones** (the box in the menu) shows the zones' borders and numbers in any view, DXCC
 or none.
@@ -701,6 +733,7 @@ headline, call, frequency (kHz), band, mode, country, then details separated by 
 | NEW MODE   | Country worked, but not in this mode group (CW, PHONE, DIGI)                 | on      |
 | WATCHLIST  | A call from your watchlist, not yet worked                                   | on      |
 | NEW SLOT   | Country not worked on this band+mode combination                             | off     |
+| NEW GRID   | Grid square not worked on this band, any mode (VUCC, FFMA). Only spots that say the locator: your WSJT-X's decodes and RBN's FT8/FT4 (see Your grid squares on the map) | off |
 | NEW CALL   | This exact callsign isn't in your log (very noisy)                           | off     |
 | MARATHON   | A country or CQ zone you haven't worked yet in the CQ DX Marathon (see CQ DX Marathon) | on, while the Marathon is followed |
 | YOU'RE HEARD | Your own callsign spotted (any of yours, on any band and mode): who hears you, and how far away, in What you need ("heard 8,912 km away, in United States"); the row is highlighted in pink and follows the latest spot (×N skimmers). Click it for every receiver that heard you, nearest first, and on the map | on (`alerts.self_spots`) |
@@ -781,7 +814,7 @@ the gain is a confirmation, **DXPED HAVE** when there is nothing to gain.
 |----------|---------------|--------|---------------------------------------------------------------------|
 | 1        | white on red  | yes    | ATNO                                                                |
 | 2        | yellow        | no     | NEW BAND; DXPED NEED/CFM for a new band or mode, or an unconfirmed country |
-| 3        | cyan          | no     | NEW MODE, WATCHLIST; DXPED for a new band+mode or an unconfirmed band/mode |
+| 3        | cyan          | no     | NEW MODE, WATCHLIST, NEW GRID; DXPED for a new band+mode or an unconfirmed band/mode |
 | 4        | green         | no     | NEW SLOT; DXPED for an unconfirmed band+mode                        |
 | 5        | grey          | no     | NEW CALL, DXPED HAVE                                                |
 
@@ -871,6 +904,7 @@ The same alert isn't repeated within the cooldown (default 15 minutes):
   for every other US station on 30 m CW for the next 15 minutes.
 - **Call alerts** (DXPEDITION, WATCHLIST, NEW CALL) are limited per call + band + mode,
   so the DXpedition alerts again when it moves to another band or mode.
+- **NEW GRID** is limited per grid square + band: one station in FN31 on 6 m is enough.
 
 Saving Settings keeps the cooldown, and so does closing and opening DX Agent again: what alerted in
 the last cooldown minutes is listed again as it is spotted, but doesn't pop up or beep a second time.

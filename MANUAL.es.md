@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.13 · Creado por Diego – LW5HR · Colaboradores: **Javi – LU5FF** (pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
+*Versión 0.4.14 · Creado por Diego – LW5HR · Colaboradores: **Javi – LU5FF** (QA Product Advocate), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -225,6 +225,10 @@ frecuencia) se abre la estación:
   minutos, el anillo se apaga. Un anillo sobre un cuadro vacío: está en el aire en una banda que
   te falta;
 - si ya trabajaste ese indicativo exacto, su estado de LoTW y, si es una DXpedición, sus datos;
+- si la estación dijo su grid locator en el aire (tu WSJT-X, FT8/FT4 de la RBN), su **grid** y cómo
+  lo tenés en la banda en que la spotearon: "Grid DN39 · 20 m: GRID NUEVO", o confirmado, y en qué
+  otras bandas lo trabajaste. La grilla banda × modo de arriba es la del país; esta fila es la del
+  grid;
 - con el CQ DX Marathon activado, qué te suma en el Marathon (sección 11);
 - para una estación en un **parque POTA o una cumbre SOTA**, una tarjeta con lo que dicen pota.app
   o SOTA: nombre, tipo y lugar, cuántas activaciones y QSOs, quién la activó primero, sus últimas
@@ -272,12 +276,13 @@ navegador lo recuerda.
 | **MODO NUEVO** | País trabajado, pero no en este modo (CW, fonía, digital) | activada |
 | **SIGUIENDO** | Un indicativo de tu lista de seguimiento | activada |
 | **BANDA+MODO** | País no trabajado en esta combinación de banda y modo | desactivada |
+| **GRID NUEVO** | Un grid que no trabajaste en esta banda, en cualquier modo (VUCC, FFMA). Solo avisan los spots que dicen el locator: los decodes de tu WSJT-X y FT8/FT4 de la RBN (sección 10) | desactivada |
 | **INDICATIVO NUEVO** | Este indicativo exacto no está en tu log (genera muchísimas alertas) | desactivada |
 | **MARATHON** | Un país o una zona CQ que todavía no trabajaste en el CQ DX Marathon (sección 11) | activada, si seguís el Marathon |
 | **TE ESCUCHAN** | Spotearon tu propio indicativo, en cualquier banda y modo: la fila va resaltada en rosa y dice a qué distancia y en qué país está el skimmer ("te escuchan a 8.912 km, en United States"). Al hacer clic se ven todos los receptores que te escucharon, también en el mapa | activada |
 
 - **Qué te falta** dice exactamente qué te suma la estación: "banda nueva", "17m DIGI nunca
-  trabajado", "país no confirmado", o "ya lo tenés".
+  trabajado", "grid EN52 nunca trabajado en 6m", "país no confirmado", o "ya lo tenés".
 - **Confirmado** es LoTW o QSL en papel, como en el DXCC de la ARRL (eQSL no cuenta). Solo
   cuentan las entidades vigentes: una borrada que traen QSOs viejos (85 Antillas Neerlandesas,
   como la informa LoTW) no entra en ningún total, tampoco en los trabajados y confirmados del
@@ -298,6 +303,8 @@ navegador lo recuerda.
 - **Un tipo de alerta que apagás en Configuración también sale de la lista:** una alerta solo de
   ese tipo se va, y una que tiene otro motivo pasa a mostrarlo (BANDA NUEVA en vez de INDICATIVO
   NUEVO).
+- Una alerta puede ser de varios tipos a la vez: una BANDA NUEVA que además es un grid nuevo
+  aparece con el filtro **GRID NUEVO**, y con ese filtro elegido la fila dice GRID NUEVO.
 - En Configuración → Alertas también están **Dejar solo la última fila de cada estación** (mismo
   indicativo, frecuencia y modo) y **Quitar de la lista después de** N minutos sin spot (0 =
   nunca): las dos apagadas de fábrica.
@@ -490,13 +497,31 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
   5BWAZ...).
 - Con una sola banda (o un solo modo) elegidos en los filtros de arriba, DXCC y WAZ pintan esa
   banda ("12 m (filtro)"), salvo que hayas elegido una en sus propios menús.
+- **Grillas** (en el mismo menú que DXCC y WAZ): la grilla Maidenhead, como GridTracker. Los 324
+  fields (FN, GF...) con sus nombres y, con zoom, los grids (FN31) con los suyos. Los grids que
+  trabajaste se pintan: verde confirmado, ámbar trabajado. Se elige el modo (Mixto, Fonía, CW,
+  Digital o Satélite) y la banda: **6 m** para el FFMA, una banda para el VUCC. El resumen dice
+  cuántos grids tenés confirmados, trabajados y en cuántos fields. Sigue las reglas del VUCC:
+  confirmado es LoTW o QSL en papel (eQSL no), y las repetidoras e internet no cuentan. El grid
+  es el que tu programa de log guardó con el QSO (y cada uno de VUCC_GRIDS, para una estación
+  sobre una línea o una esquina); un QSO guardado sin locator no cuenta para ningún grid.
+- **En el aire** (en la vista Grillas, marcado de fábrica): las estaciones oídas con locator en los
+  últimos 15 minutos, con alerta o sin ella, en su grid: las que decodifica tu WSJT-X y los spots
+  de FT8/FT4 de la RBN, en las bandas y modos en que alertás. Borde **rojo**: un grid que no
+  trabajaste en la banda de esa estación; borde verde: uno que ya tenés. Un clic en una la abre en
+  la pestaña Estación, con su frecuencia y el rumbo a su grid.
+- Pasando el mouse por un grid se ve qué tenés ahí en la banda y el modo elegidos (cada banda, sus
+  modos, ✓ confirmado) y quién está en el aire en él.
 - **Referencias** (al lado de DXCC / WAZ): tus parques POTA y cumbres SOTA, en verde confirmadas y
-  en ámbar trabajadas. Un clic en uno muestra su tarjeta y tus QSOs con él, en la pestaña Estación.
+  en ámbar trabajadas. Un clic en uno muestra su tarjeta, el rumbo y la distancia, y tus QSOs con
+  él, en la pestaña Estación.
 - **DXpediciones** (al lado de DXCC / WAZ / Referencias): qué rombos se ven: las que están **en el
   aire** (de fábrica), **las que faltan**, **todas** las activas, o **no**. La estación abierta en la
   pestaña Estación se ve siempre.
 - Varias DXpediciones en el mismo lugar (por ejemplo cuatro en Koror, Palau) van en un círculo chico
   alrededor, así se puede hacer clic en cada una.
+- **Plegar:** la barra de arriba (DXCC / WAZ / Grillas y sus menús) y la leyenda de abajo tienen
+  un chevron que las pliega a una línea, para dejarle más lugar al mapa. El navegador lo recuerda.
 
 ## 11. CQ DX Marathon
 
@@ -594,7 +619,7 @@ Lo que DX Agent va haciendo queda en `data\dx-agent.log`, en tu carpeta de DX Ag
 - **Documentación técnica completa** (todas las opciones del archivo de configuración, cómo
   funciona por dentro): [docs/DOCUMENTACION.md](docs/DOCUMENTACION.md), y dentro del zip.
 - **Apoyá DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · desde Argentina, [Cafecito](https://cafecito.app/lw5hr) (también en la ventana **Acerca de** del panel)
-- **Hecho por** Diego – LW5HR, con **Javi – LU5FF** (pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
+- **Hecho por** Diego – LW5HR, con **Javi – LU5FF** (QA Product Advocate), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
 - **Licencia:** software libre, [MIT](LICENSE): cualquiera puede usarlo, copiarlo y compartirlo.
 
 73, Diego – LW5HR

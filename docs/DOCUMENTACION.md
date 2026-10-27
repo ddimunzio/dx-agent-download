@@ -1,6 +1,6 @@
 # DX Agent — Guía de uso
 
-*Creado por Diego – LW5HR, con **Javi – LU5FF** (pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. Licencia MIT. Apoyá DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · desde Argentina, [Cafecito](https://cafecito.app/lw5hr).
+*Creado por Diego – LW5HR, con **Javi – LU5FF** (QA Product Advocate), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH. Licencia MIT. Apoyá DX Agent: [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · desde Argentina, [Cafecito](https://cafecito.app/lw5hr).
 English version: [DOCUMENTATION.md](DOCUMENTATION.md).*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada
@@ -501,7 +501,7 @@ mismas alertas en un mapa del mundo. Los filtros valen para las dos vistas.
   el país pero en menos de la mitad de tus bandas, gris = ya la tenés. Si tienen una alerta de
   los últimos 15 minutos, el rombo toma el color de la alerta. Un **borde verde** quiere decir
   que la spotearon en los últimos 15 minutos (está en el aire). La leyenda abajo a la izquierda
-  lo resume. Si hay varias en el mismo lugar (por ejemplo cuatro en Koror, Palau), cada una va en
+  lo resume (su chevron la pliega a una palabra, "Leyenda", y el navegador lo recuerda). Si hay varias en el mismo lugar (por ejemplo cuatro en Koror, Palau), cada una va en
   un círculo chico alrededor, con su propio clic, y las que están en el aire quedan arriba. Cuáles
   se ven: el menú **DXpediciones** (al lado de DXCC / WAZ / Referencias): las que están **en el
   aire** (de fábrica), **las que faltan** (como "solo las que faltan" de la pestaña), **todas** las
@@ -593,6 +593,38 @@ Sigue las reglas de CQ (n4baa.com/9_Rules.pdf, agosto 2026):
   14/11/1945 tampoco.
 - No se controla que hayas operado desde una sola entidad DXCC, ni las categorías
   Tradicional / Remota.
+
+#### Tus grids en el mapa (como GridTracker)
+
+Elegí **Grillas** en el primer menú (en lugar de DXCC o WAZ) para ver la grilla Maidenhead:
+los 324 fields (FN, GF...) con sus líneas y nombres, y con zoom los grids (FN31) con los suyos.
+Los grids que trabajaste se pintan: verde confirmado, ámbar trabajado. Elegí qué cuenta:
+
+- **Mixto, Fonía, CW, Digital**, y una banda: **6 m** para el FFMA, una banda para el VUCC
+  (todas las bandas por defecto); una banda o un modo elegidos en los filtros de arriba de la
+  lista se usan mientras los menús digan "todas las bandas" o Mixto, como en el DXCC;
+- **Satélite**: los QSOs por satélite (PROP_MODE SAT), que no cuentan para ninguna banda.
+
+El resumen dice cuántos grids tenés confirmados y trabajados, y en cuántos fields. Pasá el
+mouse por un grid para ver qué tenés ahí (cada banda y modo, ✓ confirmado) y quién está en el
+aire en él.
+
+**En el aire** (marcado por defecto) pone en su grid a las estaciones oídas con locator en los
+últimos 15 minutos, con alerta o sin ella, como GridTracker: las que decodifica tu WSJT-X (su
+CQ dice el locator) y los spots de FT8/FT4 de la RBN, en las bandas y modos en que alertás. Un
+grid con borde **rojo** es uno que no trabajaste en la banda de esa estación; con borde verde,
+uno que ya tenés. Sus indicativos se ven con zoom; con un clic se abre la pestaña Estación.
+
+Sigue las reglas del VUCC: confirmado quiere decir **LoTW o QSL en papel** (eQSL no cuenta),
+y las repetidoras e internet nunca cuentan. El grid es el GRIDSQUARE del QSO (sus primeros 4
+caracteres), y cada grid de VUCC_GRIDS para una estación sobre una línea o una esquina. Las
+confirmaciones de LoTW traen el locator de la otra estación, así que confirman su grid. Un QSO
+que tu programa guardó sin locator no cuenta para ningún grid.
+
+Para que te avise cuando sale un grid nuevo, marcá **Grid nuevo** en **Avisarme de** en la
+configuración (desactivada por defecto): una alerta **GRID NUEVO** por una estación en un grid
+que no trabajaste en esa banda, en cualquier modo. Solo pueden avisar los spots que dicen el
+locator: los decodes de tu WSJT-X y los spots de FT8/FT4 de la RBN, no los del DX cluster.
 
 **Zonas CQ** (la casilla del menú) muestra los bordes y números de las zonas en cualquier
 vista, con DXCC o sin nada.
@@ -736,6 +768,7 @@ siempre usan los nombres en inglés.
 | MODO NUEVO        | NEW MODE            | País trabajado, pero no en este grupo de modos (CW, FONÍA, DIGI)   | activada    |
 | SIGUIENDO         | WATCHLIST           | Un indicativo de tu lista de seguimiento, todavía no trabajado     | activada    |
 | BANDA+MODO        | NEW SLOT            | País no trabajado en esta combinación de banda y modo              | desactivada |
+| GRID NUEVO        | NEW GRID            | Grid no trabajado en esta banda, en cualquier modo (VUCC, FFMA). Solo los spots que dicen el locator: los decodes de tu WSJT-X y FT8/FT4 de la RBN (ver Tus grids en el mapa) | desactivada |
 | INDICATIVO NUEVO  | NEW CALL            | Este indicativo exacto no está en tu log (genera muchísimas alertas) | desactivada |
 | MARATHON          | MARATHON            | Un país o una zona CQ que todavía no trabajaste en el CQ DX Marathon (ver CQ DX Marathon) | activada, mientras sigas el Marathon |
 | TE ESCUCHAN       | YOU'RE HEARD        | Spotearon tu propio indicativo (cualquiera de los tuyos, en cualquier banda y modo): quién te escucha y a qué distancia, en Qué te falta ("te escuchan a 8.912 km, en United States"); la fila va resaltada en rosa y sigue al último spot (×N skimmers). Al hacer clic se ven todos los receptores que te escucharon, del más cercano al más lejano, y en el mapa | activada (`alerts.self_spots`) |
@@ -917,6 +950,7 @@ La misma alerta no se repite dentro del tiempo de espera (15 minutos por defecto
 - **Alertas de indicativo** (DXPEDITION, WATCHLIST, NEW CALL): se limitan por
   indicativo + banda + modo, así que la DXpedición vuelve a avisar cuando pasa a otra
   banda o modo.
+- **GRID NUEVO** se limita por grid + banda: con una estación en FN31 en 6 m alcanza.
 
 Guardar la Configuración no reinicia el tiempo de espera, y cerrar y volver a abrir DX Agent tampoco:
 lo que avisó en esos últimos minutos vuelve a la lista cuando llega su spot, pero no muestra otra

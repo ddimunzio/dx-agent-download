@@ -38,7 +38,7 @@ What it does:
   the call filled in in Log4OM and WSJT-X; with a FlexRadio on AetherSDR (TCI, in testing) the alerts
   also show on its panadapter.
 - **POTA, SOTA, IOTA, WWFF** and more, with the summits and parks you haven't worked.
-- A **world map** with your DXCC and WAZ standing; click a country to see what you have of it.
+- A **world map** with your DXCC and WAZ standing and your grid squares, as GridTracker shows them (VUCC, FFMA); click a country to see what you have of it.
 - The **CQ DX Marathon**, the year or the Sprint: your countries and zones, and alerts for the
   ones you still need.
 - **Several callsigns** (a contest call, say), each with its own log, counted together.
@@ -73,7 +73,7 @@ clic en `start-dx-agent.command`. No hay nada que instalar: trae Python adentro.
 
 ---
 
-Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: **Javi – LU5FF** (testing / pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH
+Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: **Javi – LU5FF** (QA Product Advocate), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH
 
 Free software, [MIT License](LICENSE) / Software libre, licencia MIT.
 
