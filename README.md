@@ -73,7 +73,7 @@ clic en `start-dx-agent.command`. No hay nada que instalar: trae Python adentro.
 
 ---
 
-Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF
+Made by / Creado por Diego – LW5HR · Collaborators / Colaboradores: **Javi – LU5FF** (testing / pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH
 
 Free software, [MIT License](LICENSE) / Software libre, licencia MIT.
 

@@ -1,6 +1,6 @@
 # DX Agent — User manual
 
-*Version 0.4.12 · Made by Diego – LW5HR · Collaborators: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [Versión en castellano](MANUAL.es.md)*
+*Version 0.4.13 · Made by Diego – LW5HR · Collaborators: **Javi – LU5FF** (testing), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [Versión en castellano](MANUAL.es.md)*
 
 DX Agent watches the DX cluster and the Reverse Beacon Network (RBN), checks every station
 spotted against your log, and tells you when one you still need is on the air: a new country,
@@ -151,7 +151,8 @@ red = down); the **DXpeditions** pill ("48 · 6 on the air": how many are within
 how many were spotted in the last 15 minutes; a click opens their tab); your log's totals, in a
 blue pill; icon buttons (hover one to see what it does): **About** ⓘ, **Settings** ⚙,
 **EN/ES/PT**, **Theme** (light / dark / auto), **Sound** (a beep for the important alerts, off by
-default) and **Stop**, in red; the UTC clock. **About** tells what DX Agent is, who made it and its
+default), **Full screen** (four corners; the **F** key too, F or Esc to leave) and **Stop**, in
+red; the UTC clock. **About** tells what DX Agent is, who made it and its
 collaborators, and has the links to support it, to the website, to this manual and to report a
 problem.
 
@@ -177,6 +178,9 @@ problem.
 - **⚙** (next to Clear filters, or Settings → **Filters above the list**): which of Continent, Near you only, Hide
   confirmed, Only LoTW and Activity show. A hidden one is turned off. The alert types, bands and modes are the ones you
   alert on (Settings → Alerts).
+- **Fold the filters:** the chevron next to **List** / **Map** folds them to one line that says what
+  is picked ("FILTERS 20m · CW", highlighted while a filter is on), for more room for the list;
+  the search, Clear filters, the count and Clear list stay. Your browser remembers it.
 
 **The alert list:** one row per alert, newest on top, coloured by type. Columns: UTC time,
 alert type, callsign, frequency, band, mode, country, **what you need**, LoTW, **near you** and
@@ -234,6 +238,11 @@ refused it. At most one spot every 30 seconds; with the cluster off or down the 
 **The DXpeditions tab:** see section 8. **The Marathon tab:** see section 11. Clicking a country
 on the map shows that country in the Station tab (section 10).
 
+**Fold the panel:** the chevron right of the tabs folds the panel on the right to a strip of
+their icons, with the DXpeditions on the air and the Marathon score still showing; a click on an
+icon opens it at that tab. While it is folded, hovering over a row of the list shows that
+station's card: its country, status and band × mode grid. Your browser remembers it.
+
 **List / Map:** to the left of the filters, switches between the list and the map (section 10).
 
 ## 5. Alerts
@@ -269,6 +278,8 @@ on the map shows that country in the Station tab (section 10).
   one RBN skimmer only alerts once another skimmer, or someone on the cluster or PSKReporter,
   hears it too (a few minutes at most), so a skimmer's busted call (P9DX as an ATNO) doesn't
   alert. Cluster spots, posted by people, alert at once. Off: they alert at once, marked **?**.
+- **An alert type turned off in Settings also leaves the list:** an alert only for it goes, and
+  one with another reason shows that one (NEW BAND rather than NEW CALL).
 - Settings → Alerts also has **Keep only the latest row of each station** (same call,
   frequency and mode) and **Take out of the list after** N minutes without a spot (0 = never):
   both off by default.
@@ -318,10 +329,13 @@ has a **Tune** button. A message at the top right says whether it worked.
   radio in USB-D once. From then on, clicking FT8/FT4 spots moves only the frequency and leaves
   USB-D on. A phone spot switches to USB or LSB, and the next FT8 spot stays in USB: put USB-D
   back by hand. The same goes for CW: a radio in CW or CW-R keeps it.
-- **FlexRadio with AetherSDR (TCI), in testing:** Tune moves the active slice and sets the mode
-  (CW, USB/LSB, RTTY, DIGU for FT8). With two or more slices open, the Station tab has a Tune
-  button per slice: its letter (or its RX number, until it has had the focus) and where it is
-  now; the one with the focus stands out. With **Show the alerts on the radio's panadapter (TCI)** (on
+- **FlexRadio with AetherSDR (TCI), in testing:** Tune moves the slice that transmits (the TX
+  slice; until DX Agent knows which one, the one with the focus) and sets the mode (CW, USB/LSB,
+  RTTY, DIGU for FT8). With two or more slices open, the Station tab has a Tune button per slice:
+  its letter (or its RX number, until it has had the focus) and where it is now; the TX slice is
+  marked **TX**, and the one the list's frequencies tune stands out. Choosing a slice there tunes
+  it but doesn't give it the focus in AetherSDR: AetherSDR doesn't let another program change
+  it. With **Show the alerts on the radio's panadapter (TCI)** (on
   by default), each station of the list shows on AetherSDR's panadapter in its colour, with its
   headline and country; it moves when the station changes frequency and leaves when it's no
   longer spotted. A click on one tunes there and opens it in DX Agent's Station tab. A **TCI**
@@ -527,7 +541,7 @@ version beside it) and says so on the dashboard. The old version stays as it was
 | A station I just worked keeps alerting | See section 7. Without your logger telling DX Agent, it updates when your logger writes its ADIF file |
 | Slow to start with a very big log | The first time it reads the whole log (250,000 QSOs: about 15 seconds); then it keeps a cache in `data\cache` (in your DX Agent folder) and starts in a second, unless the log changed |
 | Too many alerts | In Settings → Alerts keep only **ATNO** and **DXpedition**, or untick bands you don't operate |
-| Very few cluster alerts | Normal: the cluster sends a few spots a minute, and the RBN usually reports the same station first |
+| Very few cluster alerts | Normal: the cluster sends a few spots a minute, and the RBN usually reports the same station first. If a server stays connected but sends no spot for 10 minutes, DX Agent moves on to the next one by itself |
 | No Windows pop-ups | Settings → **Show pop-ups**, and in Windows: Settings → System → Notifications (including "Windows PowerShell") |
 | Mac: "start-dx-agent.command cannot be opened" | It isn't signed by Apple: System Settings → Privacy & Security → **Open Anyway** (section 2) |
 | Tune doesn't move the radio | Check your program's remote control (section 6) and that it's running; the message at the top right says what failed |
@@ -550,7 +564,7 @@ What DX Agent does is written to `data\dx-agent.log`, in your DX Agent folder (o
 - **Full technical documentation** (every setting in the configuration file, how it works
   inside): [docs/DOCUMENTATION.md](docs/DOCUMENTATION.md), and in the zip.
 - **Support DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · from Argentina, [Cafecito](https://cafecito.app/lw5hr) (also in the dashboard's **About** window)
-- **Made by** Diego – LW5HR, with Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF.
+- **Made by** Diego – LW5HR, with **Javi – LU5FF** (testing), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
 - **License:** free software, [MIT](LICENSE): anyone can use, copy and share it.
 
 73, Diego – LW5HR

@@ -1,6 +1,6 @@
 # DX Agent — Manual de usuario
 
-*Versión 0.4.12 · Creado por Diego – LW5HR · Colaboradores: Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF · [English version](MANUAL.en.md)*
+*Versión 0.4.13 · Creado por Diego – LW5HR · Colaboradores: **Javi – LU5FF** (pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH · [English version](MANUAL.en.md)*
 
 DX Agent vigila el DX cluster y la Reverse Beacon Network (RBN), compara cada estación
 reportada con tu log y te avisa cuando sale al aire una que todavía necesitás: un país nuevo,
@@ -156,7 +156,8 @@ falta a ese); una pastilla por cada fuente de spots (verde = conectada,
 están dentro de sus fechas y cuántas se spotearon en los últimos 15 minutos; un clic abre su
 pestaña); los totales de tu log, en una pastilla azul; botones con íconos (al pasar el mouse
 dicen qué hace cada uno): **Acerca de** ⓘ, **Configuración** ⚙, **EN/ES/PT**, **Tema** (claro /
-oscuro / automático), **Sonido** (un pitido para las alertas importantes, apagado de fábrica) y
+oscuro / automático), **Sonido** (un pitido para las alertas importantes, apagado de fábrica),
+**Pantalla completa** (cuatro esquinas; también la tecla **F**, se sale con F o Esc) y
 **Detener**, en rojo; el reloj UTC. **Acerca de** cuenta qué es DX Agent, quién lo hizo y sus
 colaboradores, y tiene los links para apoyarlo, al sitio, a este manual y para reportar un
 problema.
@@ -183,6 +184,10 @@ problema.
 - **⚙** (junto a Limpiar filtros, o Configuración → **Filtros sobre la lista**): cuáles de Continente, Solo cerca tuyo,
   Ocultar confirmados, Solo LoTW y Actividad se ven. Uno oculto queda apagado. Los tipos de alerta, las bandas y los modos
   son los de tus alertas (Configuración → Alertas).
+- **Plegar los filtros:** el chevron junto a **Lista** / **Mapa** los pliega a una línea que dice
+  qué está elegido ("FILTROS 20m · CW", resaltada mientras hay un filtro), para dejarle más lugar
+  a la lista; quedan la búsqueda, Limpiar filtros, la cantidad y Limpiar lista. El navegador lo
+  recuerda.
 
 **La lista de alertas:** una fila por alerta, la más nueva arriba, con el color de su tipo.
 Columnas: hora UTC, tipo de alerta, indicativo, frecuencia, banda, modo, país, **qué te falta**,
@@ -247,6 +252,12 @@ el botón queda gris.
 **La pestaña DXpediciones:** ver la sección 8. **La pestaña Marathon:** ver la sección 11.
 Con un clic en un país del mapa, la pestaña Estación muestra ese país (sección 10).
 
+**Plegar el panel:** el chevron a la derecha de las pestañas pliega el panel de la derecha a una
+tira con sus íconos, donde siguen las DXpediciones en el aire y el puntaje del Marathon; un clic
+en un ícono lo abre en esa pestaña. Mientras está plegado, al pasar el mouse por una fila de la
+lista aparece la ficha de esa estación: su país, su estado y su grilla banda × modo. El
+navegador lo recuerda.
+
 **Lista / Mapa:** a la izquierda de los filtros, cambia entre la lista y el mapa (sección 10).
 
 ## 5. Las alertas
@@ -284,6 +295,9 @@ Con un clic en un país del mapa, la pestaña Estación muestra ese país (secci
   alguien en el cluster o en PSKReporter (unos minutos como mucho), así un indicativo mal
   decodificado por un skimmer (P9DX como ATNO) no avisa. Los spots del cluster, que publican
   personas, avisan enseguida. Desmarcado: avisan enseguida, marcados con **?**.
+- **Un tipo de alerta que apagás en Configuración también sale de la lista:** una alerta solo de
+  ese tipo se va, y una que tiene otro motivo pasa a mostrarlo (BANDA NUEVA en vez de INDICATIVO
+  NUEVO).
 - En Configuración → Alertas también están **Dejar solo la última fila de cada estación** (mismo
   indicativo, frecuencia y modo) y **Quitar de la lista después de** N minutos sin spot (0 =
   nunca): las dos apagadas de fábrica.
@@ -336,10 +350,13 @@ derecha dice si funcionó.
   radio en USB-D una vez. Desde ahí, los clics en spots de FT8/FT4 solo cambian la frecuencia y
   el USB-D se mantiene. Un spot de fonía la pasa a USB o LSB, y el siguiente spot de FT8 queda en
   USB: volvé a poner USB-D a mano. Con CW pasa lo mismo: una radio en CW o CW-R lo conserva.
-- **FlexRadio con AetherSDR (TCI), en prueba:** Sintonizar mueve el slice activo y pone el modo
-  (CW, USB/LSB, RTTY, DIGU para FT8). Con dos o más slices abiertos, la pestaña Estación tiene un
-  botón Sintonizar por slice: su letra (o su número de RX, hasta que tuvo el foco) y dónde está
-  ahora; el que tiene el foco se destaca. Con **Mostrar las alertas en el panadaptador de la radio**
+- **FlexRadio con AetherSDR (TCI), en prueba:** Sintonizar mueve el slice que transmite (el de
+  TX; hasta que DX Agent sabe cuál es, el que tiene el foco) y pone el modo (CW, USB/LSB, RTTY,
+  DIGU para FT8). Con dos o más slices abiertos, la pestaña Estación tiene un botón Sintonizar por
+  slice: su letra (o su número de RX, hasta que tuvo el foco) y dónde está ahora; el de TX está
+  marcado **TX**, y se destaca el que sintonizan las frecuencias de la lista. Elegir un slice ahí
+  lo sintoniza pero no le da el foco en AetherSDR: AetherSDR no deja que otro programa lo cambie.
+  Con **Mostrar las alertas en el panadaptador de la radio**
   (activado de fábrica), cada estación de la lista aparece en el panadaptador de AetherSDR con su
   color, su título y su país; se mueve cuando cambia de frecuencia y se saca cuando dejan de
   spotearla. Un clic en una sintoniza ahí y la abre en la pestaña Estación de DX Agent. Una
@@ -554,7 +571,7 @@ queda como estaba.
 | Una estación que acabo de trabajar sigue alertando | Ver la sección 7. Sin aviso del programa de log, se actualiza cuando tu programa escribe el archivo ADIF |
 | Tarda en arrancar con un log muy grande | La primera vez lee todo el log (con 250.000 QSOs, unos 15 segundos); después guarda un caché en `data\cache` (en tu carpeta de DX Agent) y arranca en un segundo, salvo que el log haya cambiado |
 | Demasiadas alertas | En Configuración → Alertas dejá solo **ATNO** y **DXpedición**, o sacá bandas que no operás |
-| Muy pocas alertas del cluster | Es normal: el cluster manda pocos spots por minuto y la RBN suele reportar primero la misma estación |
+| Muy pocas alertas del cluster | Es normal: el cluster manda pocos spots por minuto y la RBN suele reportar primero la misma estación. Si un servidor sigue conectado pero no manda ningún spot en 10 minutos, DX Agent pasa solo al siguiente |
 | No aparecen notificaciones de Windows | Configuración → **Mostrar notificaciones**, y en Windows: Configuración → Sistema → Notificaciones (incluida "Windows PowerShell") |
 | Mac: "No se puede abrir start-dx-agent.command" | No está firmado por Apple: Configuración del Sistema → Privacidad y seguridad → **Abrir igualmente** (sección 2) |
 | El botón Sintonizar no mueve la radio | Revisá en tu programa el control remoto (sección 6) y que esté abierto; el mensaje arriba a la derecha dice qué falló |
@@ -577,7 +594,7 @@ Lo que DX Agent va haciendo queda en `data\dx-agent.log`, en tu carpeta de DX Ag
 - **Documentación técnica completa** (todas las opciones del archivo de configuración, cómo
   funciona por dentro): [docs/DOCUMENTACION.md](docs/DOCUMENTACION.md), y dentro del zip.
 - **Apoyá DX Agent:** [Ko-fi](https://ko-fi.com/lw5hr) · [PayPal](https://paypal.me/diegodimunzio1) · desde Argentina, [Cafecito](https://cafecito.app/lw5hr) (también en la ventana **Acerca de** del panel)
-- **Hecho por** Diego – LW5HR, con Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH, Javi – LU5FF.
+- **Hecho por** Diego – LW5HR, con **Javi – LU5FF** (pruebas), Franco – LU2PWY, Juan Pablo – LU9HVR, Gustavo – LU7HW, Daniel – LU1HLH.
 - **Licencia:** software libre, [MIT](LICENSE): cualquiera puede usarlo, copiarlo y compartirlo.
 
 73, Diego – LW5HR
