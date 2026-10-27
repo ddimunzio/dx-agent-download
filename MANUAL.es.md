@@ -251,7 +251,7 @@ el botón queda gris.
 
 ![La pestaña Estación, con una DXpedición en el aire](images/station.es.png)
 
-![En el aire: S9R en cuatro bandas a la vez; parpadea 20 m digital, el spot más reciente, en una banda que falta](images/grid-onair.es.png)
+![En el aire: C5R en tres bandas a la vez, con su anillo; dos de ellas, 60 m y 12 m digital, te faltan](images/grid-onair.es.png)
 
 **La pestaña DXpediciones:** ver la sección 8. **La pestaña Marathon:** ver la sección 11.
 Con un clic en un país del mapa, la pestaña Estación muestra ese país (sección 10).
@@ -522,6 +522,8 @@ Clic en **Mapa** (al lado de **Lista**). Los filtros valen igual que en la lista
   alrededor, así se puede hacer clic en cada una.
 - **Plegar:** la barra de arriba (DXCC / WAZ / Grillas y sus menús) y la leyenda de abajo tienen
   un chevron que las pliega a una línea, para dejarle más lugar al mapa. El navegador lo recuerda.
+
+![La vista Grillas: los grids que trabajaste y confirmaste, y las estaciones en el aire en su grid](images/grids.es.png)
 
 ## 11. CQ DX Marathon
 

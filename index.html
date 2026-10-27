@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DX Agent — DX cluster and RBN alerts for what you still need</title>
-<meta name="description" content="Free, open-source DX cluster and RBN spot watcher for Windows, Linux and Mac. Alerts when a DXCC entity, band, mode or DXpedition you need is on the air.">
+<meta name="description" content="Free, open-source DX cluster and RBN spot watcher for Windows, Linux and Mac. Alerts when a DXCC entity, band, mode, grid square or DXpedition you need is on the air, with your DXCC, WAZ and grid squares on a map.">
 <link rel="canonical" href="https://ddimunzio.github.io/dx-agent-download/">
 <link rel="alternate" hreflang="en" href="https://ddimunzio.github.io/dx-agent-download/">
 <link rel="alternate" hreflang="es" href="https://ddimunzio.github.io/dx-agent-download/es/">
@@ -57,6 +57,8 @@
       "acceptedAnswer": { "@type": "Answer", "text": "The DX cluster is where radio amateurs announce the stations they hear; the Reverse Beacon Network is a worldwide set of automatic receivers (skimmers) that decode CW and digital modes and report every station they hear. DX Agent listens to both and keeps the spots that matter to your log." } },
     { "@type": "Question", "name": "Does it run on Linux and macOS?",
       "acceptedAnswer": { "@type": "Answer", "text": "Yes. Windows, Linux (x86_64) and macOS each have their own package with Python inside. The Windows-only parts are Log4OM's live log and the Log4OM, N1MM, OmniRig and DXLab tuning targets; Hamlib, flrig and TCI work everywhere." } },
+    { "@type": "Question", "name": "Does it show grid squares like GridTracker?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The map's Grids view paints the Maidenhead squares you worked and confirmed (VUCC rules, one band for VUCC or 6 m for FFMA), puts the stations heard with a locator in their square, from your WSJT-X's decodes and the RBN's FT8/FT4 spots, and a NEW GRID alert tells you when a square you still need on that band is on the air." } },
     { "@type": "Question", "name": "Is it free?",
       "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is free and open source under the MIT licence, with no account, no telemetry and no cloud service: it runs on your own computer." } }
   ]
@@ -85,8 +87,8 @@
     <h1>DX Agent</h1>
     <p class="lead">It watches the DX cluster and the Reverse Beacon Network, checks every spot
       against <strong>your</strong> log, and tells you the moment a station you still need is on the
-      air: a new country, a new band or mode, a DXpedition that adds something, a park or summit you
-      have not worked.</p>
+      air: a new country, a new band or mode, a grid square, a DXpedition that adds something, a park
+      or summit you have not worked.</p>
     <div class="cta">
       <a class="btn" href="https://github.com/ddimunzio/dx-agent-download/releases/latest" data-goatcounter-click="download">Download the latest version</a>
       <a class="btn secondary" href="https://github.com/ddimunzio/dx-agent-download/blob/main/MANUAL.en.md">Read the manual</a>
@@ -106,6 +108,12 @@
     <li><b>ATNO, new band, new mode</b> An alert only when working that station would actually add
       something: the country never worked, the band or the mode you are missing, or a combination
       you do not have.</li>
+    <li><b>Grid squares, as GridTracker</b> The squares you worked and confirmed on the map (VUCC,
+      FFMA), the stations heard with a locator in their square, and a NEW GRID alert when a square
+      you still need on that band is on the air.</li>
+    <li><b>Your awards on the map</b> DXCC (Mixed, by mode or band, Satellite, Challenge) and WAZ
+      (5BWAZ too), each country or zone painted confirmed, worked or missing; click a country to see
+      what you have of it.</li>
     <li><b>DXpeditions worth your time</b> Announced DXpeditions from NG3K, 425 DX News and Club Log,
       each one saying whether it adds an entity, a band or a mode for you, and whether you are
       already in their online log.</li>
@@ -113,11 +121,18 @@
       the exact callsigns you are chasing.</li>
     <li><b>POTA, SOTA, IOTA, WWFF</b> Summits, parks and islands, marked new when you have not worked
       them on that band.</li>
-    <li><b>Near you</b> Whether the station is being heard by receivers close to your own station,
-      so you know if the path is open to you.</li>
+    <li><b>Near you</b> Whether the station is being heard by receivers close to your own station
+      (RBN, cluster, PSKReporter live, and your own WSJT-X's decodes), so you know if the path is
+      open to you.</li>
+    <li><b>Who hears you</b> Your own call spotted: which skimmers hear you, how far away and in
+      which country, on the list and the map.</li>
+    <li><b>CQ DX Marathon</b> Your score for the year or the Sprint, the countries and CQ zones still
+      missing, and an alert when one of them is on the air.</li>
+    <li><b>Several callsigns</b> Each with its own log; alerts and awards for all of them together,
+      or for the one you pick.</li>
     <li><b>One click to the radio</b> Tune to the spot from the dashboard: Log4OM, N1MM, DXLog.net,
       OmniRig, Hamlib, flrig, DXLab, WSJT-X or TCI (a FlexRadio on AetherSDR, with the alerts on its
-      panadapter; in testing).</li>
+      panadapter; in testing). And Spot it posts a spot to the DX cluster.</li>
   </ul>
 
   <h2 id="screens">Screens</h2>
@@ -136,7 +151,15 @@
     </figure>
     <figure>
       <img src="images/map.en.png" alt="DX Agent: the world map with the countries worked and confirmed, and the station's position" loading="lazy">
-      <figcaption>Your DXCC, your WAZ and your grid squares on a world map.</figcaption>
+      <figcaption>Your DXCC and WAZ standing on a world map.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/grids.en.png" alt="DX Agent: the map's Grids view, with the grid squares worked and confirmed and the stations on the air in their square" loading="lazy">
+      <figcaption>Your grid squares, and who is on the air in each one, as GridTracker shows them.</figcaption>
+    </figure>
+    <figure>
+      <img src="images/activity.en.png" alt="DX Agent: the alert list filtered to activations, with the parks and summits not worked marked new" loading="lazy">
+      <figcaption>POTA, SOTA and other activations, the ones you need marked new.</figcaption>
     </figure>
   </div>
 
@@ -189,6 +212,13 @@
       every station they hear. DX Agent listens to both and keeps what matters to your log.</p>
   </details>
   <details>
+    <summary>Does it show grid squares like GridTracker?</summary>
+    <p>Yes. The map's <b>Grids</b> view paints the Maidenhead squares you worked and confirmed (VUCC
+      rules: one band for VUCC, 6 m for FFMA) and puts the stations heard with a locator in their
+      square, from your WSJT-X's decodes and the RBN's FT8/FT4 spots. A <b>NEW GRID</b> alert tells
+      you when a square you still need on that band is on the air.</p>
+  </details>
+  <details>
     <summary>Windows, Linux or Mac?</summary>
     <p>All three, each with its own package. The Windows-only parts are Log4OM's live log and the
       Log4OM, N1MM, OmniRig and DXLab tuning targets; Hamlib, flrig and TCI work everywhere.</p>
@@ -203,7 +233,7 @@
     <ul>
       <li><a href="https://github.com/ddimunzio/dx-agent-download/blob/main/MANUAL.en.md">User manual</a>
         — install, first setup, the screen, alerts, tuning the radio, your logger, DXpeditions,
-        POTA/SOTA, the map, the CQ DX Marathon, LoTW.</li>
+        POTA/SOTA, the map and its grid squares, the CQ DX Marathon, LoTW.</li>
       <li><a href="https://github.com/ddimunzio/dx-agent-download/blob/main/docs/DOCUMENTATION.md">Technical documentation</a>
         — every setting and how it works inside.</li>
       <li><a href="https://github.com/ddimunzio/dx-agent-download/releases" data-goatcounter-click="all-versions">All versions</a>, with what

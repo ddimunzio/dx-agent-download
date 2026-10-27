@@ -237,7 +237,7 @@ refused it. At most one spot every 30 seconds; with the cluster off or down the 
 
 ![The Station tab, with a DXpedition on the air](images/station.en.png)
 
-![On the air: S9R on four bands at once; 20 m digital blinks, the latest spot, on a band you need](images/grid-onair.en.png)
+![On the air: C5R on three bands at once, ringed; two of them, 60 m and 12 m digital, you still need](images/grid-onair.en.png)
 
 **The DXpeditions tab:** see section 8. **The Marathon tab:** see section 11. Clicking a country
 on the map shows that country in the Station tab (section 10).
@@ -494,6 +494,8 @@ Click **Map** (next to **List**). The filters work the same as in the list.
 - **Fold:** the bar at the top (DXCC / WAZ / Grids and their menus) and the legend at the bottom
   each have a chevron that folds them to one line, to give the map more room. The browser
   remembers it.
+
+![The Grids view: the squares you worked and confirmed, and the stations on the air in their square](images/grids.en.png)
 
 ## 11. CQ DX Marathon
 
