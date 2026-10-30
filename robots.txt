@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ddimunzio.github.io/dx-agent-download/sitemap.xml
+Sitemap: https://lw5hr.github.io/dx-agent-download/sitemap.xml

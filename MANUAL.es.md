@@ -45,7 +45,7 @@ Contenido:
 ## 2. Instalarlo y abrirlo
 
 1. Bajá el último `dx-agent-<versión>-windows.zip` de la página
-   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest).
+   [Releases](https://github.com/lw5hr/dx-agent-download/releases/latest).
 2. Descomprimilo donde quieras, por ejemplo en `Documentos`. Tu configuración y tus datos no
    quedan ahí, sino en una carpeta tuya que usan todas las versiones (sección 13): la carpeta
    del programa se puede reemplazar o borrar.
@@ -69,7 +69,7 @@ puede abrir desde tu PC; otras computadoras de la red no lo ven.
 ### En Linux
 
 1. Bajá el último `dx-agent-<versión>-linux-x86_64.tar.gz` de la misma página
-   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest).
+   [Releases](https://github.com/lw5hr/dx-agent-download/releases/latest).
 2. Descomprimilo en una carpeta tuya y abrilo:
 
    ```sh
@@ -84,7 +84,7 @@ puede abrir desde tu PC; otras computadoras de la red no lo ven.
 ### En una Mac
 
 1. Bajá el último `dx-agent-<versión>-macos.tar.gz` de la misma página
-   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest). Sirve para
+   [Releases](https://github.com/lw5hr/dx-agent-download/releases/latest). Sirve para
    cualquier Mac, con Apple Silicon (M1, M2...) o Intel.
 2. Hacé doble clic para descomprimirlo, y mové la carpeta `dx-agent` adonde quieras, por
    ejemplo a Documentos.
@@ -370,7 +370,7 @@ derecha dice si funcionó.
   pastilla **TCI** en el encabezado muestra la conexión; si abrís AetherSDR después de DX Agent,
   Sintonizar se conecta en el momento. Está probado con la radio de demostración
   de AetherSDR; si lo usás con una Flex, contanos cómo te fue en el
-  [issue #10](https://github.com/ddimunzio/dx-agent-download/issues/10).
+  [issue #10](https://github.com/lw5hr/dx-agent-download/issues/10).
 - **WSJT-X:** marcá en DX Agent **Mandar también el indicativo a WSJT-X** y en WSJT-X
   Settings → Reporting → **Accept UDP requests**. Un clic en un spot de FT8/FT4 pone la radio
   en la frecuencia de FT8/FT4, completa **DX Call** y **DX Grid** y mueve el audio a la
@@ -615,7 +615,7 @@ Lo que DX Agent va haciendo queda en `data\dx-agent.log`, en tu carpeta de DX Ag
 ![La ventana Acerca de](images/about.es.png)
 
 - **Reportar un problema o proponer una mejora:** en
-  [Issues](https://github.com/ddimunzio/dx-agent-download/issues) de este repositorio.
+  [Issues](https://github.com/lw5hr/dx-agent-download/issues) de este repositorio.
   Contá qué hiciste, qué esperabas y qué pasó, y si podés adjuntá `data\dx-agent.log`
   (no tiene tu contraseña).
 - **Documentación técnica completa** (todas las opciones del archivo de configuración, cómo

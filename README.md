@@ -1,7 +1,7 @@
 # DX Agent
 
-[![Downloads](https://img.shields.io/github/downloads/ddimunzio/dx-agent-download/total?label=downloads&cacheSeconds=3600)](https://github.com/ddimunzio/dx-agent-download/releases)
-[![Latest version](https://img.shields.io/github/v/release/ddimunzio/dx-agent-download?sort=semver&label=version)](https://github.com/ddimunzio/dx-agent-download/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/lw5hr/dx-agent-download/total?label=downloads&cacheSeconds=3600)](https://github.com/lw5hr/dx-agent-download/releases)
+[![Latest version](https://img.shields.io/github/v/release/lw5hr/dx-agent-download?sort=semver&label=version)](https://github.com/lw5hr/dx-agent-download/releases/latest)
 
 **DX Agent** watches the DX cluster and the Reverse Beacon Network, checks every spot against
 your log, and tells you the moment a station you still need is on the air: a new country, band
@@ -14,7 +14,7 @@ your PC (Windows, Linux or Mac) and you use it from your browser.
 
 ## Download
 
-**[Download the latest version](https://github.com/ddimunzio/dx-agent-download/releases/latest)**
+**[Download the latest version](https://github.com/lw5hr/dx-agent-download/releases/latest)**
 — Windows: `dx-agent-<version>-windows.zip`, unzip it and double-click `start-dx-agent.bat`.
 Linux (x86_64): `dx-agent-<version>-linux-x86_64.tar.gz`, unpack it and run `./start-dx-agent.sh`.
 Mac: `dx-agent-<version>-macos.tar.gz`, unpack it and double-click `start-dx-agent.command`.
@@ -23,8 +23,8 @@ Nothing to install: Python comes inside.
 - **[User manual](MANUAL.en.md)** — install, first setup, the screen, alerts, tuning the
   radio, your logger, DXpeditions, POTA/SOTA, the map, the CQ DX Marathon, LoTW.
 - [Technical documentation](docs/DOCUMENTATION.md) — every setting and how it works inside.
-- Problems or ideas: [Issues](https://github.com/ddimunzio/dx-agent-download/issues).
-- Page for sharing: **https://ddimunzio.github.io/dx-agent-download/** (and [/es/](https://ddimunzio.github.io/dx-agent-download/es/) in Spanish) — screenshots and the answers to the usual questions, to send someone instead of the whole README.
+- Problems or ideas: [Issues](https://github.com/lw5hr/dx-agent-download/issues).
+- Page for sharing: **https://lw5hr.github.io/dx-agent-download/** (and [/es/](https://lw5hr.github.io/dx-agent-download/es/) in Spanish) — screenshots and the answers to the usual questions, to send someone instead of the whole README.
 
 What it does:
 
@@ -58,7 +58,7 @@ PC y se usa desde el navegador.
 
 ## Descarga
 
-**[Bajar la última versión](https://github.com/ddimunzio/dx-agent-download/releases/latest)**
+**[Bajar la última versión](https://github.com/lw5hr/dx-agent-download/releases/latest)**
 — Windows: `dx-agent-<versión>-windows.zip`, descomprimilo y hacé doble clic en
 `start-dx-agent.bat`. Linux (x86_64): `dx-agent-<versión>-linux-x86_64.tar.gz`, descomprimilo y
 corré `./start-dx-agent.sh`. Mac: `dx-agent-<versión>-macos.tar.gz`, descomprimilo y hacé doble
@@ -69,7 +69,7 @@ clic en `start-dx-agent.command`. No hay nada que instalar: trae Python adentro.
   Marathon, LoTW.
 - [Documentación técnica](docs/DOCUMENTACION.md) — todas las opciones y cómo funciona por
   dentro.
-- Problemas o ideas: [Issues](https://github.com/ddimunzio/dx-agent-download/issues).
+- Problemas o ideas: [Issues](https://github.com/lw5hr/dx-agent-download/issues).
 
 ---
 

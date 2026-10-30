@@ -45,7 +45,7 @@ Contents:
 ## 2. Install and open it
 
 1. Download the latest `dx-agent-<version>-windows.zip` from the
-   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest) page.
+   [Releases](https://github.com/lw5hr/dx-agent-download/releases/latest) page.
 2. Unzip it wherever you like, for example in `Documents`. Your settings and data aren't kept
    there but in a folder of your own that every version uses (section 13): the program's folder
    can be replaced or deleted.
@@ -66,7 +66,7 @@ computers on your network can't.
 ### On Linux
 
 1. Download the latest `dx-agent-<version>-linux-x86_64.tar.gz` from the same
-   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest) page.
+   [Releases](https://github.com/lw5hr/dx-agent-download/releases/latest) page.
 2. Unpack it into a folder of yours and start it:
 
    ```sh
@@ -81,7 +81,7 @@ computers on your network can't.
 ### On a Mac
 
 1. Download the latest `dx-agent-<version>-macos.tar.gz` from the same
-   [Releases](https://github.com/ddimunzio/dx-agent-download/releases/latest) page. It works on
+   [Releases](https://github.com/lw5hr/dx-agent-download/releases/latest) page. It works on
    every Mac, Apple Silicon (M1, M2...) or Intel.
 2. Double-click it to unpack it, and move the `dx-agent` folder wherever you like, for example
    Documents.
@@ -348,7 +348,7 @@ has a **Tune** button. A message at the top right says whether it worked.
   longer spotted. A click on one tunes there and opens it in DX Agent's Station tab. A **TCI**
   pill in the header shows the connection; if you open AetherSDR after DX Agent, Tune connects
   right then. Tested with AetherSDR's demo radio; if you use it with
-  a Flex, tell us how it went in [issue #10](https://github.com/ddimunzio/dx-agent-download/issues/10).
+  a Flex, tell us how it went in [issue #10](https://github.com/lw5hr/dx-agent-download/issues/10).
 - **WSJT-X:** tick **Also send the call to WSJT-X** in DX Agent, and in WSJT-X tick Settings →
   Reporting → **Accept UDP requests**. Clicking an FT8/FT4 spot puts the radio on the FT8/FT4
   frequency, fills in **DX Call** and **DX Grid**, and moves the audio to the station's
@@ -586,7 +586,7 @@ What DX Agent does is written to `data\dx-agent.log`, in your DX Agent folder (o
 ![The About window](images/about.en.png)
 
 - **Report a problem or suggest an improvement:** in this repository's
-  [Issues](https://github.com/ddimunzio/dx-agent-download/issues). Say what you did, what you
+  [Issues](https://github.com/lw5hr/dx-agent-download/issues). Say what you did, what you
   expected and what happened, and if you can, attach `data\dx-agent.log` (it doesn't contain
   your password).
 - **Full technical documentation** (every setting in the configuration file, how it works
